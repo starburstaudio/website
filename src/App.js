@@ -20,15 +20,15 @@ function App() {
                   your hands on this sample pack today!
                 </p>
                 <div>
-                  <div className='btn btn-primary text-base mr-2'>
+                  <a className='btn btn-primary text-base mr-2' href='/'>
                     <span>Check it out!</span>
-                      <FiChevronRight />
-                    </div>
-                  <div className='btn btn-ghost'>Other Sample Packs </div>
+                    <FiChevronRight className='ml-2'/>
+                  </a>
+                  <a className='btn btn-ghost' href='/'>Other Sample Packs </a>
                 </div>
               </div>
             </div>
-            <img src='https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174' className='w-96 h-96 rounded'/>
+            <img alt="" src='https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174' className='w-96 h-96 rounded'/>
           </div>
         </div>
       </main>
