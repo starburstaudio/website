@@ -19,7 +19,7 @@ body {
 }
 
 [data-theme="light"] .header {
-  background-color: rgba(246,246,246,0.66);
+  background-color: rgba(246,246,246,0.8);
   box-shadow: 0 1px 0 0 rgba(0,0,0,0.16);
 }
 
@@ -49,10 +49,51 @@ body {
 
 h1,h2 {
   font-family: "Inter Tight";
-  line-height: 0.8em;
+  line-height: 0.95em;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.carousel {
+  scrollbar-width: inherit;
+}
+
+.card.image-full::before {
+  opacity: 0;
+}
+.masked-overflow-y {
+  /* If content exceeds height of container, overflow! */
+  overflow-y: auto;
+
+  /* The CSS mask */
+
+  /* The content mask is a linear gradient from top to bottom */
+  --mask-image-content: linear-gradient(
+      to right,
+      transparent,
+      black 3rem,
+      black calc(100% - 3rem),
+      transparent
+  );
+
+  /* Here we scale the content gradient to the width of the container 
+  minus the scrollbar width. The height is the full container height */
+  --mask-size-content: 100%;
+
+  /* The scrollbar mask is a black pixel */
+  --mask-image-scrollbar: linear-gradient(black, black);
+
+  /* Apply the mask image and mask size variables */
+  mask-image: var(--mask-image-content);
+  mask-size: var(--mask-size-content);
+
+  /* Position the content gradient in the top left, and the 
+  scroll gradient in the top right */
+  mask-position: 0 0, 100% 0;
+
+  /* We don't repeat our mask images */
+  mask-repeat: no-repeat, no-repeat;
 }
