@@ -34,12 +34,12 @@ body {
 
 .content-width {
   width: 578px;
-  max-width: calc(100% - 2rem);
+  max-width: 100%;
 }
 
 .all-width {
   width: 1203px;
-  max-width: calc(100% - 2rem);
+  max-width: calc(100% - 8rem);
 }
 
 .start-banner {
