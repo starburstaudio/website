@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <html data-theme="dark">
+  <html data-theme="light">
     <BrowserRouter>
       <App />
     </BrowserRouter>
