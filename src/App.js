@@ -2,6 +2,7 @@ import './App.css';
 import HeaderView from './components/HeaderView';
 import { FiChevronRight, FiPlusCircle } from "react-icons/fi";
 import { IconContext } from "react-icons";
+import FooterView from './components/FooterView';
 
 function App() {
   return (
@@ -164,6 +165,7 @@ function App() {
           </div>
         </div>
       </main>
+      <FooterView/>
     </div>
   );
 }
