@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FiChevronRight, FiPlusCircle } from "react-icons/fi";
+import { FiChevronRight, FiMoreHorizontal, FiPlusCircle } from "react-icons/fi";
 import { IconContext } from "react-icons";
 
 class HomePage extends React.Component {
@@ -41,13 +41,12 @@ class HomePage extends React.Component {
                     </div>
                     <div className='w-full flex items-center flex-col'>
                         <div className='all-width mt-16'>
-                            <h2 className='text-4xl mb-4'>Top Sample Packs</h2>
-                            <p className='content-width mb-2'>
-                            With over 450 individual samples, this huge sample pack has
-                            something for all flavors of lo-fi - From thumping, driven kick
-                            drums to meticulously textured percussion and synth loops with
-                            that signature vintage warmth. Embrace the past sound and get
-                            your hands on this sample pack today!
+                            <h2 className='text-4xl mb-4'>Sample Packs</h2>
+                            <p className='content-width mb-2 text-md'>
+                                Sample Packs from Starburst Audio offer the perfect combination of sounds,
+                                loops, and samples to take your music production to the next level. Across many
+                                different genres, these sample packs are designed to provide you with the samples
+                                you need to create awesome music quickly and easily.
                             </p>
                             <IconContext.Provider value={{ size: "2em" }}>
                             <div
@@ -147,7 +146,7 @@ class HomePage extends React.Component {
                                     <div className="card-body flex flex-col justify-center">
                                     <div>
                                         <h2 className='text-4xl text-center pb-4'>
-                                        Want some more?
+                                        Want more?
                                         </h2>
                                         <p className="pb-4 text-md">
                                         There's a lot more where that came from. We've got a
@@ -158,6 +157,78 @@ class HomePage extends React.Component {
                                     </div>
                                     </div>
                                 </div>
+                                </div>
+                            </div>
+                            </IconContext.Provider>
+                        </div>
+                    </div>
+                    <div className='w-full flex items-center flex-col'>
+                        <div className='all-width mt-16'>
+                            <h2 className='text-4xl mb-4'>Blog</h2>
+                            <p className='content-width'>
+                                Whether you're a beginner, or you're already experienced with music production,
+                                you'll definitely get something out of our blog. It's where we share music
+                                production, sound design, mixing and mastering tips.
+                            </p>
+                        </div>
+                        <div className="all-width flex space-x-6 flex-row my-8">
+                            <IconContext.Provider value={{ size: "2em" }}>
+                            <div className="card bg-base-100 indicator grow flex-1 card-bordered">
+                                <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
+                                <div className="card-body p-6">
+                                    <h2 className="card-title">
+                                        Should you put reverb on the bass?
+                                    </h2>
+                                    <p className="pb-4 text-md">
+                                        As a rule of thumb, you shouldn't use reverb on bass tracks.
+                                        However, there are some exceptions to this rule that you
+                                        should always be aware of.
+                                    </p>
+                                    <div className="card-actions justify-end items-center">
+                                    <div className="btn btn-primary">
+                                        <span className="text-base">Read More</span>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </IconContext.Provider>
+                            <IconContext.Provider value={{ size: "2em" }}>
+                            <div className="card bg-base-100 indicator flex-1 card-bordered">
+                                <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
+                                <div className="card-body p-6">
+                                    <h2 className="card-title">
+                                        How to make a synth sound "alive"
+                                    </h2>
+                                    <p className="pb-4 text-md">
+                                        Software synths often sound very cold, because they are
+                                        digital, and not analog. But with a few tricks, you can
+                                        bring that analog sound to your synths.
+                                    </p>
+                                    <div className="card-actions justify-end items-center">
+                                    <div className="btn btn-primary">
+                                        <span className="text-base">Read More</span>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </IconContext.Provider>
+                            <IconContext.Provider value={{ size: "2em" }}>
+                            <div className="card bg-base-100 indicator flex-1 card-bordered">
+                                <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
+                                <div className="card-body p-6">
+                                    <h2 className="card-title">
+                                        5 Ways to add texture to anything!
+                                    </h2>
+                                    <p className="pb-4 text-md">
+                                        "Noisy" basses, abberated percussion, and some crunchy
+                                        layers can give a lot of edge to your music. Here
+                                        are five methods for making things sound coarse and texturized.
+                                    </p>
+                                    <div className="card-actions justify-end items-center">
+                                    <div className="btn btn-primary">
+                                        <span className="text-base">Read More</span>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                             </IconContext.Provider>

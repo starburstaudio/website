@@ -7,9 +7,9 @@ class AboutPage extends React.Component {
     render() {
         return (
             <div>
-                 <main className='flex-col justify-center '>
-                    <h2>Test</h2>
-                 </main>
+                <main className='flex-col justify-center '>
+                    <h1>Music production tools, crafted with passion.</h1>
+                </main>
             </div>
         );
     }
