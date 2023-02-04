@@ -144,7 +144,7 @@ class HomePage extends React.Component {
                                     <div className="card w-72 h-48 bg-base-200 card-bordered indicator">
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                         </IconContext.Provider>
                         <div className="flex flex-col items-center -mt-16">
                             <a className='btn shadow-xl btn-accent btn-lg text-lg mr-2 z-10' href='/'>
@@ -156,7 +156,7 @@ class HomePage extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className='w-full flex items-center flex-col'>
+                <div className='w-full flex items-center flex-col mb-16'>
                     <div className='all-width mt-16'>
                         <h2 className='text-4xl mb-4'>Blog</h2>
                         <p className='content-width'>
@@ -185,8 +185,6 @@ class HomePage extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        </IconContext.Provider>
-                        <IconContext.Provider value={{ size: "2em" }}>
                         <div className="card bg-base-100 indicator flex-1 card-bordered">
                             <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
                             <div className="card-body p-6">
@@ -205,8 +203,6 @@ class HomePage extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        </IconContext.Provider>
-                        <IconContext.Provider value={{ size: "2em" }}>
                         <div className="card bg-base-100 indicator flex-1 card-bordered">
                             <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
                             <div className="card-body p-6">
@@ -226,6 +222,26 @@ class HomePage extends React.Component {
                             </div>
                         </div>
                         </IconContext.Provider>
+                    </div>
+                    <div className="fade-btm mb-8 all-width">
+                        <div className="w-full flex space-x-6 flex-row">
+                            <IconContext.Provider value={{ size: "2em" }}>
+                                <div className="card indicator h-48 grow flex-1 bg-base-200">
+                                </div>
+                                <div className="card indicator h-48 flex-1 bg-base-200">
+                                </div>
+                                <div className="card indicator h-48 flex-1 bg-base-200">
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center -mt-16">
+                        <a className='btn shadow-xl btn-accent btn-lg text-lg mr-2 z-10' href='/'>
+                            <span>Show all</span>
+                            <IconContext.Provider value={{ size: "1.5em" }}>
+                            <FiChevronRight className='ml-2'/>
+                            </IconContext.Provider>
+                        </a>
                     </div>
                 </div>
             </main>
