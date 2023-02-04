@@ -32,6 +32,25 @@ body {
   width: 100vw;
 }
 
+.fade-btm {
+  height: 4rem;
+  overflow: hidden;
+}
+
+.fade-btm::after {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    #fff
+  );
+  content: "";
+  width: 100%;
+  height: 4rem;
+  display: block;
+  top: -12rem;
+  position: relative;
+}
+
 .content-width {
   width: 578px;
   max-width: 100%;
