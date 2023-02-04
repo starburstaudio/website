@@ -36,7 +36,7 @@ class HeaderView extends React.Component {
                         </div></label>
                         <ul tabIndex={0} className="dropdown-content menu menu-compact px-6 mt-3 shadow-2xl bg-base-200 rounded-box w-80 border-base-300 border">
                             <h2 className="pt-6 text-xl">Shopping Cart</h2>
-                            <div className="flex-row flex border-b border-base-200 py-3 items-center">
+                            <div className="flex-row flex border-b border-base-300 py-3 items-center">
                                 <img className="h-16 w-16 p-0 rounded-lg" src="https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174"/>
                                 <div className="grow ml-3 cursor-default">
                                     <h3 className="text-base">The Lofi Sample Pack</h3>

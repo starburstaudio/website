@@ -23,18 +23,34 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-[data-theme="light"] .header {
-  background-color: rgba(246,246,246,0.8);
-  box-shadow: 0 1px 0 0 rgba(0,0,0,0.16);
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: rgba(29, 29, 31, 0.72);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.24);
+  }
+  .fade-btm::after {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      #1d1d1f
+    );
+  }
 }
-
-[data-theme="light"] .dropdown-content {
-  background-color: #fff;
-}
-
-[data-theme="dark"] .header {
-  background-color: rgba(29, 29, 31, 0.72);
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.24);
+@media (prefers-color-scheme: light) {
+  .header {
+    background-color: rgba(246,246,246,0.8);
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.16);
+  }
+  .dropdown-content {
+    background-color: #fff;
+  }
+  .fade-btm::after {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      #fff
+    );
+  }
 }
 
 .btn-primary {
@@ -49,22 +65,6 @@ body {
 .fade-btm {
   height: 4rem;
   overflow: hidden;
-}
-
-[data-theme="light"] .fade-btm::after {
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    #fff
-  );
-}
-
-[data-theme="dark"] .fade-btm::after {
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    #1d1d1f
-  );
 }
 
 .fade-btm::after {

@@ -34,6 +34,7 @@ module.exports = {
         },
       },
     ],
+    darkTheme: 'dark',
   },
   theme: {
     extend:
