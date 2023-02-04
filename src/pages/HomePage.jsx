@@ -31,7 +31,7 @@ class HomePage extends React.Component {
                             </div>
                         </div>
                         </div>
-                        <div className="card w-[24rem] bg-base-100 shadow-xl image-full bannercover">
+                        <div className="card w-[24rem] bg-base-100 shadow-xl image-full bannercover z-0">
                         <figure><img
                             src="https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174"
                             alt="Cover image of the Lofi Sample Pack"
