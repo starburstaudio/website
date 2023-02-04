@@ -8,7 +8,7 @@ class HomePage extends React.Component {
         return (
             <main className='flex-col justify-center '>
                 <div className='w-full flex justify-center start-banner pt-16' style={{"background-image": "url(https://images.pexels.com/photos/7130555/pexels-photo-7130555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}}>
-                <div className='all-width py-24 flex items-center justify-between'>
+                <div className='all-width py-24 flex items-center justify-between bg-transparent' data-theme="light">
                     <div className='h-min content-width'>
                     <h1 className='text-5xl z-5 pb-4 w-full'>The last Lo-Fi samples you'll ever need</h1>
                     <div className='content-width'>
