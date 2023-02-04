@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 class HeaderView extends React.Component {
     render() {
         return (
-            <header className='flex justify-center fixed top-0 bg-base-200 header z-10'>
+            <header className='flex justify-center fixed top-0 bg-base-200 header z-20'>
                 <div className="navbar px-0 all-width">
                     <div className="flex-1">
                     <a className="btn normal-case text-2xl" href="/">SBA</a>
