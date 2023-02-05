@@ -1,7 +1,5 @@
 import React from "react";
 
-import './ProductPage.css';
-
 import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { FaRegFileAudio } from "react-icons/fa";
@@ -60,7 +58,7 @@ class PoductsPage extends React.Component {
                             productAsset {
                                 preview
                             }
-                            price {
+                            priceWithTax {
                                 __typename
                                 ... on SinglePrice {
                                     value
@@ -157,7 +155,7 @@ class PoductsPage extends React.Component {
                                     <div className="card-actions justify-end items-center">
                                         <Link className="btn btn-ghost text-md btn-sm" to={"/p/" + r.slug}>More Info</Link>
                                         <div className="btn btn-primary">
-                                            <span className="mr-2 text-base">{this.formatPrice(r.price)}</span>
+                                            <span className="mr-2 text-base">{this.formatPrice(r.priceWithTax)}</span>
                                             <FiPlusCircle/>
                                         </div>
                                     </div>
