@@ -23,6 +23,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
+
 @media (prefers-color-scheme: dark) {
   .header {
     background-color: rgba(29, 29, 31, 0.72);

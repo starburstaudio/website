@@ -73,7 +73,6 @@ class PoductsPage extends React.Component {
             `,
         })
         .then((result) => {
-            console.log(result);
             this.setState({results: result.data.search.items});
         });
     }
@@ -90,7 +89,8 @@ class PoductsPage extends React.Component {
                     <p className="mb-8">Showing 23 out of 109 total products.</p>
                 </div>
                 <div className="all-width flex space-x-4 items-stretch">
-                    <div className="w-48 space-y-2 mr-4 shrink-0"><IconContext.Provider value={{ size: "1.5em" }}>
+                    <div className="w-48 space-y-2 mr-4 shrink-0">
+                    <IconContext.Provider value={{ size: "1.5em" }}>
                         <h3 className="text-xl">Category</h3>
                         <div className="w-full">
                             <div className="form-control">
@@ -135,7 +135,8 @@ class PoductsPage extends React.Component {
                                 </label>
                             </div>
                         </div>
-                    </IconContext.Provider></div>
+                    </IconContext.Provider>
+                    </div>
                     <div className="flex-row flex flex-wrap justify-between gap-8 pb-8"><IconContext.Provider value={{ size: "2em" }}>
                         {this.state.results.map(r => (
                             <div key={r.productId} className="card w-80 bg-base-100 card-bordered indicator">
@@ -148,7 +149,7 @@ class PoductsPage extends React.Component {
                                     </h2>
                                     <div dangerouslySetInnerHTML={{__html: r.description}} className="pb-4 text-md"/>
                                     <div className="card-actions justify-end items-center">
-                                        <Link className="btn btn-ghost text-md btn-sm" to={"/product/" + r.slug}>More Info</Link>
+                                        <Link className="btn btn-ghost text-md btn-sm" to={"/p/" + r.slug}>More Info</Link>
                                         <div className="btn btn-primary">
                                             <span className="mr-2 text-base">{this.formatPrice(r.price)}</span>
                                             <FiPlusCircle/>
