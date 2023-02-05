@@ -1,5 +1,7 @@
 import React from "react";
 
+import './ProductPage.css';
+
 import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { FaRegFileAudio } from "react-icons/fa";
