@@ -3,11 +3,85 @@ import React from "react";
 import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { FaRegFileAudio } from "react-icons/fa";
-import { HiOutlineGift } from "react-icons/hi"
+import { HiOutlineGift } from "react-icons/hi";
+
+import { storeClient } from "../storeClient";
 
 import gql from 'graphql-tag';
+import { Link } from "react-router-dom";
+
 
 class PoductsPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            results: []
+        };
+    }
+
+    formatPrice(p) {
+        let v = 0;
+        if(p.__typename == "SinglePrice") v = p.value;
+        if(p.__typename == "PriceRange") v = p.min;
+
+        if(p.value != 0) {
+            return (parseFloat(p.value) / 100.0) + " $";
+        } else {
+            return "FREE";
+        }
+    }
+
+    formatBadge(b) {
+        switch (Number(b)) {
+            case 41:
+                return <div className="badge badge-secondary">FREE</div>;
+            case 42:
+                return <div className="badge badge-accent">NEW</div>;
+            default:
+                return;
+        }
+    }
+
+    performSearch() {
+        storeClient.query({
+            query: gql`
+                query SearchProducts {
+                    search(input: {}) {
+                        totalItems
+                        items {
+                            productId
+                            productName
+                            slug
+                            description
+                            currencyCode
+                            facetValueIds
+                            productAsset {
+                                preview
+                            }
+                            price {
+                                __typename
+                                ... on SinglePrice {
+                                    value
+                                }
+                                ... on PriceRange {
+                                    min
+                                }
+                            }
+                        }
+                    }
+                }
+            `,
+        })
+        .then((result) => {
+            console.log(result);
+            this.setState({results: result.data.search.items});
+        });
+    }
+
+    componentDidMount() {
+        this.performSearch();
+    }
+
     render() {
         return (
            <main className="flex flex-col items-center">
@@ -63,86 +137,26 @@ class PoductsPage extends React.Component {
                         </div>
                     </IconContext.Provider></div>
                     <div className="flex-row flex flex-wrap justify-between gap-8 pb-8"><IconContext.Provider value={{ size: "2em" }}>
-                        <div className="card w-72 bg-base-100 card-bordered indicator">
-                            <figure><img src="https://i.kym-cdn.com/photos/images/newsfeed/002/450/520/b00.jpg" /></figure>
-                            <div className="card-body p-6">
-                                <h2 className="card-title">
-                                    Quieres Spiderr
-                                    <div className="badge badge">FREE</div>
-                                </h2>
-                                <p className="pb-4 text-md">
-                                    Baby, can't you see im messed uppp D-30 boys really next
-                                    up in this life I'm a extra king nothyng
-                                </p>
-                                <div className="card-actions justify-end items-center">
-                                    <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                                    <div className="btn btn-primary">
-                                        <span className="mr-2 text-base">FREE</span>
-                                        <FiPlusCircle/>
+                        {this.state.results.map(r => (
+                            <div key={r.productId} className="card w-80 bg-base-100 card-bordered indicator">
+                                <figure><img src={r.productAsset.preview} /></figure>
+                                <div className="card-body p-6">
+                                    <h2 className="card-title">
+                                        {r.productName}
+
+                                        {this.formatBadge(r.facetValueIds[0])} 
+                                    </h2>
+                                    <div dangerouslySetInnerHTML={{__html: r.description}} className="pb-4 text-md"/>
+                                    <div className="card-actions justify-end items-center">
+                                        <Link className="btn btn-ghost text-md btn-sm" to={"/product/" + r.slug}>More Info</Link>
+                                        <div className="btn btn-primary">
+                                            <span className="mr-2 text-base">{this.formatPrice(r.price)}</span>
+                                            <FiPlusCircle/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="card w-72 bg-base-100 card-bordered indicator">
-                            <figure><img src="https://i.kym-cdn.com/photos/images/newsfeed/002/450/520/b00.jpg" /></figure>
-                            <div className="card-body p-6">
-                                <h2 className="card-title">
-                                    Quieres Spiderr
-                                    <div className="badge badge">FREE</div>
-                                </h2>
-                                <p className="pb-4 text-md">
-                                    Baby, can't you see im messed uppp D-30 boys really next
-                                    up in this life I'm a extra king nothyng
-                                </p>
-                                <div className="card-actions justify-end items-center">
-                                    <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                                    <div className="btn btn-primary">
-                                        <span className="mr-2 text-base">FREE</span>
-                                        <FiPlusCircle/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card w-72 bg-base-100 card-bordered indicator">
-                            <figure><img src="https://i.kym-cdn.com/photos/images/newsfeed/002/450/520/b00.jpg" /></figure>
-                            <div className="card-body p-6">
-                                <h2 className="card-title">
-                                    Quieres Spiderr
-                                    <div className="badge badge">FREE</div>
-                                </h2>
-                                <p className="pb-4 text-md">
-                                    Baby, can't you see im messed uppp D-30 boys really next
-                                    up in this life I'm a extra king nothyng
-                                </p>
-                                <div className="card-actions justify-end items-center">
-                                    <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                                    <div className="btn btn-primary">
-                                        <span className="mr-2 text-base">FREE</span>
-                                        <FiPlusCircle/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card w-72 bg-base-100 card-bordered indicator">
-                            <figure><img src="https://i.kym-cdn.com/photos/images/newsfeed/002/450/520/b00.jpg" /></figure>
-                            <div className="card-body p-6">
-                                <h2 className="card-title">
-                                    Quieres Spiderr
-                                    <div className="badge badge">FREE</div>
-                                </h2>
-                                <p className="pb-4 text-md">
-                                    Baby, can't you see im messed uppp D-30 boys really next
-                                    up in this life I'm a extra king nothyng
-                                </p>
-                                <div className="card-actions justify-end items-center">
-                                    <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                                    <div className="btn btn-primary">
-                                        <span className="mr-2 text-base">FREE</span>
-                                        <FiPlusCircle/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </IconContext.Provider></div>
                 </div>
            </main>

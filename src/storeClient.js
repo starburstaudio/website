@@ -46,4 +46,4 @@ const storeClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export storeClient;
+export { storeClient };
