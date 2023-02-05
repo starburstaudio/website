@@ -49,7 +49,7 @@ class HomePage extends React.Component {
                 </div>
                 <div className='w-full flex items-center flex-col'>
                     <div className='all-width mt-16'>
-                        <h2 className='text-4xl mb-4'>Top Sample Packs</h2>
+                        <h2 className='text-4xl mb-4'>Featured Sample Packs</h2>
                         <p className='content-width mb-2 text-md'>
                             Sample Packs from Starburst Audio offer the perfect combination of sounds,
                             loops, and samples to take your music production to the next level. Across many
