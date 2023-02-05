@@ -18,9 +18,9 @@ class FooterView extends React.Component {
                 <div>
                 <span className="footer-title">Information</span> 
                   <Link className="link link-hover" to="/about">About us</Link> 
-                  <a className="link link-hover">Blog</a> 
+                  <a className="link link-hover">Help Section</a> 
                   <a className="link link-hover">Contact</a> 
-                  <a className="link link-hover">Frequently Asked Questions</a> 
+                  <a>Feedback</a>
                 </div> 
                 <div>
                 <span className="footer-title">Legal</span> 
