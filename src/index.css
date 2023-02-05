@@ -45,6 +45,17 @@ main {
       #1d1d1f
     );
   }
+  .blur-3xl.opacity-60.brightness-150.saturate-150 {
+    --tw-brightness: brightness(1);
+    --tw-blur: blur(48px);
+    opacity: .4;
+  }
+  .shadow-primary.shadow-2xl {
+    --tw-shadow-colored: 0 18px 48px -18px var(--tw-shadow-color);
+  }
+  .shadow-accent.shadow-2xl {
+    --tw-shadow-colored: 0 12px 48px -16px var(--tw-shadow-color);
+  }
 }
 @media (prefers-color-scheme: light) {
   .header {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { FiChevronRight, FiMoreHorizontal, FiPlusCircle } from "react-icons/fi";
 import { IconContext } from "react-icons";
@@ -20,21 +21,29 @@ class HomePage extends React.Component {
                         your hands on this sample pack today!
                         </p>
                         <div>
-                        <a className='btn shadow-xl btn-accent btn-lg text-lg mr-2' href='/'>
+                        <Link className='btn shadow-2xl shadow-accent btn-accent btn-lg text-lg mr-2' to="/p/lo-fi-memories">
                             <span>Check it out!</span>
                             <IconContext.Provider value={{ size: "1.5em" }}>
                             <FiChevronRight className='ml-2'/>
                             </IconContext.Provider>
-                        </a>
-                        <a className='btn btn-ghost btn-lg' href='/'>All Sample Packs </a>
+                        </Link>
+                        <Link className='btn btn-ghost btn-lg' to='/products'>All Sample Packs </Link>
                         </div>
                     </div>
                     </div>
-                    <div className="card w-[24rem] bg-base-100 shadow-xl image-full bannercover z-0">
-                    <figure><img
-                        src="https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174"
-                        alt="Cover image of the Lofi Sample Pack"
-                    /></figure>
+                    <div className="relative">
+                      <div className="card w-[24rem] bg-base-100 shadow-xl image-full bannercover z-0 saturate-150 brightness-150 opacity-100 blur-3xl absolute">
+                        <figure><img
+                            src="http://localhost:3001/assets/source/4b/cover.jpg"
+                            alt="Cover image of the Lofi Sample Pack"
+                        /></figure>
+                      </div>
+                      <div className="card w-[24rem] bg-base-100 shadow-xl image-full bannercover z-0">
+                        <figure><img
+                            src="http://localhost:3001/assets/source/4b/cover.jpg"
+                            alt="Cover image of the Lofi Sample Pack"
+                        /></figure>
+                      </div>
                     </div>
                 </div>
                 </div>
@@ -96,7 +105,7 @@ class HomePage extends React.Component {
                                     <div className="card-body p-6">
                                         <h2 className="card-title">
                                             Quieres Spiderr
-                                            <div className="badge badge">FREE</div>
+                                            <div className="badge">FREE</div>
                                         </h2>
                                         <p className="pb-4 text-md">
                                             Baby, can't you see im messed uppp D-30 boys really next
@@ -147,7 +156,7 @@ class HomePage extends React.Component {
                             </div>
                         </IconContext.Provider>
                         <div className="flex flex-col items-center -mt-16">
-                            <a className='btn shadow-xl btn-accent btn-lg text-lg mr-2 z-10' href='/'>
+                            <a className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' href='/'>
                                 <span>Show all</span>
                                 <IconContext.Provider value={{ size: "1.5em" }}>
                                 <FiChevronRight className='ml-2'/>
@@ -236,7 +245,7 @@ class HomePage extends React.Component {
                         </div>
                     </div>
                     <div className="flex flex-col items-center -mt-16">
-                        <a className='btn shadow-xl btn-accent btn-lg text-lg mr-2 z-10' href='/'>
+                        <a className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' href='/'>
                             <span>Show all</span>
                             <IconContext.Provider value={{ size: "1.5em" }}>
                             <FiChevronRight className='ml-2'/>
