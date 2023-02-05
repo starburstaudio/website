@@ -149,7 +149,11 @@ class PoductsPage extends React.Component {
 
                                         {this.formatBadge(r.facetValueIds[0])} 
                                     </h2>
-                                    <div dangerouslySetInnerHTML={{__html: r.description}} className="pb-4 text-md"/>
+                                    <div
+                                      dangerouslySetInnerHTML={{__html: r.description}}
+                                      className="pb-4 text-md max-h-36 overflow-hidden"
+                                      style={{maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%)"}}
+                                    />
                                     <div className="card-actions justify-end items-center">
                                         <Link className="btn btn-ghost text-md btn-sm" to={"/p/" + r.slug}>More Info</Link>
                                         <div className="btn btn-primary">
