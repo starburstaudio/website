@@ -10,7 +10,7 @@ import { storeClient } from "../storeClient";
 import gql from 'graphql-tag';
 import { Link } from "react-router-dom";
 import CheckOptions from "../components/CheckOptions";
-
+import CheckSelect from "../components/CheckSelect";
 
 class PoductsPage extends React.Component {
     constructor(props) {
@@ -121,25 +121,19 @@ class PoductsPage extends React.Component {
                         <div className="divider"/>
                         <h3 className="text-xl">Price</h3>
                         <div className="w-full">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Price limit</span>
-                                </label>
+                            <div className="form-control mb-2">
                                 <label className="input-group input-group-sm">
                                     <span>Up to</span>
                                     <input type="text" placeholder="0.00 +" className="input input-sm input-bordered w-16 flex-grow" />
                                     <span>$</span>
                                 </label>
                             </div>
-                            <div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text flex gap-2">
-                                        <HiOutlineGift/>
-                                        Show only free
-                                    </span> 
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
-                            </div>
+                            <CheckSelect>
+                              <span className="flex gap-2">
+                                <HiOutlineGift/>
+                                Show only free
+                              </span> 
+                            </CheckSelect>
                         </div>
                     </IconContext.Provider>
                     </div>

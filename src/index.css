@@ -146,6 +146,10 @@ code {
   background-color: var(--b2);
 }
 
+.check-select:active {
+  background-color: var(--b3);
+}
+
 .masked-overflow-y {
   /* If content exceeds height of container, overflow! */
   overflow-y: auto;
