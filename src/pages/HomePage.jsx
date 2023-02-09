@@ -50,7 +50,7 @@ class HomePage extends React.Component {
                 <div className='w-full flex items-center flex-col'>
                     <div className='all-width mt-16'>
                         <h2 className='text-4xl mb-4'>Featured Sample Packs</h2>
-                        <p className='content-width mb-2 text-md'>
+                        <p className='content-width mb-2 text-md opacity-75'>
                             Sample Packs from Starburst Audio offer the perfect combination of sounds,
                             loops, and samples to take your music production to the next level. Across many
                             different genres, these sample packs are designed to provide you with the samples
@@ -67,7 +67,7 @@ class HomePage extends React.Component {
                                         Lo-Fi Memories
                                         <div className="badge badge-accent">NEW</div>
                                         </h2>
-                                        <p className="pb-4 text-md">
+                                        <p className="pb-4 text-md opacity-75">
                                         With over 450 individual samples, this huge sample pack has
                                         something for all flavors of lo-fi.
                                         </p>
@@ -87,7 +87,7 @@ class HomePage extends React.Component {
                                             Icedancerr
                                             <div className="badge badge-secondary">50% OFF</div>
                                         </h2>
-                                        <p className="pb-4 text-md">
+                                        <p className="pb-4 text-md opacity-75">
                                             The cover was created by Bladee himself. It features
                                             castles, a common theme in DG art and euros.
                                         </p>
@@ -107,7 +107,7 @@ class HomePage extends React.Component {
                                             Quieres Spiderr
                                             <div className="badge">FREE</div>
                                         </h2>
-                                        <p className="pb-4 text-md">
+                                        <p className="pb-4 text-md opacity-75">
                                             Baby, can't you see im messed uppp D-30 boys really next
                                             up in this life I'm a extra king nothyng
                                         </p>
@@ -126,7 +126,7 @@ class HomePage extends React.Component {
                                         <h2 className="card-title">
                                             Nike Just Do It
                                         </h2>
-                                        <p className="pb-4 text-md">
+                                        <p className="pb-4 text-md opacity-75">
                                             With over 450 individual samples, this huge sample pack has
                                             something for all flavors of lo-fi.
                                         </p>
@@ -159,7 +159,7 @@ class HomePage extends React.Component {
                             <a className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' href='/'>
                                 <span>Show all</span>
                                 <IconContext.Provider value={{ size: "1.5em" }}>
-                                <FiChevronRight className='ml-2'/>
+                                  <FiChevronRight className='ml-2'/>
                                 </IconContext.Provider>
                             </a>
                         </div>
@@ -168,7 +168,7 @@ class HomePage extends React.Component {
                 <div className='w-full flex items-center flex-col mb-16'>
                     <div className='all-width mt-16'>
                         <h2 className='text-4xl mb-4'>Blog</h2>
-                        <p className='content-width'>
+                        <p className='content-width opacity-75'>
                             Whether you're a beginner, or you're already experienced with music production,
                             you'll definitely get something out of our blog. It's where we share music
                             production, sound design, mixing and mastering tips.
@@ -182,7 +182,7 @@ class HomePage extends React.Component {
                                 <h2 className="card-title">
                                     Should you put reverb on the bass?
                                 </h2>
-                                <p className="pb-4 text-md">
+                                <p className="pb-4 text-md opacity-75">
                                     As a rule of thumb, you shouldn't use reverb on bass tracks.
                                     However, there are some exceptions to this rule that you
                                     should always be aware of.
@@ -200,7 +200,7 @@ class HomePage extends React.Component {
                                 <h2 className="card-title">
                                     How to make a synth sound "alive"
                                 </h2>
-                                <p className="pb-4 text-md">
+                                <p className="pb-4 text-md opacity-75">
                                     Software synths often sound very cold, because they are
                                     digital, and not analog. But with a few tricks, you can
                                     bring that analog sound to your synths.
@@ -218,7 +218,7 @@ class HomePage extends React.Component {
                                 <h2 className="card-title">
                                     5 Ways to add texture to anything!
                                 </h2>
-                                <p className="pb-4 text-md">
+                                <p className="pb-4 text-md opacity-75">
                                     "Noisy" basses, abberated percussion, and some crunchy
                                     layers can give a lot of edge to your music. Here
                                     are five methods for making things sound coarse and texturized.

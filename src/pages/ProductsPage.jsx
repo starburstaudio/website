@@ -4,6 +4,7 @@ import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { FaRegFileAudio, FaRegFileCode } from "react-icons/fa";
 import { HiOutlineGift } from "react-icons/hi";
+import { TbWaveSine } from "react-icons/tb"
 
 import { storeClient } from "../storeClient";
 
@@ -87,31 +88,31 @@ class PoductsPage extends React.Component {
            <main className="flex flex-col items-center">
                 <div className="all-width pt-24">
                     <h1 className="text-4xl my-6">Sample Packs</h1>
-                    <p className="mb-8">Showing 23 out of 109 total products.</p>
+                    <p className="mb-8 opacity-75">Showing 23 out of 109 total products.</p>
                 </div>
-                <div className="all-width flex space-x-4 items-stretch">
+                <div className="all-width flex space-x-4 items-start">
                     <div className="w-64 space-y-2 mr-4 mb-8 p-4 shrink-0 rounded-3xl card-bordered">
                     <IconContext.Provider value={{ size: "1.5em" }}>
                         <h3 className="text-xl">Category</h3>
                         <div className="w-full space-y-2">
                             <CheckOptions options={[
                                 {
-                                    jsx: <div className="space-x-2">
-                                            <FaRegFileAudio style={{display: "inline-block"}}/><span>Samples</span>
+                                    jsx: <div className="flex-row flex gap-2 items-center">
+                                            <TbWaveSine/><span>Samples</span>
                                         </div>,
                                     selected: false,
                                     value: "samples"
                                 },
                                 {
-                                    jsx: <div className="space-x-2">
-                                            <FaRegFileCode style={{display: "inline-block"}}/><span>Presets</span>
+                                    jsx: <div className="flex-row flex gap-2 items-center">
+                                            <FaRegFileAudio/><span>Presets</span>
                                         </div>,
                                     selected: false,
                                     value: "presets"
                                 },
                                 {
-                                    jsx: <div className="space-x-2">
-                                            <FiSettings style={{display: "inline-block"}}/><span>Plugins</span>
+                                    jsx: <div className="flex-row flex gap-2 items-center">
+                                            <FiSettings/><span>Plugins</span>
                                         </div>,
                                     selected: false,
                                     value: "plugins"
@@ -143,7 +144,7 @@ class PoductsPage extends React.Component {
                         display: "grid",
                         gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
                       }}
-                    ><IconContext.Provider value={{ size: "2em" }}>
+                    ><IconContext.Provider value={{ size: "1.5em" }}>
                     {this.state.results.map(r => (
                         <div key={r.productId} className="card w-auto bg-base-100 card-bordered indicator">
                             <figure><img src={r.productAsset.preview} /></figure>
@@ -153,15 +154,18 @@ class PoductsPage extends React.Component {
 
                                     {this.formatBadge(r.facetValueIds[0])} 
                                 </h2>
+                                <p
+                                  className="font-bold"
+                                >{this.formatPrice(r.priceWithTax)}</p>
                                 <div
                                   dangerouslySetInnerHTML={{__html: r.description}}
-                                  className="pb-4 text-md max-h-36 overflow-hidden"
+                                  className="pb-4 text-md max-h-36 overflow-hidden opacity-75"
                                   style={{maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%)"}}
                                 />
                                 <div className="card-actions justify-end items-center">
                                     <Link className="btn btn-ghost text-md btn-sm" to={"/p/" + r.slug}>More Info</Link>
-                                    <div className="btn btn-primary">
-                                        <span className="mr-2 text-base">{this.formatPrice(r.priceWithTax)}</span>
+                                    <div className="btn btn-primary btn-md">
+                                        <span className="mr-2">Buy</span>
                                         <FiPlusCircle/>
                                     </div>
                                 </div>
