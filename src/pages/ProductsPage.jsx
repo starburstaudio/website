@@ -2,13 +2,14 @@ import React from "react";
 
 import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { IconContext } from "react-icons";
-import { FaRegFileAudio } from "react-icons/fa";
+import { FaRegFileAudio, FaRegFileCode } from "react-icons/fa";
 import { HiOutlineGift } from "react-icons/hi";
 
 import { storeClient } from "../storeClient";
 
 import gql from 'graphql-tag';
 import { Link } from "react-router-dom";
+import CheckOptions from "../components/CheckOptions";
 
 
 class PoductsPage extends React.Component {
@@ -89,28 +90,33 @@ class PoductsPage extends React.Component {
                     <p className="mb-8">Showing 23 out of 109 total products.</p>
                 </div>
                 <div className="all-width flex space-x-4 items-stretch">
-                    <div className="w-48 space-y-2 mr-4 shrink-0">
+                    <div className="w-64 space-y-2 mr-4 mb-8 p-4 shrink-0 rounded-3xl card-bordered">
                     <IconContext.Provider value={{ size: "1.5em" }}>
                         <h3 className="text-xl">Category</h3>
-                        <div className="w-full">
-                            <div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text flex gap-2">
-                                        <FaRegFileAudio/>
-                                        Sample Packs
-                                    </span> 
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
-                            </div>
-                            <div className="form-control">
-                                <label className="label cursor-pointer">
-                                    <span className="label-text flex gap-2">
-                                        <FiSettings/>
-                                        Plugins
-                                    </span> 
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
-                            </div>
+                        <div className="w-full space-y-2">
+                            <CheckOptions options={[
+                                {
+                                    jsx: <div className="space-x-2">
+                                            <FaRegFileAudio style={{display: "inline-block"}}/><span>Samples</span>
+                                        </div>,
+                                    selected: false,
+                                    value: "samples"
+                                },
+                                {
+                                    jsx: <div className="space-x-2">
+                                            <FaRegFileCode style={{display: "inline-block"}}/><span>Presets</span>
+                                        </div>,
+                                    selected: false,
+                                    value: "presets"
+                                },
+                                {
+                                    jsx: <div className="space-x-2">
+                                            <FiSettings style={{display: "inline-block"}}/><span>Plugins</span>
+                                        </div>,
+                                    selected: false,
+                                    value: "plugins"
+                                },
+                            ]}/>
                         </div>
                         <div className="divider"/>
                         <h3 className="text-xl">Price</h3>
