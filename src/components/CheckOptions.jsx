@@ -4,15 +4,14 @@ class CheckOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            options: this.props.options,
-            value: "",
+            value: this.props.value,
         };
     }
 
     render() {
         return (
             <div className="space-y-2">
-                {this.state.options.map(r => (
+                {this.props.options.map(r => (
                     <div
                         key={r.value}
                         className={
@@ -21,10 +20,14 @@ class CheckOptions extends React.Component {
                         }
                         onClick={
                             ()=>{
-                                if(this.state.value == r.value)
-                                    this.setState({value: ""})
-                                else
-                                    this.setState({value: r.value})
+                                if(this.state.value == r.value) {
+                                    this.setState({value: ""});
+                                    this.props.onSelect("");
+                                } else {
+                                    this.setState({value: r.value});
+                                    this.props.onSelect(r.value);
+                                }
+                                
                             }
                         }
                     >

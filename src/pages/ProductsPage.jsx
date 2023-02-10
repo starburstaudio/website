@@ -1,5 +1,5 @@
 import React from "react";
-import {useParams} from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { FiPlusCircle, FiSettings } from "react-icons/fi";
@@ -25,6 +25,7 @@ class ProductsPage extends React.Component {
             results: [],
             allItemCount: 0,
             sectionTitle: "All Products",
+            section: this.props.params.section,
         };
         
         storeClient.query({
@@ -40,11 +41,11 @@ class ProductsPage extends React.Component {
             this.setState({allItemCount: r.data.search.totalItems});
         });
 
-        if(this.props.params.section != undefined) {
+        if(this.state.section != undefined) {
             storeClient.query({
                 query: gql`
                     query GetCollectionInfo {
-                        collection(slug: "${this.props.params.section}") {
+                        collection(slug: "${this.state.section}") {
                             name
                         }
                     }
@@ -84,7 +85,7 @@ class ProductsPage extends React.Component {
             query: gql`
                 query SearchProducts {
                     search(input: {
-                      ${(this.props.params.section != undefined ? `collectionSlug: "` + this.props.params.section + `" ` : "")}
+                      ${(this.state.section != undefined ? `collectionSlug: "` + this.state.section + `" ` : "")}
                     }) {
                         totalItems
                         items {
@@ -132,29 +133,53 @@ class ProductsPage extends React.Component {
                     <IconContext.Provider value={{ size: "1.5em" }}>
                         <h3 className="text-xl">Category</h3>
                         <div className="w-full space-y-2">
-                            <CheckOptions options={[
-                                {
-                                    jsx: <div className="flex-row flex gap-2 items-center">
-                                            <TbWaveSine/><span>Samples</span>
-                                        </div>,
-                                    selected: false,
-                                    value: "sample-packs"
-                                },
-                                {
-                                    jsx: <div className="flex-row flex gap-2 items-center">
-                                            <FaRegFileAudio/><span>Presets</span>
-                                        </div>,
-                                    selected: false,
-                                    value: "presets"
-                                },
-                                {
-                                    jsx: <div className="flex-row flex gap-2 items-center">
-                                            <FiSettings/><span>Plugins</span>
-                                        </div>,
-                                    selected: false,
-                                    value: "plugins"
-                                },
-                            ]}/>
+                            <CheckOptions
+                                value={this.state.section}
+                                options={[
+                                    {
+                                        jsx: <div className="flex-row flex gap-2 items-center">
+                                                <TbWaveSine/><span>Samples</span>
+                                            </div>,
+                                        value: "sample-packs"
+                                    },
+                                    {
+                                        jsx: <div className="flex-row flex gap-2 items-center">
+                                                <FaRegFileAudio/><span>Presets</span>
+                                            </div>,
+                                        value: "presets"
+                                    },
+                                    {
+                                        jsx: <div className="flex-row flex gap-2 items-center">
+                                                <FiSettings/><span>Plugins</span>
+                                            </div>,
+                                        value: "plugins"
+                                    },
+                                ]}
+                                onSelect={(o) => {
+                                    this.setState({ section: o });
+                                    if(o != "") {
+                                        storeClient.query({
+                                            query: gql`
+                                                query GetCollectionInfo {
+                                                    collection(slug: "${o}") {
+                                                        name
+                                                    }
+                                                }
+                                            `,
+                                        })
+                                        .then((result) => {
+                                            this.setState({ sectionTitle: result.data.collection.name },()=>{
+                                              this.performSearch();
+                                            });
+                                        });
+                                    } else {
+                                        this.setState({ sectionTitle: "All Products" },()=>{
+                                            this.performSearch();
+                                        });
+                                    }
+                                    window.history.replaceState(null, "", "/products/"+o)
+                                }}
+                            />
                         </div>
                         <div className="divider"/>
                         <h3 className="text-xl">Price</h3>
