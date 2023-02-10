@@ -17,8 +17,21 @@ class PoductsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: []
+            results: [],
+            allItemCount: 0,
         };
+        storeClient.query({
+            query: gql`
+                query SearchProducts {
+                    search(input: {}) {
+                        totalItems
+                    }
+                }
+            `,
+        })
+        .then((result) => {
+            this.setState({allItemCount: result});
+        });
     }
 
     formatPrice(p) {
@@ -88,7 +101,7 @@ class PoductsPage extends React.Component {
            <main className="flex flex-col items-center">
                 <div className="all-width pt-24">
                     <h1 className="text-4xl my-6">Sample Packs</h1>
-                    <p className="mb-8 opacity-75">Showing 23 out of 109 total products.</p>
+                    <p className="mb-8 opacity-75">Showing {[this.state.results.length]} out of {[this.state.results.length]} total products.</p>
                 </div>
                 <div className="all-width flex space-x-4 items-start">
                     <div className="w-64 space-y-2 mr-4 mb-8 p-4 shrink-0 rounded-3xl card-bordered">
