@@ -13,9 +13,9 @@ class HeaderView extends React.Component {
                     </div>
                     <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link to="/">Free Stuff</Link></li>
-                        <li><Link to="/">Plugins</Link></li>
-                        <li><Link to="/">Sample Packs</Link></li>
+                        <li><Link to="/products/all/free">Free Stuff</Link></li>
+                        <li><Link to="/products/plugins">Plugins</Link></li>
+                        <li><Link to="/products/sample-packs">Sample Packs</Link></li>
                         <li><Link to="/">Blog</Link></li>
                     </ul>
                     <div className="form-control">

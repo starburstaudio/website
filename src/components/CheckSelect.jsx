@@ -8,6 +8,12 @@ class CheckSelect extends React.Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if(this.props.isChecked != prevProps.isChecked) {
+            this.setState({checked: this.props.isChecked});
+        }
+    }
+
     render() {
         return (
         <div

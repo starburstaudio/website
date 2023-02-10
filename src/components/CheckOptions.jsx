@@ -7,6 +7,10 @@ class CheckOptions extends React.Component {
             value: this.props.value,
         };
     }
+    componentDidUpdate(prevProps) {
+        if(this.props.value != prevProps.value)
+        this.setState({value: this.props.value});
+    }
 
     render() {
         return (

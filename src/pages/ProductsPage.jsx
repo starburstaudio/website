@@ -42,20 +42,7 @@ class ProductsPage extends React.Component {
             this.setState({allItemCount: r.data.search.totalItems});
         });
 
-        if(this.state.section != undefined) {
-            storeClient.query({
-                query: gql`
-                    query GetCollectionInfo {
-                        collection(slug: "${this.state.section}") {
-                            name
-                        }
-                    }
-                `,
-            })
-            .then((result) => {
-              this.setState({ sectionTitle: result.data.collection.name })
-            });
-        }
+        this.setTitle();
     }
 
     formatPrice(p) {
@@ -158,6 +145,39 @@ class ProductsPage extends React.Component {
         window.history.replaceState(null, "", newURL);
     }
 
+    setTitle() {
+        if(this.state.section != undefined) {
+            storeClient.query({
+                query: gql`
+                    query GetCollectionInfo {
+                        collection(slug: "${this.state.section}") {
+                            name
+                        }
+                    }
+                `,
+            })
+            .then((result) => {
+                this.setState({ sectionTitle: result.data.collection.name });
+            });
+        } else {
+            this.setState({ sectionTitle: "All Products" })
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        let prevParams = JSON.stringify(prevProps.params);
+        let currParams = JSON.stringify(this.props.params);
+        if(prevParams != currParams) {
+            this.setState({
+                section: this.props.params.section == "all" ? undefined : this.props.params.section,
+                onlyFree: this.props.params.free == "free",
+            },()=>{
+                this.setTitle();
+                this.performSearch();
+            });
+        }
+    }
+
     render() {
         return (
            <main className="flex flex-col items-center">
@@ -209,7 +229,7 @@ class ProductsPage extends React.Component {
                                 </select>
                             </div>
                             <CheckSelect
-                                isChecked={this.props.params.free == "free"}
+                                isChecked={this.state.onlyFree}
                                 onChange={(s)=>{this.filterRedirect(null, s)}}
                             >
                                 <span className="flex gap-2">
