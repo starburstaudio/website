@@ -1,7 +1,8 @@
 import React from "react";
+import {useParams} from "react-router-dom";
 
-import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { IconContext } from "react-icons";
+import { FiPlusCircle, FiSettings } from "react-icons/fi";
 import { FaRegFileAudio, FaRegFileCode } from "react-icons/fa";
 import { HiOutlineGift } from "react-icons/hi";
 import { TbWaveSine } from "react-icons/tb"
@@ -13,25 +14,46 @@ import { Link } from "react-router-dom";
 import CheckOptions from "../components/CheckOptions";
 import CheckSelect from "../components/CheckSelect";
 
-class PoductsPage extends React.Component {
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+
+class ProductsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             results: [],
             allItemCount: 0,
+            sectionTitle: "All Products",
         };
+        
         storeClient.query({
             query: gql`
-                query SearchProducts {
+                query GetTotal {
                     search(input: {}) {
                         totalItems
                     }
                 }
             `,
         })
-        .then((result) => {
-            this.setState({allItemCount: result});
+        .then((r) => {
+            this.setState({allItemCount: r.data.search.totalItems});
         });
+
+        if(this.props.params.section != undefined) {
+            storeClient.query({
+                query: gql`
+                    query GetCollectionInfo {
+                        collection(slug: "${this.props.params.section}") {
+                            name
+                        }
+                    }
+                `,
+            })
+            .then((result) => {
+              this.setState({ sectionTitle: result.data.collection.name })
+            });
+        }
     }
 
     formatPrice(p) {
@@ -61,7 +83,9 @@ class PoductsPage extends React.Component {
         storeClient.query({
             query: gql`
                 query SearchProducts {
-                    search(input: {}) {
+                    search(input: {
+                      ${(this.props.params.section != undefined ? `collectionSlug: "` + this.props.params.section + `" ` : "")}
+                    }) {
                         totalItems
                         items {
                             productId
@@ -100,8 +124,8 @@ class PoductsPage extends React.Component {
         return (
            <main className="flex flex-col items-center">
                 <div className="all-width pt-24">
-                    <h1 className="text-4xl my-6">Sample Packs</h1>
-                    <p className="mb-8 opacity-75">Showing {[this.state.results.length]} out of {[this.state.results.length]} total products.</p>
+                    <h1 className="text-4xl my-6">{this.state.sectionTitle}</h1>
+                    <p className="mb-8 opacity-75">Showing {[this.state.results.length]} out of {[this.state.allItemCount]} total products.</p>
                 </div>
                 <div className="all-width flex space-x-4 items-start">
                     <div className="w-64 space-y-2 mr-4 mb-8 p-4 shrink-0 rounded-3xl card-bordered">
@@ -192,4 +216,4 @@ class PoductsPage extends React.Component {
     }
 }
 
-export default PoductsPage;
+export default withParams(ProductsPage);
