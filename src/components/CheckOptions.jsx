@@ -14,6 +14,7 @@ class CheckOptions extends React.Component {
             <div className="space-y-2">
                 {this.state.options.map(r => (
                     <div
+                        key={r.value}
                         className={
                             "form-control check-select " +
                             (this.state.value == r.value ? "bg-primary hover:bg-primary-focus " : "bg-base-100 hover:bg-base-200 ")

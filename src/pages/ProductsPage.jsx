@@ -138,7 +138,7 @@ class ProductsPage extends React.Component {
                                             <TbWaveSine/><span>Samples</span>
                                         </div>,
                                     selected: false,
-                                    value: "samples"
+                                    value: "sample-packs"
                                 },
                                 {
                                     jsx: <div className="flex-row flex gap-2 items-center">
