@@ -22,7 +22,7 @@ class App extends React.Component {
             <Route path="/" element={ <HomePage/> } />
             <Route path="/about" element={ <AboutPage/> } />
             <Route path="/products" element={ <ProductsPage/> } />
-            <Route path="/products/:section" element={ <ProductsPage/> } />
+            <Route path="/products/:section?/:free?" element={ <ProductsPage/> } />
             <Route path="/p/:product" element={ <ProductPage/> } />
           </Routes>
         <FooterView/>

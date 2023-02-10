@@ -25,7 +25,8 @@ class ProductsPage extends React.Component {
             results: [],
             allItemCount: 0,
             sectionTitle: "All Products",
-            section: this.props.params.section,
+            section: this.props.params.section == "all" ? undefined : this.props.params.section,
+            onlyFree: this.props.params.free == "free",
         };
         
         storeClient.query({
@@ -121,6 +122,42 @@ class ProductsPage extends React.Component {
         this.performSearch();
     }
 
+    filterRedirect(section, isFree) {
+        let newURL = "/products";
+        if(section !== null) {
+            this.setState({ section: section });
+            if(section != "") {
+                storeClient.query({
+                    query: gql`
+                        query GetCollectionInfo {
+                            collection(slug: "${section}") {
+                                name
+                            }
+                        }
+                    `,
+                })
+                .then((result) => {
+                    this.setState({ sectionTitle: result.data.collection.name },()=>{
+                      this.performSearch();
+                    });
+                });
+            } else {
+                this.setState({ sectionTitle: "All Products" },()=>{
+                    this.performSearch();
+                });
+            }
+            newURL += "/" + section;
+        } else {
+            let section = this.state.section;
+            newURL += section == "" ? "/all" : "/" + section;
+        }
+        if(isFree !== null) {
+            this.setState({onlyFree: isFree});
+            if(isFree) newURL += "/free";
+        } else if(this.state.onlyFree) newURL += "/free";
+        window.history.replaceState(null, "", newURL);
+    }
+
     render() {
         return (
            <main className="flex flex-col items-center">
@@ -158,30 +195,7 @@ class ProductsPage extends React.Component {
                                         value: "plugins"
                                     },
                                 ]}
-                                onSelect={(o) => {
-                                    this.setState({ section: o });
-                                    if(o != "") {
-                                        storeClient.query({
-                                            query: gql`
-                                                query GetCollectionInfo {
-                                                    collection(slug: "${o}") {
-                                                        name
-                                                    }
-                                                }
-                                            `,
-                                        })
-                                        .then((result) => {
-                                            this.setState({ sectionTitle: result.data.collection.name },()=>{
-                                              this.performSearch();
-                                            });
-                                        });
-                                    } else {
-                                        this.setState({ sectionTitle: "All Products" },()=>{
-                                            this.performSearch();
-                                        });
-                                    }
-                                    window.history.replaceState(null, "", "/products/"+o)
-                                }}
+                                onSelect={(o) => {this.filterRedirect(o, null)}}
                             />
                         </div>
                         <div className="divider"/>
@@ -194,21 +208,24 @@ class ProductsPage extends React.Component {
                                     <option>Price (High to low)</option>
                                 </select>
                             </div>
-                            <CheckSelect>
-                              <span className="flex gap-2">
-                                <HiOutlineGift/>
-                                Show only free
-                              </span> 
+                            <CheckSelect
+                                isChecked={this.props.params.free == "free"}
+                                onChange={(s)=>{this.filterRedirect(null, s)}}
+                            >
+                                <span className="flex gap-2">
+                                    <HiOutlineGift/>
+                                    Show only free
+                                </span> 
                             </CheckSelect>
                         </div>
                     </IconContext.Provider>
                     </div>
                     <div
-                      className="gap-8 pb-8"
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
-                      }}
+                        className="gap-8 pb-8"
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
+                        }}
                     ><IconContext.Provider value={{ size: "1.5em" }}>
                     {this.state.results.map(r => (
                         <div key={r.productId} className="card w-auto bg-base-100 card-bordered indicator">

@@ -17,7 +17,9 @@ class CheckSelect extends React.Component {
             }
             onClick={
                 ()=>{
-                    this.setState({checked: !this.state.checked})
+                    this.setState({checked: !this.state.checked},()=>{
+                        this.props.onChange(this.state.checked);
+                    });
                 }
             }
         >
