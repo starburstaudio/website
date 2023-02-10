@@ -25,7 +25,7 @@ class CheckSelect extends React.Component {
                 <span
                     className=
                     {
-                        "label-text flex gap-2 font-bold " + 
+                        "label-text flex gap-2 " + 
                         (this.state.checked ? "text-white" : "")
                     }
                 >

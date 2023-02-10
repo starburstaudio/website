@@ -85,7 +85,7 @@ class ProductsPage extends React.Component {
             query: gql`
                 query SearchProducts {
                     search(input: {
-                      ${(this.state.section != undefined ? `collectionSlug: "` + this.state.section + `" ` : "")}
+                        ${(this.state.section != undefined ? `collectionSlug: "` + this.state.section + `" ` : "")}
                     }) {
                         totalItems
                         items {
@@ -131,6 +131,9 @@ class ProductsPage extends React.Component {
                 <div className="all-width flex space-x-4 items-start">
                     <div className="w-64 space-y-2 mr-4 mb-8 p-4 shrink-0 rounded-3xl card-bordered">
                     <IconContext.Provider value={{ size: "1.5em" }}>
+                        <h3 className="text-xl">Search</h3>
+                        <input type="text" placeholder="Search..." className="input input-bordered w-full max-w-xs" />
+                        <div className="divider"/>
                         <h3 className="text-xl">Category</h3>
                         <div className="w-full space-y-2">
                             <CheckOptions
@@ -182,14 +185,14 @@ class ProductsPage extends React.Component {
                             />
                         </div>
                         <div className="divider"/>
-                        <h3 className="text-xl">Price</h3>
+                        <h3 className="text-xl">Sorting</h3>
                         <div className="w-full">
                             <div className="form-control mb-2">
-                                <label className="input-group input-group-sm">
-                                    <span>Up to</span>
-                                    <input type="text" placeholder="0.00 +" className="input input-sm input-bordered w-16 flex-grow" />
-                                    <span>$</span>
-                                </label>
+                                <select class="select select-bordered w-full max-w-xs">
+                                    <option selected>Default</option>
+                                    <option>Price (Low to high)</option>
+                                    <option>Price (High to low)</option>
+                                </select>
                             </div>
                             <CheckSelect>
                               <span className="flex gap-2">

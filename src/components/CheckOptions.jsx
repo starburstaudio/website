@@ -35,7 +35,7 @@ class CheckOptions extends React.Component {
                             <span
                                 className=
                                 {
-                                    "label-text flex gap-2 font-bold " + 
+                                    "label-text flex gap-2 " + 
                                     (this.state.value == r.value ? "text-white" : "")
                                 }
                             >
