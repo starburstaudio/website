@@ -28,6 +28,16 @@ main {
   flex-grow: 1;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --b2: 240 3.3333% 18%;
