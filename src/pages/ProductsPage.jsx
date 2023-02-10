@@ -74,6 +74,7 @@ class ProductsPage extends React.Component {
                 query SearchProducts {
                     search(input: {
                         ${(this.state.section != undefined ? `collectionSlug: "` + this.state.section + `" ` : "")}
+                        ${this.state.onlyFree ? "facetValueIds: [41]" : ""}
                     }) {
                         totalItems
                         items {
@@ -112,7 +113,6 @@ class ProductsPage extends React.Component {
     filterRedirect(section, isFree) {
         let newURL = "/products";
         if(section !== null) {
-            this.setState({ section: section });
             if(section != "") {
                 storeClient.query({
                     query: gql`
@@ -124,24 +124,27 @@ class ProductsPage extends React.Component {
                     `,
                 })
                 .then((result) => {
-                    this.setState({ sectionTitle: result.data.collection.name },()=>{
-                      this.performSearch();
-                    });
+                    this.setState({ sectionTitle: result.data.collection.name });
                 });
             } else {
-                this.setState({ sectionTitle: "All Products" },()=>{
-                    this.performSearch();
-                });
+                this.setState({ sectionTitle: "All Products" });
             }
             newURL += "/" + section;
         } else {
-            let section = this.state.section;
+            section = this.state.section;
             newURL += section == "" ? "/all" : "/" + section;
         }
         if(isFree !== null) {
             this.setState({onlyFree: isFree});
             if(isFree) newURL += "/free";
-        } else if(this.state.onlyFree) newURL += "/free";
+        } else {
+            isFree = this.state.onlyFree;
+            if(this.state.onlyFree) newURL += "/free";
+        }
+
+        this.setState({ section: section, onlyFree: isFree }, ()=>{
+            this.performSearch();
+        });
         window.history.replaceState(null, "", newURL);
     }
 
@@ -219,15 +222,8 @@ class ProductsPage extends React.Component {
                             />
                         </div>
                         <div className="divider"/>
-                        <h3 className="text-xl">Sorting</h3>
+                        <h3 className="text-xl">Filter</h3>
                         <div className="w-full">
-                            <div className="form-control mb-2">
-                                <select class="select select-bordered w-full max-w-xs">
-                                    <option selected>Default</option>
-                                    <option>Price (Low to high)</option>
-                                    <option>Price (High to low)</option>
-                                </select>
-                            </div>
                             <CheckSelect
                                 isChecked={this.state.onlyFree}
                                 onChange={(s)=>{this.filterRedirect(null, s)}}
