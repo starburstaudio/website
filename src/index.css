@@ -110,12 +110,12 @@ input[type=number] {
 }
 
 .content-width {
-  width: 578px;
+  width: 600px;
   max-width: 100%;
 }
 
 .all-width {
-  width: 1203px;
+  width: 1300px;
   max-width: calc(100% - 8rem);
 }
 
