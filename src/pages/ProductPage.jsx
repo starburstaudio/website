@@ -75,7 +75,11 @@ class ProductPage extends React.Component {
                 <FiPlusCircle/>
               </IconContext.Provider>
             </div>
-            <h2 className="text-3xl">Previews</h2>
+            {
+              this.state.product.assets.some((a)=>{
+                return a.mimeType.split("/")[0] == "audio"
+              }) && <h2 className="text-3xl">Previews</h2>
+            }
             {
               this.state.product.assets.map(a => (
                 a.mimeType.split("/")[0] == "audio" ?
