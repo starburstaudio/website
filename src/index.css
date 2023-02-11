@@ -145,6 +145,10 @@ h3 {
   font-weight: 600;
 }
 
+.stat-value {
+  font-family: "Inter Tight";
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
