@@ -2,8 +2,7 @@ import React from "react";
 import { useParams, Navigate } from "react-router-dom";
 
 import { IconContext } from "react-icons";
-import { FiPlusCircle, FiSearch, FiSettings } from "react-icons/fi";
-import { FaRegFileAudio, FaRegFileCode } from "react-icons/fa";
+import { FiFile, FiSearch, FiSettings } from "react-icons/fi";
 import { HiOutlineGift } from "react-icons/hi";
 import { TbWaveSine } from "react-icons/tb"
 
@@ -242,24 +241,22 @@ class ProductsPage extends React.Component {
           <p className="mb-8 opacity-75">Showing {[this.state.results.length]} out of {[this.state.allItemCount]} total products.</p>
         </div>
         <div className="all-width flex space-x-4 items-start">
-          <div className="w-56 space-y-2 mr-4 mb-8 shrink-0 sticky top-[4.5rem]">
-          <IconContext.Provider value={{ size: "1.5em" }}>
-            <h3 className="text-xl">Search</h3>
-            <div className="form-control">
-              <div className="input-group">
+          <div className="w-56 mr-4 mb-8 shrink-0 sticky top-[4.5rem]">
+          <IconContext.Provider value={{ size: "1.25em" }}>
+            <div className="form-control -ml-2" style={{width: "calc(100% + 1rem)"}}>
+              <div className="input-group input-group-sm">
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="input input-bordered w-full max-w-xs"
+                  className="input bg-base-200 input-sm w-full max-w-xs pl-2"
                 />
-                <button className="btn btn-square">
+                <button className="btn btn-square bg-base-200 btn-ghost btn-sm">
                   <FiSearch></FiSearch>
                 </button>
               </div>
             </div>
-            <div className="divider"/>
-            <h3 className="text-xl">Category</h3>
-            <div className="w-full space-y-2">
+            <h3 className="text-lg mt-4 mb-2">Category</h3>
+            <div className="space-y-2 -ml-2" style={{width: "calc(100% + 1rem)"}}>
               <CheckOptions
                 value={this.state.section}
                 options={[
@@ -271,7 +268,7 @@ class ProductsPage extends React.Component {
                   },
                   {
                     jsx: <div className="flex-row flex gap-2 items-center">
-                        <FaRegFileAudio/><span>Presets</span>
+                        <FiFile/><span>Presets</span>
                       </div>,
                     value: "presets"
                   },
@@ -285,9 +282,8 @@ class ProductsPage extends React.Component {
                 onSelect={(o) => {this.filterRedirect(o, null)}}
               />
             </div>
-            <div className="divider"/>
-            <h3 className="text-xl">Filter</h3>
-            <div className="w-full">
+            <h3 className="text-lg mt-4 mb-2">Filter</h3>
+            <div className="w-full -ml-2">
               <CheckSelect
                 isChecked={this.state.onlyFree}
                 onChange={(s)=>{this.filterRedirect(null, s)}}
