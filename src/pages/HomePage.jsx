@@ -11,9 +11,9 @@ class HomePage extends React.Component {
         <div className='w-full flex justify-center start-banner pt-16' style={{"backgroundImage": "url(https://images.pexels.com/photos/7130555/pexels-photo-7130555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}}>
         <div className='all-width py-24 flex items-center justify-between bg-transparent' data-theme="light">
           <div className='h-min content-width'>
-          <h1 className='text-5xl z-5 pb-4 w-full'>The last Lo-Fi samples you'll ever need</h1>
+          <h1 className='text-5xl z-5 w-full'>The last Lo-Fi samples you'll ever need</h1>
           <div className='content-width'>
-            <p className='pb-4 pt-4'>
+            <p className='my-6 text-md'>
             With over 450 individual samples, this huge sample pack has
             something for all flavors of lo-fi - From thumping, driven kick
             drums to meticulously textured percussion and synth loops with
@@ -50,7 +50,7 @@ class HomePage extends React.Component {
         <div className='w-full flex items-center flex-col'>
           <div className='all-width mt-16'>
             <h2 className='text-4xl mb-4'>Featured Sample Packs</h2>
-            <p className='content-width mb-2 text-md opacity-75'>
+            <p className='content-width mb-2 opacity-75'>
               Sample Packs from Starburst Audio offer the perfect combination of sounds,
               loops, and samples to take your music production to the next level. Across many
               different genres, these sample packs are designed to provide you with the samples
@@ -77,65 +77,6 @@ class HomePage extends React.Component {
                       <span className="mr-2 text-base">7,99€</span>
                       <FiPlusCircle/>
                     </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card w-72 bg-base-100 card-bordered indicator">
-                  <figure><img src="https://t2.genius.com/unsafe/903x0/https%3A%2F%2Fimages.genius.com%2F5085bb85a1459e2edde86cdc3da324b3.1000x1000x1.jpg" /></figure>
-                  <div className="card-body p-6">
-                    <h2 className="card-title">
-                      Icedancerr
-                      <div className="badge badge-secondary">50% OFF</div>
-                    </h2>
-                    <p className="pb-4 text-md opacity-75">
-                      The cover was created by Bladee himself. It features
-                      castles, a common theme in DG art and euros.
-                    </p>
-                    <div className="card-actions justify-end items-center">
-                      <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                      <div className="btn btn-primary">
-                      <span className="mr-2 text-base">3,99€</span>
-                      <FiPlusCircle/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card w-72 bg-base-100 card-bordered indicator">
-                  <figure><img src="https://i.kym-cdn.com/photos/images/newsfeed/002/450/520/b00.jpg" /></figure>
-                  <div className="card-body p-6">
-                    <h2 className="card-title">
-                      Quieres Spiderr
-                      <div className="badge">FREE</div>
-                    </h2>
-                    <p className="pb-4 text-md opacity-75">
-                      Baby, can't you see im messed uppp D-30 boys really next
-                      up in this life I'm a extra king nothyng
-                    </p>
-                    <div className="card-actions justify-end items-center">
-                      <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                      <div className="btn btn-primary">
-                      <span className="mr-2 text-base">FREE</span>
-                      <FiPlusCircle/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card w-72 bg-base-100 card-bordered indicator">
-                  <figure><img src="https://t2.genius.com/unsafe/903x0/https%3A%2F%2Fimages.genius.com%2Fb81222e5d6dfc81874e7a120daefc163.1000x1000x1.jpg" /></figure>
-                  <div className="card-body p-6">
-                    <h2 className="card-title">
-                      Nike Just Do It
-                    </h2>
-                    <p className="pb-4 text-md opacity-75">
-                      With over 450 individual samples, this huge sample pack has
-                      something for all flavors of lo-fi.
-                    </p>
-                    <div className="card-actions justify-end items-center">
-                      <div className="btn btn-ghost text-md btn-sm">More Info</div>
-                      <div className="btn btn-primary">
-                      <span className="mr-2 text-base">7,99€</span>
-                      <FiPlusCircle/>
-                      </div>
                     </div>
                   </div>
                 </div>
