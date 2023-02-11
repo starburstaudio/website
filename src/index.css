@@ -43,10 +43,12 @@ input[type=number] {
     --b2: 240 3.3333% 18%;
     --b3: 240 3.3333% 24%;
   }
-  .header {
+  .header, .dropdown-content {
     background-color: rgba(29, 29, 31, 0.72);
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.24);
   }
+  .header {
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.24);
+  } 
   .fade-btm::after {
     background: linear-gradient(
       to bottom,
@@ -70,12 +72,11 @@ input[type=number] {
   }
 }
 @media (prefers-color-scheme: light) {
-  .header {
+  .header, .dropdown-content {
     background-color: rgba(246,246,246,0.8);
-    box-shadow: 0 1px 0 0 rgba(0,0,0,0.16);
   }
-  .dropdown-content {
-    background-color: #fff;
+  .header {
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.16);
   }
   .fade-btm::after {
     background: linear-gradient(
@@ -90,8 +91,11 @@ input[type=number] {
   color: #fff;
 }
 
-.header {
+.header, .dropdown-content {
   backdrop-filter: saturate(1.8) blur(20px);
+}
+
+.header {
   width: 100vw;
 }
 
