@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, Navigate } from "react-router-dom";
 
 import { IconContext } from "react-icons";
-import { FiPlusCircle, FiSettings } from "react-icons/fi";
+import { FiPlusCircle, FiSearch, FiSettings } from "react-icons/fi";
 import { FaRegFileAudio, FaRegFileCode } from "react-icons/fa";
 import { HiOutlineGift } from "react-icons/hi";
 import { TbWaveSine } from "react-icons/tb"
@@ -27,6 +27,7 @@ class ProductsPage extends React.Component {
       sectionTitle: "All Products",
       section: this.props.params.section == "all" ? undefined : this.props.params.section,
       onlyFree: this.props.params.free == "free",
+      searchQuery: ""
     };
     
     storeClient.query({
@@ -69,40 +70,91 @@ class ProductsPage extends React.Component {
   }
 
   performSearch() {
-    storeClient.query({
-      query: gql`
-        query SearchProducts {
-          search(input: {
-            ${(this.state.section != undefined ? `collectionSlug: "` + this.state.section + `" ` : "")}
-            ${this.state.onlyFree ? "facetValueIds: [41]" : ""}
-          }) {
-            totalItems
-            items {
-              productId
-              productName
-              slug
-              description
-              currencyCode
-              facetValueIds
-              productAsset {
-                preview
-              }
-              priceWithTax {
-                __typename
-                ... on SinglePrice {
-                  value
+    if(this.state.searchQuery != "" || this.state.onlyFree || (this.state.section != undefined && this.state.section != ""))
+      storeClient.query({
+        query: gql`
+          query SearchProducts {
+            search(input: {
+              ${(this.state.section != undefined ? `collectionSlug: "` + this.state.section + `" ` : "")}
+              ${this.state.onlyFree ? "facetValueIds: [41]" : ""}
+            }) {
+              totalItems
+              items {
+                productId
+                productName
+                slug
+                description
+                currencyCode
+                facetValueIds
+                productAsset {
+                  preview
                 }
-                ... on PriceRange {
-                  min
+                priceWithTax {
+                  __typename
+                  ... on SinglePrice {
+                    value
+                  }
+                  ... on PriceRange {
+                    min
+                  }
                 }
               }
             }
           }
-        }
-      `,
-    })
-    .then((result) => {
-      this.setState({results: result.data.search.items});
+        `,
+      })
+      .then((result) => {
+        this.setState({results: result.data.search.items});
+      });
+    else
+      storeClient.query({
+        query: gql`
+          query ListProducts {
+            products(options: {
+              sort: {
+                createdAt: DESC
+              }
+            }) {
+              totalItems
+              items {
+                id
+                name
+                slug
+                description
+                facetValues {
+                  id
+                }
+                featuredAsset {
+                  preview
+                }
+                variants {
+                  priceWithTax
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        let p = result.data.products;
+        let items = Array();
+        p.items.forEach((i)=>{
+          let facetValues = i.facetValues.map(e => e.id);
+          items.push({
+            productId: i.id,
+            productName: i.name,
+            slug: i.slug,
+            description: i.description,
+            currencyCode: null,
+            facetValueIds: facetValues,
+            productAsset: i.featuredAsset,
+            priceWithTax: {
+              __typename: "SinglePrice",
+              value: i.variants[0].priceWithTax,
+            }
+          })
+        })
+        this.setState({results: items});
     });
   }
 
@@ -189,10 +241,21 @@ class ProductsPage extends React.Component {
           <p className="mb-8 opacity-75">Showing {[this.state.results.length]} out of {[this.state.allItemCount]} total products.</p>
         </div>
         <div className="all-width flex space-x-4 items-start">
-          <div className="w-64 space-y-2 mr-4 mb-8 p-4 shrink-0 rounded-3xl card-bordered">
+          <div className="w-56 space-y-2 mr-4 mb-8 shrink-0 sticky top-[4.5rem]">
           <IconContext.Provider value={{ size: "1.5em" }}>
             <h3 className="text-xl">Search</h3>
-            <input type="text" placeholder="Search..." className="input input-bordered w-full max-w-xs" />
+            <div className="form-control">
+              <div className="input-group">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="input input-bordered w-full max-w-xs"
+                />
+                <button className="btn btn-square">
+                  <FiSearch></FiSearch>
+                </button>
+              </div>
+            </div>
             <div className="divider"/>
             <h3 className="text-xl">Category</h3>
             <div className="w-full space-y-2">
@@ -257,7 +320,7 @@ class ProductsPage extends React.Component {
                 >{this.formatPrice(r.priceWithTax)}</p>
                 <div
                   dangerouslySetInnerHTML={{__html: r.description}}
-                  className="pb-4 text-md max-h-36 overflow-hidden opacity-75"
+                  className="pb-4 text-sm max-h-36 overflow-hidden opacity-75"
                   style={{maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%)"}}
                 />
                 <div className="card-actions justify-end items-center">
