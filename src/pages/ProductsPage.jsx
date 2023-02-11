@@ -13,6 +13,7 @@ import gql from 'graphql-tag';
 import { Link } from "react-router-dom";
 import CheckOptions from "../components/CheckOptions";
 import CheckSelect from "../components/CheckSelect";
+import ProductCard from "../components/ProductCard";
 
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
@@ -307,31 +308,15 @@ class ProductsPage extends React.Component {
             }}
           ><IconContext.Provider value={{ size: "1.5em" }}>
           {this.state.results.map(r => (
-            <div key={r.productId} className="card w-auto bg-base-100 card-bordered indicator">
-              <figure><img src={r.productAsset.preview} /></figure>
-              <div className="card-body p-6">
-                <h2 className="card-title">
-                  {r.productName}
-
-                  {this.formatBadge(r.facetValueIds[0])} 
-                </h2>
-                <p
-                  className="font-bold"
-                >{this.formatPrice(r.priceWithTax)}</p>
-                <div
-                  dangerouslySetInnerHTML={{__html: r.description}}
-                  className="pb-4 text-sm max-h-36 overflow-hidden opacity-75"
-                  style={{maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%)"}}
-                />
-                <div className="card-actions justify-end items-center">
-                  <Link className="btn btn-ghost text-md btn-sm" to={"/p/" + r.slug}>More Info</Link>
-                  <div className="btn btn-primary btn-md">
-                    <span className="mr-2">Buy</span>
-                    <FiPlusCircle/>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProductCard
+              key={r.productId}
+              assetPreview={r.productAsset.preview}
+              productName={r.productName}
+              badges={r.facetValueIds}
+              priceWithTax={r.priceWithTax}
+              description={r.description}
+              slug={r.slug}
+            />
           ))}
           </IconContext.Provider></div>
         </div>

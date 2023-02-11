@@ -4,7 +4,47 @@ import { Link } from "react-router-dom";
 import { FiChevronRight, FiMoreHorizontal, FiPlusCircle } from "react-icons/fi";
 import { IconContext } from "react-icons";
 
+import { storeClient } from "../storeClient";
+import gql from "graphql-tag";
+import ProductCard from "../components/ProductCard";
+
 class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      latestSamplePacks: Array(),
+    }
+  }
+
+  componentDidMount() {
+    storeClient.query({
+      query: gql`
+        query ListProducts {
+          products(options: {
+            sort: {
+              createdAt: DESC
+            }
+          }) {
+            items {
+              id
+              name
+              slug
+              description
+              featuredAsset {
+                preview
+              }
+              variants {
+                priceWithTax
+              }
+            }
+          }
+        }
+      `,
+    }).then(r => {
+      this.setState({latestSamplePacks: r.data.products.items});
+    })
+  }
+
   render() {
     return (
       <main className='flex-col justify-center '>
@@ -49,7 +89,7 @@ class HomePage extends React.Component {
         </div>
         <div className='w-full flex items-center flex-col'>
           <div className='all-width mt-16'>
-            <h2 className='text-4xl mb-4'>Featured Sample Packs</h2>
+            <h2 className='text-4xl mb-4'>Latest Products</h2>
             <p className='content-width mb-2 opacity-75'>
               Sample Packs from Starburst Audio offer the perfect combination of sounds,
               loops, and samples to take your music production to the next level. Across many
@@ -58,40 +98,43 @@ class HomePage extends React.Component {
             </p>
             <IconContext.Provider value={{ size: "2em" }}>
               <div
-              className="w-full flex space-x-6 my-8"
+                className="gap-8 my-8"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
+                }}
               >
-                <div className="card w-72 bg-base-100 card-bordered indicator">
-                  <figure><img src="https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174" /></figure>
-                  <div className="card-body p-6">
-                    <h2 className="card-title">
-                    Lo-Fi Memories
-                    <div className="badge badge-accent">NEW</div>
-                    </h2>
-                    <p className="pb-4 text-md opacity-75">
-                    With over 450 individual samples, this huge sample pack has
-                    something for all flavors of lo-fi.
-                    </p>
-                    <div className="card-actions justify-end items-center">
-                    <div className="btn btn-ghost btn-sm">More Info</div>
-                    <div className="btn btn-primary">
-                      <span className="mr-2 text-base">7,99€</span>
-                      <FiPlusCircle/>
-                    </div>
-                    </div>
-                  </div>
-                </div>
+                {this.state.latestSamplePacks.map(p => (
+                  <ProductCard
+                    key={p.productId}
+                    assetPreview={p.featuredAsset.preview}
+                    productName={p.name}
+                    badges={[]}
+                    priceWithTax={{
+                      __typename: "SinglePrice",
+                      value: p.variants[0].priceWithTax
+                    }}
+                    description={p.description}
+                    slug={p.slug}
+                  />
+                  )
+                )}
               </div>
               <div className="fade-btm my-8">
                 <div
-                className="w-full flex space-x-6"
+                  className="w-full flex space-x-6"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
+                  }}
                 >
-                  <div className="card w-72 h-48 bg-base-200 card-bordered indicator">
+                <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
+                </div>
+                  <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
                   </div>
-                  <div className="card w-72 h-48 bg-base-200 card-bordered indicator">
+                  <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
                   </div>
-                  <div className="card w-72 h-48 bg-base-200 card-bordered indicator">
-                  </div>
-                  <div className="card w-72 h-48 bg-base-200 card-bordered indicator">
+                  <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
                   </div>
                 </div>
               </div>
