@@ -184,7 +184,7 @@ class ProductsPage extends React.Component {
       newURL += "/" + section;
     } else {
       section = this.state.section;
-      newURL += section == "" ? "/all" : "/" + section;
+      newURL += (section == "" || section == undefined) ? "/all" : "/" + section;
     }
     if(isFree !== null) {
       this.setState({onlyFree: isFree});
