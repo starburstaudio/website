@@ -67,9 +67,6 @@ input[type=number] {
   .shadow-accent.shadow-2xl {
     --tw-shadow-colored: 0 12px 48px -16px var(--tw-shadow-color);
   }
-  .card-bordered {
-    background-color: hsl(var(--b2) / var(--tw-bg-opacity));
-  }
   .check-select svg {
     stroke: #0a84ff;
   }

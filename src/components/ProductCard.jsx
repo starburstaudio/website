@@ -34,7 +34,7 @@ class ProductCard extends React.Component {
 
   render() {
     return (
-      <div key={this.props.key} className="card w-auto bg-base-100 card-bordered indicator">
+      <div key={this.props.key} className="card w-auto card-bordered border-base-300 bg-base-200 indicator">
         <figure><img src={this.props.assetPreview} /></figure>
         <div className="card-body p-6">
           <h2 className="card-title">
