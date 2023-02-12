@@ -184,7 +184,7 @@ class ProductPage extends React.Component {
                     }
                   <div className="grid gap-4 mt-4 "
                     style={{
-                      gridTemplateColumns: "repeat(auto-fill, minmax(24rem, 1fr))"
+                      gridTemplateColumns: "repeat(auto-fill, minmax(20rem, 1fr))"
                   }}>
                     {
                       this.state.product.assets.map(a => (

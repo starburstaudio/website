@@ -29,10 +29,11 @@ class AudioPlayer extends React.Component {
       responsive: true,
       progressColor: "#808088",
       waveColor: "#80808880",
-    })
-    this.wavesurfer.load(this.props.src)
-    this.wavesurfer.on('play', ()=>{ this.setState({playing: true}) })
-    this.wavesurfer.on('pause', ()=>{ this.setState({playing: false}) })
+    });
+    this.wavesurfer.load(this.props.src);
+    this.wavesurfer.setVolume(0.5);
+    this.wavesurfer.on('play', ()=>{ this.setState({playing: true}) });
+    this.wavesurfer.on('pause', ()=>{ this.setState({playing: false}) });
   }
 
   togglePlay() {
