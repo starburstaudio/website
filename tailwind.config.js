@@ -12,12 +12,14 @@ module.exports = {
           "accent": "#fa18c5",
           "neutral": "#cacaca",
           "base-100": "#fff",
+          "base-200": "#f6f6f7",
+          "base-300": "#e8e8ea",
           "info": "#e4dcff",
           "success": "#b2ffc4",
           "warning": "#ffecb9",
           "error": "#ffd8cd",
           "--rounded-btn": ".6rem",
-          "--btn-focus-scale": "0.97"
+          "--btn-focus-scale": "0.97",
         },
         dark: {
           "primary": "#0a84ff",

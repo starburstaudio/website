@@ -190,7 +190,7 @@ class ProductPage extends React.Component {
                       this.state.product.assets.map(a => (
                         a.mimeType.split("/")[0] == "audio" ?
                           (
-                            <div key={a.id} className="bg-base-100 py-4 px-6 border-base-300 border rounded-lg">
+                            <div key={a.id} className="bg-base-300 py-4 px-6 border border-opacity-20 border-gray-500 rounded-lg">
                               <AudioPlayer name={a.name} src={a.source}/>
                             </div>
                           )

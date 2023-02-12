@@ -27,8 +27,8 @@ class AudioPlayer extends React.Component {
       height: "42",
       normalize: true,
       responsive: true,
-      progressColor: "#808080",
-      waveColor: "#80808080",
+      progressColor: "#808088",
+      waveColor: "#80808880",
     })
     this.wavesurfer.load(this.props.src)
     this.wavesurfer.on('play', ()=>{ this.setState({playing: true}) })
