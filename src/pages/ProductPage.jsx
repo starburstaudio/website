@@ -8,6 +8,7 @@ import { FiCheck, FiFile, FiMusic, FiPlusCircle } from "react-icons/fi";
 
 import { storeClient } from '../storeClient';
 import gql from 'graphql-tag';
+import { AudioPlayer } from "../components/AudioPlayer";
 
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
@@ -186,8 +187,7 @@ class ProductPage extends React.Component {
                       a.mimeType.split("/")[0] == "audio" ?
                         (
                           <div className="mt-4" key={a.id}>
-                            <div className="opacity-75 mb-2">{a.name}</div>
-                            <audio className="w-full" controls><source src={a.source} type={a.mimeType}/></audio>
+                            <AudioPlayer name={a.name} src={a.source} key={a.id}/>
                           </div>
                         )
                       : null
