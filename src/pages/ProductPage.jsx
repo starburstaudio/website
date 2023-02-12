@@ -78,7 +78,7 @@ class ProductPage extends React.Component {
     let nextIsHeading = true;
     contentText.split("\n").forEach(l=>{
       if(nextIsHeading) {
-        out.push(<h3 className="mt-2">{l}</h3>);
+        out.push(<h3 className="mt-4">{l}</h3>);
         nextIsHeading = false;
       }
       else if(l != "") out.push(<li className="opacity-75">{l}</li>);
@@ -177,22 +177,27 @@ class ProductPage extends React.Component {
             <div className="all-width flex gap-4">
               <div className="card shadow bg-base-200 grow border-base-300 border">
                 <div className="card-body">
-                  {
-                    this.state.product.assets.some((a)=>{
-                      return a.mimeType.split("/")[0] == "audio"
-                    }) && <h2 className="text-2xl">Previews</h2>
-                  }
-                  {
-                    this.state.product.assets.map(a => (
-                      a.mimeType.split("/")[0] == "audio" ?
-                        (
-                          <div className="mt-4" key={a.id}>
-                            <AudioPlayer name={a.name} src={a.source} key={a.id}/>
-                          </div>
-                        )
-                      : null
-                    ))
-                  }
+                    {
+                      this.state.product.assets.some((a)=>{
+                        return a.mimeType.split("/")[0] == "audio"
+                      }) && <h2 className="text-2xl">Previews</h2>
+                    }
+                  <div className="grid gap-4 mt-4 "
+                    style={{
+                      gridTemplateColumns: "repeat(auto-fill, minmax(24rem, 1fr))"
+                  }}>
+                    {
+                      this.state.product.assets.map(a => (
+                        a.mimeType.split("/")[0] == "audio" ?
+                          (
+                            <div key={a.id} className="bg-base-100 py-4 px-6 border-base-300 border rounded-lg">
+                              <AudioPlayer name={a.name} src={a.source}/>
+                            </div>
+                          )
+                        : null
+                      ))
+                    }
+                  </div>
                 </div>
               </div>
               {

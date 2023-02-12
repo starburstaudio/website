@@ -24,7 +24,7 @@ class AudioPlayer extends React.Component {
       barWidth: 6,
       barRadius: 4,
       cursorWidth: 0,
-      height: "64",
+      height: "42",
       normalize: true,
       responsive: true,
       progressColor: "#808080",
@@ -44,7 +44,7 @@ class AudioPlayer extends React.Component {
     return (
       <div>
         <div className="opacity-75 mb-2">{this.props.name}</div>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4">
           <IconContext.Provider value={{ size: "2em" }}>
             <button className="text-primary cursor-pointer" onClick={this.togglePlay}>
               { this.state.playing ? <FiPauseCircle/> : <FiPlayCircle/> }
