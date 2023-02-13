@@ -34,19 +34,19 @@ class ProductCard extends React.Component {
 
   render() {
     return (
-      <div key={this.props.key} className="card w-auto card-bordered border-base-300 bg-base-200 indicator">
-        <figure><img src={this.props.assetPreview} /></figure>
-        <div className="card-body p-6">
-          <h2 className="card-title">
+      <div key={this.props.key} className="card w-auto card-bordered border-base-300 bg-base-200 indicator h-[36rem]">
+        <figure className="aspect-square shrink-0"><img src={this.props.assetPreview} /></figure>
+        <div className="card-body p-6 flex-1">
+          <h2 className="card-title h-min">
             {this.props.productName}
             {this.formatBadge(this.props.badges[0])} 
           </h2>
           <p
-            className="font-bold"
+            className="font-bold h-min grow-0"
           >{this.formatPrice(this.props.priceWithTax)}</p>
           <div
             dangerouslySetInnerHTML={{__html: this.props.description}}
-            className="pb-4 text-sm max-h-36 overflow-hidden opacity-75"
+            className="pb-4 text-sm overflow-hidden opacity-75 h-0 grow"
             style={{maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%)"}}
           />
           <div className="card-actions justify-end items-center">

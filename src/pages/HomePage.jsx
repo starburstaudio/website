@@ -98,10 +98,11 @@ class HomePage extends React.Component {
             </p>
             <IconContext.Provider value={{ size: "2em" }}>
               <div
-                className="gap-8 my-8"
+                className="gap-8 my-8 grid-rows-none h-[42rem] overflow-hidden"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
+                  gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))",
+                  maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 25%)"
                 }}
               >
                 {this.state.latestSamplePacks.map(p => (
@@ -119,33 +120,19 @@ class HomePage extends React.Component {
                   />
                   )
                 )}
-              </div>
-              <div className="fade-btm my-8">
-                <div
-                  className="w-full flex space-x-6"
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))"
-                  }}
-                >
-                <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
-                </div>
-                  <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
-                  </div>
-                  <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
-                  </div>
-                  <div className="card w-auto h-48 bg-base-200 card-bordered indicator">
-                  </div>
-                </div>
+                <div className="card w-auto h-48 bg-base-200 card-bordered indicator"/>
+                <div className="card w-auto h-48 bg-base-200 card-bordered indicator"/>
+                <div className="card w-auto h-48 bg-base-200 card-bordered indicator"/>
+                <div className="card w-auto h-48 bg-base-200 card-bordered indicator"/>
               </div>
             </IconContext.Provider>
             <div className="flex flex-col items-center -mt-16">
-              <a className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' href='/'>
+              <Link className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' to='/products'>
                 <span>Show all</span>
                 <IconContext.Provider value={{ size: "1.5em" }}>
                   <FiChevronRight className='ml-2'/>
                 </IconContext.Provider>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
