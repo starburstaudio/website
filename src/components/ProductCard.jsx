@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { FiPlusCircle } from "react-icons/fi";
 
 import { storeClient } from "../storeClient";
+import { trigger } from "../events";
+
 import gql from "graphql-tag";
 
 class ProductCard extends React.Component {
@@ -41,9 +43,26 @@ class ProductCard extends React.Component {
         mutation {
           addItemToOrder(productVariantId: ${this.props.id}, quantity: 1) {
             __typename
+            ... on Order {
+              lines {
+                featuredAsset {
+                  preview
+                }
+                productVariant {
+                  name
+                }
+                proratedLinePrice
+              }
+              totalWithTax
+              totalQuantity
+            }
           }
         }
       `
+    }).then(r => {
+      if(r.data.addItemToOrder.__typename == "Order") {
+        trigger("updateOrder", r.data.addItemToOrder);
+      }
     })
   }
 

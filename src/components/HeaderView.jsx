@@ -4,6 +4,7 @@ import { FiDownload, FiLogOut, FiMinusCircle, FiSettings, FiShoppingCart } from 
 import { Link } from "react-router-dom";
 import { storeClient } from "../storeClient";
 import gql from "graphql-tag";
+import { subscribe } from "../events";
 
 class HeaderView extends React.Component {
   constructor(props) {
@@ -17,6 +18,9 @@ class HeaderView extends React.Component {
       }
     }
     this.getCurrentOrder();
+    subscribe("updateOrder", (r)=>{
+      this.setState({order: r.detail});
+    })
   }
 
   getCurrentOrder() {
