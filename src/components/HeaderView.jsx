@@ -2,8 +2,82 @@ import React from "react";
 import { IconContext } from "react-icons";
 import { FiDownload, FiLogOut, FiMinusCircle, FiSettings, FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { storeClient } from "../storeClient";
+import gql from "graphql-tag";
 
 class HeaderView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeOrder: false,
+      order: {
+        lines: [],
+        totalWithTax: 0,
+        totalQuantity: 0,
+      }
+    }
+    this.getCurrentOrder();
+  }
+
+  getCurrentOrder() {
+    storeClient.query({
+      query: gql`
+        query GetCurrentOrder {
+          activeOrder {
+            lines {
+              featuredAsset {
+                preview
+              }
+              productVariant {
+                name
+              }
+              proratedLinePrice
+            }
+            totalWithTax
+            totalQuantity
+          }
+        }
+      `,
+    }).then(r => {
+      if(r.data.activeOrder == null) {
+        this.setState({activeOrder: false})
+      } else {
+        this.setState({activeOrder: true})
+        this.setState({order: r.data.activeOrder})
+      }
+    })
+  }
+
+  removeAllFromOrder() {
+    storeClient.mutate({
+      mutation: gql`
+        mutation {
+          removeAllOrderLines {
+            __typename
+            ... on Order {
+              lines {
+                featuredAsset {
+                  preview
+                }
+                productVariant {
+                  name
+                }
+                proratedLinePrice
+              }
+              totalWithTax
+              totalQuantity
+            }
+          }
+        }
+      `
+    }).then(r=>{
+      console.log(r.data.removeAllOrderLines);
+      if(r.data.removeAllOrderLines.__typename == "Order") {
+        this.setState({order: r.data.removeAllOrderLines});
+      }
+    })
+  }
+
   render() {
     return (
       <header className='flex justify-center fixed top-0 bg-base-200 header z-20'>
@@ -16,7 +90,7 @@ class HeaderView extends React.Component {
             <li><Link to="/products/all/free">Free Stuff</Link></li>
             <li><Link to="/products/plugins">Plugins</Link></li>
             <li><Link to="/products/sample-packs">Sample Packs</Link></li>
-            <li><Link to="/">Blog</Link></li>
+            <li><Link to="/">Blog</Link></li> {this.state.activeOrder ? "a" : "b"}
           </ul>
           <div className="form-control">
             <input
@@ -25,38 +99,47 @@ class HeaderView extends React.Component {
             className="input input-ghost input-sm mx-2"
             />
           </div>
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0}><div className="btn btn-ghost btn-circle w-12 h-12 mx-2 flex justify-center items-center">
-              <div className="indicator">
-                <span className="indicator-item badge badge-sm text-sm badge-primary">3</span> 
-                <IconContext.Provider value={{ size: "1.5rem" }}>
-                  <FiShoppingCart className="-ml-1 mt-1"/>
-                </IconContext.Provider>
-              </div>
-            </div></label>
-            <ul tabIndex={0} className="dropdown-content menu menu-compact px-6 mt-3 shadow-2xl rounded-box w-80 border-base-300 border">
-              <h2 className="pt-6 text-xl">Shopping Cart</h2>
-              <div className="flex-row flex border-b border-base-300 py-3 items-center">
-                <img className="h-16 w-16 p-0 rounded-lg" src="https://cdn.shopify.com/s/files/1/0559/0941/7058/products/TY-ARCHIVEVOL.1.png?v=1662698174"/>
-                <div className="grow ml-3 cursor-default">
-                  <h3 className="text-base">The Lofi Sample Pack</h3>
-                  <p className="text-sm">7,99€</p>
-                </div>
-                <div className="btn btn-ghost text-primary btn-circle color-primary btn-sm ">
-                  <IconContext.Provider value={{ size: "1.25rem" }}>
-                    <FiMinusCircle></FiMinusCircle>
+          { this.state.activeOrder && (
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0}><div className="btn btn-ghost btn-circle w-12 h-12 mx-2 flex justify-center items-center">
+                <div className="indicator">
+                  <span className="indicator-item badge badge-sm text-sm badge-primary">
+                    { this.state.order.totalQuantity }
+                  </span> 
+                  <IconContext.Provider value={{ size: "1.5rem" }}>
+                    <FiShoppingCart className="-ml-1 mt-1"/>
                   </IconContext.Provider>
                 </div>
-              </div>
-              <div className="pt-3">
-                Total: 12,99€
-              </div>
-              <div className="py-3 justify-end flex-row flex">
-                <div className="btn btn-sm btn-ghost text-sm">Remove all</div>
-                <div className="btn btn-sm btn-primary ml-2">Check out</div>
-              </div>
-            </ul>
-          </div>
+              </div></label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu menu-compact px-6 mt-3 shadow-2xl rounded-box w-80 border-base-300 border"
+              >
+                <h2 className="pt-6 text-xl">Shopping Cart</h2>
+                {this.state.order.lines.map((l)=>(
+                <div className="flex-row flex border-b border-base-300 py-3 items-center">
+                  <img className="h-16 w-16 p-0 rounded-lg" src={ l.featuredAsset.preview }/>
+                  <div className="grow ml-3 cursor-default">
+                    <h3 className="text-base">{ l.productVariant.name }</h3>
+                    <p className="text-sm">{l.proratedLinePrice}</p>
+                  </div>
+                  <div className="btn btn-ghost text-primary btn-circle color-primary btn-sm ">
+                    <IconContext.Provider value={{ size: "1.25rem" }}>
+                      <FiMinusCircle></FiMinusCircle>
+                    </IconContext.Provider>
+                  </div>
+                </div>
+                ))}
+                <div className="pt-3">
+                  Total (after VAT): {this.state.order.totalWithTax}
+                </div>
+                <div className="py-3 justify-end flex-row flex">
+                  <div className="btn btn-sm btn-ghost text-sm" onClick={()=>this.removeAllFromOrder()}>Remove all</div>
+                  <div className="btn btn-sm btn-primary ml-2">Check out</div>
+                </div>
+              </ul>
+            </div>
+          )}
           <div className="dropdown h-12 dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">

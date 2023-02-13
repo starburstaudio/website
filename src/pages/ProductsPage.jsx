@@ -81,6 +81,7 @@ class ProductsPage extends React.Component {
               totalItems
               items {
                 productId
+                productVariantId
                 productName
                 slug
                 description
@@ -128,6 +129,7 @@ class ProductsPage extends React.Component {
                   preview
                 }
                 variants {
+                  id
                   priceWithTax
                 }
               }
@@ -142,6 +144,7 @@ class ProductsPage extends React.Component {
           let facetValues = i.facetValues.map(e => e.id);
           items.push({
             productId: i.id,
+            productVariantId: i.variants[0].id,
             productName: i.name,
             slug: i.slug,
             description: i.description,
@@ -305,7 +308,7 @@ class ProductsPage extends React.Component {
           ><IconContext.Provider value={{ size: "1.5em" }}>
           {this.state.results.map(r => (
             <ProductCard
-              key={r.productId}
+              id={r.productVariantId}
               assetPreview={r.productAsset.preview}
               productName={r.productName}
               badges={r.facetValueIds}

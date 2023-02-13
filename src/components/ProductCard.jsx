@@ -3,6 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiPlusCircle } from "react-icons/fi";
 
+import { storeClient } from "../storeClient";
+import gql from "graphql-tag";
+
 class ProductCard extends React.Component {
   state = {
     loading: true,
@@ -31,6 +34,18 @@ class ProductCard extends React.Component {
       return "FREE";
     }
   }
+  
+  addToOrder() {
+    storeClient.mutate({
+      mutation: gql`
+        mutation {
+          addItemToOrder(productVariantId: ${this.props.id}, quantity: 1) {
+            __typename
+          }
+        }
+      `
+    })
+  }
 
   render() {
     return (
@@ -51,7 +66,7 @@ class ProductCard extends React.Component {
           />
           <div className="card-actions justify-end items-center">
             <Link className="btn btn-ghost text-md btn-sm" to={"/p/" + this.props.slug}>More Info</Link>
-            <div className="btn btn-primary btn-md">
+            <div className="btn btn-primary btn-md" onClick={() => this.addToOrder()}>
               <span className="mr-2">Buy</span>
               <FiPlusCircle/>
             </div>
