@@ -45,6 +45,7 @@ class ProductCard extends React.Component {
             __typename
             ... on Order {
               lines {
+                id
                 featuredAsset {
                   preview
                 }

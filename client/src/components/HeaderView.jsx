@@ -29,6 +29,7 @@ class HeaderView extends React.Component {
         query GetCurrentOrder {
           activeOrder {
             lines {
+              id
               featuredAsset {
                 preview
               }
@@ -60,6 +61,7 @@ class HeaderView extends React.Component {
             __typename
             ... on Order {
               lines {
+                id
                 featuredAsset {
                   preview
                 }
@@ -75,9 +77,38 @@ class HeaderView extends React.Component {
         }
       `
     }).then(r=>{
-      console.log(r.data.removeAllOrderLines);
       if(r.data.removeAllOrderLines.__typename == "Order") {
         this.setState({order: r.data.removeAllOrderLines});
+      }
+    })
+  }
+
+  removeFromOrder(id) {
+    storeClient.mutate({
+      mutation: gql`
+        mutation {
+          removeOrderLine(orderLineId: ${id}) {
+            __typename
+            ... on Order {
+              lines {
+                id
+                featuredAsset {
+                  preview
+                }
+                productVariant {
+                  name
+                }
+                proratedLinePrice
+              }
+              totalWithTax
+              totalQuantity
+            }
+          }
+        }
+      `
+    }).then(r=>{
+      if(r.data.removeOrderLine.__typename == "Order") {
+        this.setState({order: r.data.removeOrderLine});
       }
     })
   }
@@ -94,7 +125,7 @@ class HeaderView extends React.Component {
             <li><Link to="/products/all/free">Free Stuff</Link></li>
             <li><Link to="/products/plugins">Plugins</Link></li>
             <li><Link to="/products/sample-packs">Sample Packs</Link></li>
-            <li><Link to="/">Blog</Link></li> {this.state.activeOrder ? "a" : "b"}
+            <li><Link to="/">Blog</Link></li>
           </ul>
           <div className="form-control">
             <input
@@ -121,13 +152,19 @@ class HeaderView extends React.Component {
               >
                 <h2 className="pt-6 text-xl">Shopping Cart</h2>
                 {this.state.order.lines.map((l)=>(
-                <div className="flex-row flex border-b border-base-300 py-3 items-center">
+                <div
+                  className="flex-row flex border-b border-base-300 py-3 items-center"
+                  key={l.id}
+                >
                   <img className="h-16 w-16 p-0 rounded-lg" src={ l.featuredAsset.preview }/>
                   <div className="grow ml-3 cursor-default">
                     <h3 className="text-base">{ l.productVariant.name }</h3>
                     <p className="text-sm">{l.proratedLinePrice}</p>
                   </div>
-                  <div className="btn btn-ghost text-primary btn-circle color-primary btn-sm ">
+                  <div
+                    className="btn btn-ghost text-primary btn-circle color-primary btn-sm "
+                    onClick={()=>this.removeFromOrder(l.id)}
+                  >
                     <IconContext.Provider value={{ size: "1.25rem" }}>
                       <FiMinusCircle></FiMinusCircle>
                     </IconContext.Provider>
