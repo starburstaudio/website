@@ -1,31 +1,32 @@
-import React from "react";
+import React from 'react'
+import PropTypes from 'prop-types'
 
 class CheckSelect extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      checked: this.props.isChecked,
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    if(this.props.isChecked != prevProps.isChecked) {
-      this.setState({checked: this.props.isChecked});
+      checked: this.props.isChecked
     }
   }
 
-  render() {
+  componentDidUpdate (prevProps) {
+    if (this.props.isChecked !== prevProps.isChecked) {
+      this.setState({ checked: this.props.isChecked })
+    }
+  }
+
+  render () {
     return (
     <div
       className={
-        "form-control check-select " +
-        (this.state.checked ? "bg-primary hover:bg-primary-focus " : "bg-base-100 hover:bg-base-200 ")
+        'form-control check-select ' +
+        (this.state.checked ? 'bg-primary hover:bg-primary-focus ' : 'bg-base-100 hover:bg-base-200 ')
       }
       onClick={
-        ()=>{
-          this.setState({checked: !this.state.checked},()=>{
-            this.props.onChange(this.state.checked);
-          });
+        () => {
+          this.setState({ checked: !this.state.checked }, () => {
+            this.props.onChange(this.state.checked)
+          })
         }
       }
     >
@@ -33,16 +34,22 @@ class CheckSelect extends React.Component {
         <span
           className=
           {
-            "label-text flex gap-2 " + 
-            (this.state.checked ? "text-white" : "")
+            'label-text flex gap-2 ' +
+            (this.state.checked ? 'text-white' : '')
           }
         >
           {this.props.children}
-        </span> 
+        </span>
       </label>
     </div>
-    );
+    )
   }
 }
 
-export default CheckSelect;
+CheckSelect.propTypes = {
+  isChecked: PropTypes.bool,
+  onChange: PropTypes.func,
+  children: PropTypes.element
+}
+
+export default CheckSelect

@@ -1,20 +1,20 @@
-import './App.css';
+import './App.css'
 
-import React from 'react';
-import { Routes, Route } from "react-router-dom";
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-import NotFoundPage from './pages/NotFoundPage';
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import ProductsPage from "./pages/ProductsPage";
-import ProductPage from './pages/ProductPage';
+import NotFoundPage from './pages/NotFoundPage'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ProductsPage from './pages/ProductsPage'
+import ProductPage from './pages/ProductPage'
 
-import HeaderView from './components/HeaderView';
-import FooterView from './components/FooterView';
+import HeaderView from './components/HeaderView'
+import FooterView from './components/FooterView'
 
 class App extends React.Component {
-  render() {
-      return (
+  render () {
+    return (
       <>
         <HeaderView />
           <Routes>
@@ -27,8 +27,8 @@ class App extends React.Component {
           </Routes>
         <FooterView/>
       </>
-    );
+    )
   }
 }
 
-export default App;
+export default App

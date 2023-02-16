@@ -1,22 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import { FiChevronRight, FiMoreHorizontal, FiPlusCircle } from "react-icons/fi";
-import { IconContext } from "react-icons";
+import { FiChevronRight } from 'react-icons/fi'
+import { IconContext } from 'react-icons'
 
-import { storeClient } from "../storeClient";
-import gql from "graphql-tag";
-import ProductCard from "../components/ProductCard";
+import { storeClient } from '../storeClient'
+import gql from 'graphql-tag'
+import ProductCard from '../components/ProductCard'
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      latestSamplePacks: Array(),
+      latestSamplePacks: []
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     storeClient.query({
       query: gql`
         query ListProducts {
@@ -39,19 +39,19 @@ class HomePage extends React.Component {
             }
           }
         }
-      `,
+      `
     }).then(r => {
-      this.setState({latestSamplePacks: r.data.products.items});
+      this.setState({ latestSamplePacks: r.data.products.items })
     })
   }
 
-  render() {
+  render () {
     return (
       <main className='flex-col justify-center '>
-        <div className='w-full flex justify-center start-banner pt-16' style={{"backgroundImage": "url(https://images.pexels.com/photos/7130555/pexels-photo-7130555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}}>
+        <div className='w-full flex justify-center start-banner pt-16' style={{ backgroundImage: 'url(https://images.pexels.com/photos/7130555/pexels-photo-7130555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }}>
         <div className='all-width py-24 flex items-center justify-between bg-transparent' data-theme="light">
           <div className='h-min content-width'>
-          <h1 className='text-5xl z-5 w-full'>The last Lo-Fi samples you'll ever need</h1>
+          <h1 className='text-5xl z-5 w-full'>The last Lo-Fi samples you&apos;ll ever need</h1>
           <div className='content-width'>
             <p className='my-6 text-md'>
             With over 450 individual samples, this huge sample pack has
@@ -63,7 +63,7 @@ class HomePage extends React.Component {
             <div>
             <Link className='btn shadow-2xl shadow-accent btn-accent btn-lg text-lg mr-2' to="/p/lo-fi-memories">
               <span>Check it out!</span>
-              <IconContext.Provider value={{ size: "1.5em" }}>
+              <IconContext.Provider value={{ size: '1.5em' }}>
               <FiChevronRight className='ml-2'/>
               </IconContext.Provider>
             </Link>
@@ -96,13 +96,13 @@ class HomePage extends React.Component {
               different genres, these sample packs are designed to provide you with the samples
               you need to create awesome music quickly and easily.
             </p>
-            <IconContext.Provider value={{ size: "2em" }}>
+            <IconContext.Provider value={{ size: '2em' }}>
               <div
                 className="gap-8 my-8 grid-rows-none h-[42rem] overflow-hidden"
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(16rem, 1fr))",
-                  maskImage: "linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 25%)"
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))',
+                  maskImage: 'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 25%)'
                 }}
               >
                 {this.state.latestSamplePacks.map(p => (
@@ -112,13 +112,13 @@ class HomePage extends React.Component {
                     productName={p.name}
                     badges={[]}
                     priceWithTax={{
-                      __typename: "SinglePrice",
+                      __typename: 'SinglePrice',
                       value: p.variants[0].priceWithTax
                     }}
                     description={p.description}
                     slug={p.slug}
                   />
-                  )
+                )
                 )}
                 <div className="card w-auto h-48 bg-base-200 card-bordered indicator"/>
                 <div className="card w-auto h-48 bg-base-200 card-bordered indicator"/>
@@ -129,7 +129,7 @@ class HomePage extends React.Component {
             <div className="flex flex-col items-center -mt-16">
               <Link className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' to='/products'>
                 <span>Show all</span>
-                <IconContext.Provider value={{ size: "1.5em" }}>
+                <IconContext.Provider value={{ size: '1.5em' }}>
                   <FiChevronRight className='ml-2'/>
                 </IconContext.Provider>
               </Link>
@@ -140,13 +140,13 @@ class HomePage extends React.Component {
           <div className='all-width mt-16'>
             <h2 className='text-4xl mb-4'>Blog</h2>
             <p className='content-width opacity-75'>
-              Whether you're a beginner, or you're already experienced with music production,
-              you'll definitely get something out of our blog. It's where we share music
+              Whether you&apos;re a beginner, or you&apos;re already experienced with music production,
+              you&apos;ll definitely get something out of our blog. It&apos;s where we share music
               production, sound design, mixing and mastering tips.
             </p>
           </div>
           <div className="all-width flex space-x-6 flex-row my-8">
-            <IconContext.Provider value={{ size: "2em" }}>
+            <IconContext.Provider value={{ size: '2em' }}>
             <div className="card bg-base-100 indicator grow flex-1 card-bordered">
               <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
               <div className="card-body p-6">
@@ -154,7 +154,7 @@ class HomePage extends React.Component {
                   Should you put reverb on the bass?
                 </h2>
                 <p className="pb-4 text-md opacity-75">
-                  As a rule of thumb, you shouldn't use reverb on bass tracks.
+                  As a rule of thumb, you shouldn&apos;t use reverb on bass tracks.
                   However, there are some exceptions to this rule that you
                   should always be aware of.
                 </p>
@@ -169,7 +169,7 @@ class HomePage extends React.Component {
               <figure><img src="https://images.unsplash.com/photo-1675019674011-9141ec0df347?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" /></figure>
               <div className="card-body p-6">
                 <h2 className="card-title">
-                  How to make a synth sound "alive"
+                  How to make a synth sound &quot;alive&quot;
                 </h2>
                 <p className="pb-4 text-md opacity-75">
                   Software synths often sound very cold, because they are
@@ -190,7 +190,7 @@ class HomePage extends React.Component {
                   5 Ways to add texture to anything!
                 </h2>
                 <p className="pb-4 text-md opacity-75">
-                  "Noisy" basses, abberated percussion, and some crunchy
+                  &quot;Noisy&quot; basses, abberated percussion, and some crunchy
                   layers can give a lot of edge to your music. Here
                   are five methods for making things sound coarse and texturized.
                 </p>
@@ -205,7 +205,7 @@ class HomePage extends React.Component {
           </div>
           <div className="fade-btm mb-8 all-width">
             <div className="w-full flex space-x-6 flex-row">
-              <IconContext.Provider value={{ size: "2em" }}>
+              <IconContext.Provider value={{ size: '2em' }}>
                 <div className="card indicator h-48 grow flex-1 bg-base-200">
                 </div>
                 <div className="card indicator h-48 flex-1 bg-base-200">
@@ -218,15 +218,15 @@ class HomePage extends React.Component {
           <div className="flex flex-col items-center -mt-16">
             <a className='btn btn-accent btn-lg text-lg mr-2 z-10 shadow-2xl shadow-accent' href='/'>
               <span>Show all</span>
-              <IconContext.Provider value={{ size: "1.5em" }}>
+              <IconContext.Provider value={{ size: '1.5em' }}>
               <FiChevronRight className='ml-2'/>
               </IconContext.Provider>
             </a>
           </div>
         </div>
       </main>
-    );
+    )
   }
 }
 
-export default HomePage;
+export default HomePage

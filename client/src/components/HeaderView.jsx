@@ -1,29 +1,29 @@
-import React from "react";
-import { IconContext } from "react-icons";
-import { FiDownload, FiLogOut, FiMinusCircle, FiSettings, FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { storeClient } from "../storeClient";
-import gql from "graphql-tag";
-import { subscribe } from "../events";
+import React from 'react'
+import { IconContext } from 'react-icons'
+import { FiDownload, FiLogOut, FiMinusCircle, FiSettings, FiShoppingCart } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import { storeClient } from '../storeClient'
+import gql from 'graphql-tag'
+import { subscribe } from '../events'
 
 class HeaderView extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       activeOrder: false,
       order: {
         lines: [],
         totalWithTax: 0,
-        totalQuantity: 0,
+        totalQuantity: 0
       }
     }
-    this.getCurrentOrder();
-    subscribe("updateOrder", (r)=>{
-      this.setState({order: r.detail});
+    this.getCurrentOrder()
+    subscribe('updateOrder', (r) => {
+      this.setState({ order: r.detail })
     })
   }
 
-  getCurrentOrder() {
+  getCurrentOrder () {
     storeClient.query({
       query: gql`
         query GetCurrentOrder {
@@ -42,18 +42,18 @@ class HeaderView extends React.Component {
             totalQuantity
           }
         }
-      `,
+      `
     }).then(r => {
-      if(r.data.activeOrder == null) {
-        this.setState({activeOrder: false})
+      if (r.data.activeOrder == null) {
+        this.setState({ activeOrder: false })
       } else {
-        this.setState({activeOrder: true})
-        this.setState({order: r.data.activeOrder})
+        this.setState({ activeOrder: true })
+        this.setState({ order: r.data.activeOrder })
       }
     })
   }
 
-  removeAllFromOrder() {
+  removeAllFromOrder () {
     storeClient.mutate({
       mutation: gql`
         mutation {
@@ -76,14 +76,14 @@ class HeaderView extends React.Component {
           }
         }
       `
-    }).then(r=>{
-      if(r.data.removeAllOrderLines.__typename == "Order") {
-        this.setState({order: r.data.removeAllOrderLines});
+    }).then(r => {
+      if (r.data.removeAllOrderLines.__typename === 'Order') {
+        this.setState({ order: r.data.removeAllOrderLines })
       }
     })
   }
 
-  removeFromOrder(id) {
+  removeFromOrder (id) {
     storeClient.mutate({
       mutation: gql`
         mutation {
@@ -106,14 +106,14 @@ class HeaderView extends React.Component {
           }
         }
       `
-    }).then(r=>{
-      if(r.data.removeOrderLine.__typename == "Order") {
-        this.setState({order: r.data.removeOrderLine});
+    }).then(r => {
+      if (r.data.removeOrderLine.__typename === 'Order') {
+        this.setState({ order: r.data.removeOrderLine })
       }
     })
   }
 
-  render() {
+  render () {
     return (
       <header className='flex justify-center fixed top-0 bg-base-200 header z-20'>
         <div className="navbar px-0 all-width">
@@ -140,8 +140,8 @@ class HeaderView extends React.Component {
                 <div className="indicator">
                   <span className="indicator-item badge badge-sm text-sm badge-primary">
                     { this.state.order.totalQuantity }
-                  </span> 
-                  <IconContext.Provider value={{ size: "1.5rem" }}>
+                  </span>
+                  <IconContext.Provider value={{ size: '1.5rem' }}>
                     <FiShoppingCart className="-ml-1 mt-1"/>
                   </IconContext.Provider>
                 </div>
@@ -151,7 +151,7 @@ class HeaderView extends React.Component {
                 className="dropdown-content menu menu-compact px-6 mt-3 shadow-2xl rounded-box w-80 border-base-300 border"
               >
                 <h2 className="pt-6 text-xl">Shopping Cart</h2>
-                {this.state.order.lines.map((l)=>(
+                {this.state.order.lines.map((l) => (
                 <div
                   className="flex-row flex border-b border-base-300 py-3 items-center"
                   key={l.id}
@@ -163,9 +163,9 @@ class HeaderView extends React.Component {
                   </div>
                   <div
                     className="btn btn-ghost text-primary btn-circle color-primary btn-sm "
-                    onClick={()=>this.removeFromOrder(l.id)}
+                    onClick={() => this.removeFromOrder(l.id)}
                   >
-                    <IconContext.Provider value={{ size: "1.25rem" }}>
+                    <IconContext.Provider value={{ size: '1.25rem' }}>
                       <FiMinusCircle></FiMinusCircle>
                     </IconContext.Provider>
                   </div>
@@ -175,7 +175,7 @@ class HeaderView extends React.Component {
                   Total (after VAT): {this.state.order.totalWithTax}
                 </div>
                 <div className="py-3 justify-end flex-row flex">
-                  <div className="btn btn-sm btn-ghost text-sm" onClick={()=>this.removeAllFromOrder()}>Remove all</div>
+                  <div className="btn btn-sm btn-ghost text-sm" onClick={() => this.removeAllFromOrder()}>Remove all</div>
                   <div className="btn btn-sm btn-primary ml-2">Check out</div>
                 </div>
               </ul>
@@ -187,9 +187,9 @@ class HeaderView extends React.Component {
               <img alt="Your Account" src="https://images.unsplash.com/photo-1619379180294-3e714910e031?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"/>
             </div>
             </label>
-            <IconContext.Provider value={{ size: "1rem" }}>
+            <IconContext.Provider value={{ size: '1rem' }}>
             <ul
-            className="mt-3 p-2 menu menu-compact dropdown-content shadow-2xl bg-base-200 rounded-box w-80 border-base-300 border rounded-box w-52 z-50"
+            className="mt-3 p-2 menu menu-compact dropdown-content shadow-2xl bg-base-200 w-52 border-base-300 border rounded-box z-50"
             >
               <h2 className="p-3 text-xl">Your Profile</h2>
               <li>
@@ -222,8 +222,8 @@ class HeaderView extends React.Component {
           </div>
         </div>
         </header>
-    );
+    )
   }
 }
 
-export default HeaderView;
+export default HeaderView
