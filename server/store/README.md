@@ -1,4 +1,8 @@
-# sba-backend
+# Store Server
+
+This server hosts - and provides the API to - the store. It requires having set
+up a local database. Set your environment variables accordingly to have it
+properly connected to your local database server.
 
 This project was generated with [`@vendure/create`](https://github.com/vendure-ecommerce/vendure/tree/master/packages/create).
 
@@ -11,8 +15,10 @@ Useful links:
 
 ## Directory structure
 
-* `/src` contains the source code of your Vendure server. All your custom code and plugins should reside here.
-* `/static` contains static (non-code) files such as assets (e.g. uploaded images) and email templates.
+* `/src` contains the source code of your Vendure server. All your custom code
+  and plugins should reside here.
+* `/static` contains static (non-code) files such as assets (e.g. uploaded
+  images) and email templates.
 
 ## Development
 
@@ -20,8 +26,8 @@ Useful links:
 yarn dev
 ```
 
-will start the Vendure server and [worker](https://www.vendure.io/docs/developer-guide/vendure-worker/) processes from
-the `src` directory.
+will start the Vendure server and [worker](https://www.vendure.io/docs/developer-guide/vendure-worker/)
+processes from the `src` directory.
 
 ## Build
 
@@ -33,8 +39,8 @@ will compile the TypeScript sources into the `/dist` directory.
 
 ## Production
 
-For production, there are many possibilities which depend on your operational requirements as well as your production
-hosting environment.
+For production, there are many possibilities which depend on your operational
+requirements as well as your production hosting environment.
 
 ### Running directly
 
@@ -44,18 +50,20 @@ You can run the built files directly with the `start` script:
 yarn start
 ```
 
-You could also consider using a process manager like [pm2](https://pm2.keymetrics.io/) to run and manage
-the server & worker processes.
+You could also consider using a process manager like [pm2](https://pm2.keymetrics.io/)
+to run and manage the server & worker processes.
 
 ### Using Docker
 
-We've included a sample [Dockerfile](./Dockerfile) which you can build with the following command:
+We've included a sample [Dockerfile](./Dockerfile) which you can build with the
+following command:
 
 ```
 docker build -t vendure .
 ```
 
-This builds an image and tags it with the name "vendure". We can then run it with:
+This builds an image and tags it with the name "vendure". We can then run it
+with:
 
 ```
 # Run the server
@@ -68,16 +76,19 @@ docker run -dp 3000:3000 -e "DB_HOST=host.docker.internal" --name vendure-worker
 Here is a breakdown of the command used above:
 
 - `docker run` - run the image we created with `docker build`
-- `-dp 3000:3000` - the `-d` flag means to run in "detached" mode, so it runs in the background and does not take
-control of your terminal. `-p 3000:3000` means to expose port 3000 of the container (which is what Vendure listens
-on by default) as port 3000 on your host machine.
-- `-e "DB_HOST=host.docker.internal"` - the `-e` option allows you to define environment variables. In this case we
-are setting the `DB_HOST` to point to a special DNS name that is created by Docker desktop which points to the IP of
-the host machine. Note that `host.docker.internal` only exists in a Docker Desktop environment and thus should only be
-used in development.
+- `-dp 3000:3000` - the `-d` flag means to run in "detached" mode, so it runs in
+  the background and does not take control of your terminal. `-p 3000:3000`
+  means to expose port 3000 of the container (which is what Vendure listens
+  on by default) as port 3000 on your host machine.
+- `-e "DB_HOST=host.docker.internal"` - the `-e` option allows you to define
+  environment variables. In this case we are setting the `DB_HOST` to point to
+  a special DNS name that is created by Docker desktop which points to the IP of
+  the host machine. Note that `host.docker.internal` only exists in a Docker
+  Desktop environment and thus should only be used in development.
 - `--name vendure-server` - we give the container a human-readable name.
 - `vendure` - we are referencing the tag we set up during the build.
-- `npm run start:server` - this last part is the actual command that should be run inside the container.
+- `npm run start:server` - this last part is the actual command that should be
+  run inside the container.
 
 ### Docker compose
 
