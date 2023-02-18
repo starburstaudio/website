@@ -2,7 +2,9 @@
 
 This server hosts - and provides the API to - the store. It requires having set
 up a local database. Set your environment variables accordingly to have it
-properly connected to your local database server.
+properly connected to your local database server. `.env` files are automatically
+ignored by git in this directory so you can add your own one safely. The same
+goes for asset data that you may populate your instance of the server with.
 
 This project was generated with [`@vendure/create`](https://github.com/vendure-ecommerce/vendure/tree/master/packages/create).
 
