@@ -32,11 +32,20 @@ class ProductPage extends React.Component {
   generateContents(contentText) {
     const out = []
     let nextIsHeading = true
-    contentText.split('\n').forEach((l) => {
+    contentText.split('\n').forEach((l, i) => {
       if (nextIsHeading) {
-        out.push(<h3 className="mt-4">{l}</h3>)
+        out.push(
+          <h3 className="mt-4" key={i}>
+            {l}
+          </h3>
+        )
         nextIsHeading = false
-      } else if (l !== '') out.push(<li className="opacity-75 ml-4">{l}</li>)
+      } else if (l !== '')
+        out.push(
+          <li className="opacity-75 ml-4" key={i}>
+            {l}
+          </li>
+        )
       else nextIsHeading = true
     })
 
@@ -202,9 +211,7 @@ class ProductPage extends React.Component {
 }
 
 ProductPage.propTypes = {
-  params: {
-    product: PropTypes.string
-  }
+  params: PropTypes.object
 }
 
 export default withParams(ProductPage)
