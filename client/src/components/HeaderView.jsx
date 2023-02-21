@@ -185,40 +185,47 @@ class HeaderView extends React.Component {
                 </label>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu menu-compact px-6 mt-3 shadow-2xl rounded-box w-80 border-base-300 border">
-                  <h2 className="pt-6 text-xl">Shopping Cart</h2>
-                  {this.state.order.lines.map((l) => (
-                    <div
-                      className="flex-row flex border-b border-base-300 py-3 items-center"
-                      key={l.id}>
-                      <img
-                        className="h-16 w-16 p-0 rounded-lg"
-                        src={l.featuredAsset.preview}
-                      />
-                      <div className="grow ml-3 cursor-default">
-                        <h3 className="text-base">{l.name}</h3>
-                        <p className="text-sm">{l.formatPrice()}</p>
-                      </div>
-                      <div
-                        className="btn btn-ghost text-primary btn-circle color-primary btn-sm "
-                        onClick={() => this.removeFromOrder(l.id)}>
-                        <IconContext.Provider value={{ size: '1.25rem' }}>
-                          <FiMinusCircle></FiMinusCircle>
-                        </IconContext.Provider>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="pt-3">
-                    Total (after VAT):{' '}
-                    {Product.formatPrice(this.state.order.totalWithTax)}
+                  className="dropdown-content menu menu-compact mt-3 shadow-md rounded-box w-80 border-base-300 border">
+                  <h2 className="pt-6 text-xl mb-2 px-6">Shopping Cart</h2>
+                  <div className="opacity-75 mb-3 px-6">
+                    {this.state.order.totalQuantity} items
                   </div>
-                  <div className="py-3 justify-end flex-row flex">
-                    <div
-                      className="btn btn-sm btn-ghost text-sm"
-                      onClick={() => this.removeAllFromOrder()}>
-                      Remove all
+                  <div className="border-b border-base-300 px-6">
+                    {this.state.order.lines.map((l) => (
+                      <div
+                        className="flex-row flex mb-4 items-center"
+                        key={l.ID}>
+                        <img
+                          className="h-16 w-16 p-0 rounded-lg border-base-300 border"
+                          src={l.featuredAsset.preview}
+                        />
+                        <div className="grow ml-3 cursor-default">
+                          <h3 className="text-base leading-tight">{l.name}</h3>
+                          <p className="text-sm opacity-75">
+                            {l.formatPrice()}
+                          </p>
+                        </div>
+                        <div
+                          className="btn btn-ghost text-primary btn-circle color-primary btn-sm "
+                          onClick={() => this.removeFromOrder(l.ID)}>
+                          <IconContext.Provider value={{ size: '1.25rem' }}>
+                            <FiMinusCircle></FiMinusCircle>
+                          </IconContext.Provider>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="py-3 px-6">
+                    <div className="opacity-75">Total (after VAT)</div>
+                    <div className="text-lg font-bold">
+                      {Product.formatPrice(this.state.order.totalWithTax)}
                     </div>
-                    <div className="btn btn-sm btn-primary ml-2">Check out</div>
+                  </div>
+                  <div className="btn btn-lg btn-primary rounded-b-xl rounded-t-none no-animation">
+                    Checkout Now
+                    <IconContext.Provider value={{ size: '1.5rem' }}>
+                      <FiShoppingCart className="ml-2"></FiShoppingCart>
+                    </IconContext.Provider>
                   </div>
                 </ul>
               </div>
