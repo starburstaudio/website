@@ -135,9 +135,20 @@ class Product {
     })
   }
 
-  formatPrice(p) {
-    if (this.price !== 0) {
-      return parseFloat(this.price) / 100.0 + ' $'
+  fromOrderLine(line) {
+    this.ID = line.id
+    this.name = line.productVariant.name
+    this.featuredAsset = line.featuredAsset
+    this.price = line.proratedLinePrice
+  }
+
+  formatPrice() {
+    return Product.formatPrice(this.price)
+  }
+
+  static formatPrice(p) {
+    if (p !== 0) {
+      return parseFloat(p) / 100.0 + ' $'
     } else {
       return 'FREE'
     }
