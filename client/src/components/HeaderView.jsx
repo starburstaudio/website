@@ -8,7 +8,7 @@ import {
   FiShoppingCart
 } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { storeClient } from '../storeClient'
+import { storeClient, Product } from '../storeClient'
 import gql from 'graphql-tag'
 import { subscribe } from '../events'
 
@@ -55,8 +55,21 @@ class HeaderView extends React.Component {
         if (r.data.activeOrder == null) {
           this.setState({ activeOrder: false })
         } else {
-          this.setState({ activeOrder: true })
-          this.setState({ order: r.data.activeOrder })
+          const lines = []
+          const o = r.data.activeOrder
+          o.lines.forEach((line) => {
+            const p = new Product()
+            p.fromOrderLine(line)
+            lines.push(p)
+          })
+          this.setState({
+            activeOrder: true,
+            order: {
+              lines,
+              totalWithTax: o.totalWithTax,
+              totalQuantity: o.totalQuantity
+            }
+          })
         }
       })
   }
@@ -183,8 +196,8 @@ class HeaderView extends React.Component {
                         src={l.featuredAsset.preview}
                       />
                       <div className="grow ml-3 cursor-default">
-                        <h3 className="text-base">{l.productVariant.name}</h3>
-                        <p className="text-sm">{l.proratedLinePrice}</p>
+                        <h3 className="text-base">{l.name}</h3>
+                        <p className="text-sm">{l.formatPrice()}</p>
                       </div>
                       <div
                         className="btn btn-ghost text-primary btn-circle color-primary btn-sm "
@@ -196,7 +209,8 @@ class HeaderView extends React.Component {
                     </div>
                   ))}
                   <div className="pt-3">
-                    Total (after VAT): {this.state.order.totalWithTax}
+                    Total (after VAT):{' '}
+                    {Product.formatPrice(this.state.order.totalWithTax)}
                   </div>
                   <div className="py-3 justify-end flex-row flex">
                     <div
