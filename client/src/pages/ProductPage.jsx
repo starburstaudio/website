@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { IconContext } from 'react-icons'
 import { FiCheck, FiFile, FiMusic, FiPlusCircle } from 'react-icons/fi'
@@ -59,24 +59,38 @@ class ProductPage extends React.Component {
           <div className="all-width pt-24 gap-8 flex justify-between">
             <div className="content-width shrink-0">
               <h1 className="text-4xl my-6">{this.state.product.name}</h1>
+              <div className="breadcrumbs m-0 mb-4 -mt-4 p-0 opacity-75">
+                <ul>
+                  <li>
+                    <Link to="/products">All Products</Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/products/${this.state.product.collections?.[0].slug}`}>
+                      {this.state.product.collections?.[0].name}
+                    </Link>
+                  </li>
+                  <li>{this.state.product.name}</li>
+                </ul>
+              </div>
+              <div className="text-2xl font-bold">
+                {this.state.product.formatPrice()}
+              </div>
+              <p className="opacity-75 text-sm mb-4 -mt-2">
+                Price includes VAT
+              </p>
               <div
                 dangerouslySetInnerHTML={{
                   __html: this.state.product.description
                 }}
-                className="pb-4 text-md space-y-4 opacity-75"
+                className="mb-8 text-md space-y-2 opacity-75"
               />
               <div className="btn btn-primary btn-lg shadow-2xl shadow-primary mb-8">
                 <IconContext.Provider value={{ size: '1.5em' }}>
-                  <span className="mr-2 text-lg">
-                    Buy for {this.state.product.formatPrice()}
-                  </span>
+                  <span className="mr-2 text-lg">Buy now</span>
                   <FiPlusCircle />
                 </IconContext.Provider>
               </div>
-              <p className="opacity-75 text-sm">
-                Price includes VAT. Upon purchase, you&apos;ll receive an e-mail
-                with your download link.
-              </p>
             </div>
             <div className="relative" style={{ width: '32rem' }}>
               {

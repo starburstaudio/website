@@ -107,6 +107,7 @@ class Product {
             }
             collections {
               slug
+              name
             }
             customFields {
               youtubeUrl
