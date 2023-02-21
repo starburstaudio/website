@@ -5,6 +5,7 @@ import {
   InMemoryCache
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import React from 'react'
 
 const AUTH_TOKEN_KEY = 'auth_token'
 
@@ -46,4 +47,50 @@ const storeClient = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-export { storeClient }
+class Product {
+  constructor () {
+    this.productId = Number
+    this.productVariantId = String
+    this.productName = String
+    this.slug = String
+    this.description = String
+    this.currencyCode = String
+    this.facetValueIds = Array
+    this.productAsset = {
+      preview: String
+    }
+    this.price = Number
+  }
+
+  formatPrice (p) {
+    if (this.price !== 0) {
+      return (parseFloat(this.price) / 100.0) + ' $'
+    } else {
+      return 'FREE'
+    }
+  }
+
+  badge () {
+    switch (Number(this.facetValueIds[0])) {
+      case 41:
+        return <div className="badge badge-secondary">FREE</div>
+      case 42:
+        return <div className="badge badge-accent">NEW</div>
+      default:
+    }
+  }
+}
+
+// formatPrice (p) {
+//   let v = 0
+//   if (p.__typename === 'SinglePrice') v = p.value
+//   if (p.__typename === 'PriceRange') v = p.min
+
+//   if (v !== 0) {
+//     return (parseFloat(v) / 100.0) + ' $'
+//   } else {
+//     return 'FREE'
+//   }
+// }
+
+export { storeClient, Product }
