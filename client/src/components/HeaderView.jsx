@@ -25,7 +25,21 @@ class HeaderView extends React.Component {
     }
     this.getCurrentOrder()
     subscribe('updateOrder', (r) => {
-      this.setState({ order: r.detail })
+      const lines = []
+      const o = r.detail
+      o.lines.forEach((line) => {
+        const p = new Product()
+        p.fromOrderLine(line)
+        lines.push(p)
+      })
+      this.setState({
+        activeOrder: true,
+        order: {
+          lines,
+          totalWithTax: o.totalWithTax,
+          totalQuantity: o.totalQuantity
+        }
+      })
     })
   }
 
@@ -101,7 +115,21 @@ class HeaderView extends React.Component {
       })
       .then((r) => {
         if (r.data.removeAllOrderLines.__typename === 'Order') {
-          this.setState({ order: r.data.removeAllOrderLines })
+          const lines = []
+          const o = r.data.removeAllOrderLines
+          o.lines.forEach((line) => {
+            const p = new Product()
+            p.fromOrderLine(line)
+            lines.push(p)
+          })
+          this.setState({
+            activeOrder: true,
+            order: {
+              lines,
+              totalWithTax: o.totalWithTax,
+              totalQuantity: o.totalQuantity
+            }
+          })
         }
       })
   }
@@ -133,7 +161,21 @@ class HeaderView extends React.Component {
       })
       .then((r) => {
         if (r.data.removeOrderLine.__typename === 'Order') {
-          this.setState({ order: r.data.removeOrderLine })
+          const lines = []
+          const o = r.data.removeOrderLine
+          o.lines.forEach((line) => {
+            const p = new Product()
+            p.fromOrderLine(line)
+            lines.push(p)
+          })
+          this.setState({
+            activeOrder: true,
+            order: {
+              lines,
+              totalWithTax: o.totalWithTax,
+              totalQuantity: o.totalQuantity
+            }
+          })
         }
       })
   }

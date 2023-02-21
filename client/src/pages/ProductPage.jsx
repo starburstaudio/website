@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, useParams } from 'react-router-dom'
+import gql from 'graphql-tag'
 
 import { IconContext } from 'react-icons'
 import { FiCheck, FiFile, FiMusic, FiPlusCircle } from 'react-icons/fi'
+import { storeClient, Product } from '../storeClient'
+import { trigger } from '../events'
 
-import { Product } from '../storeClient'
 import { AudioPlayer } from '../components/AudioPlayer'
 
 function withParams(Component) {
@@ -52,6 +54,38 @@ class ProductPage extends React.Component {
     return out
   }
 
+  addToOrder() {
+    storeClient
+      .mutate({
+        mutation: gql`
+        mutation {
+          addItemToOrder(productVariantId: ${this.state.product.pvID}, quantity: 1) {
+            __typename
+            ... on Order {
+              lines {
+                id
+                featuredAsset {
+                  preview
+                }
+                productVariant {
+                  name
+                }
+                proratedLinePrice
+              }
+              totalWithTax
+              totalQuantity
+            }
+          }
+        }
+      `
+      })
+      .then((r) => {
+        if (r.data.addItemToOrder.__typename === 'Order') {
+          trigger('updateOrder', r.data.addItemToOrder)
+        }
+      })
+  }
+
   render() {
     return (
       <main className="">
@@ -87,7 +121,11 @@ class ProductPage extends React.Component {
               />
               <div className="btn btn-primary btn-lg shadow-2xl shadow-primary mb-8">
                 <IconContext.Provider value={{ size: '1.5em' }}>
-                  <span className="mr-2 text-lg">Buy now</span>
+                  <span
+                    className="mr-2 text-lg"
+                    onClick={() => this.addToOrder()}>
+                    Buy now
+                  </span>
                   <FiPlusCircle />
                 </IconContext.Provider>
               </div>

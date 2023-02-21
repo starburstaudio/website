@@ -76,11 +76,11 @@ class ProductCard extends React.Component {
           <img src={this.props.assetPreview} />
         </figure>
         <div className="card-body p-6 flex-1">
-          <h2 className="card-title h-min">
+          <h2 className="card-title h-min font-bold">
             {this.props.productName}
             {this.formatBadge(this.props.badges[0])}
           </h2>
-          <p className="font-bold h-min grow-0">
+          <p className="font-bold text-base h-min grow-0">
             {this.formatPrice(this.props.priceWithTax)}
           </p>
           <div

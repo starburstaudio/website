@@ -51,6 +51,7 @@ const storeClient = new ApolloClient({
 class Product {
   constructor(
     ID,
+    pvID,
     name,
     slug,
     description,
@@ -63,6 +64,7 @@ class Product {
     collections
   ) {
     this.ID = ID
+    this.pvID = pvID
     this.name = name
     this.slug = slug
     this.description = description
@@ -99,6 +101,7 @@ class Product {
               mimeType
             }
             variants {
+              id
               priceWithTax
             }
             featuredAsset {
@@ -122,6 +125,7 @@ class Product {
         .then((result) => {
           const p = result.data.product
           this.ID = p.id
+          this.pvID = p.variants[0]?.id
           this.name = p.name
           this.description = p.description
           this.currencyCode = p.currencyCode
