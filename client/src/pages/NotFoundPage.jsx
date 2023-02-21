@@ -1,7 +1,7 @@
 import React from 'react'
 
 class NotFoundPage extends React.Component {
-  render () {
+  render() {
     return (
       <div className="all-width pt-24 m-auto">
         <h1 className="text-4xl my-6">Error 404</h1>

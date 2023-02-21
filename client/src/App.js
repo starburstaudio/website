@@ -13,19 +13,19 @@ import HeaderView from './components/HeaderView'
 import FooterView from './components/FooterView'
 
 class App extends React.Component {
-  render () {
+  render() {
     return (
       <>
         <HeaderView />
-          <Routes>
-            <Route path="*" element={ <NotFoundPage/> } />
-            <Route path="/" element={ <HomePage/> } />
-            <Route path="/about" element={ <AboutPage/> } />
-            <Route path="/products" element={ <ProductsPage/> } />
-            <Route path="/products/:section?/:free?" element={ <ProductsPage/> } />
-            <Route path="/p/:product" element={ <ProductPage/> } />
-          </Routes>
-        <FooterView/>
+        <Routes>
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:section?/:free?" element={<ProductsPage />} />
+          <Route path="/p/:product" element={<ProductPage />} />
+        </Routes>
+        <FooterView />
       </>
     )
   }
