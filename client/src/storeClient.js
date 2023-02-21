@@ -2,7 +2,8 @@ import {
   ApolloClient,
   ApolloLink,
   HttpLink,
-  InMemoryCache
+  InMemoryCache,
+  gql
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import React from 'react'
@@ -48,29 +49,101 @@ const storeClient = new ApolloClient({
 })
 
 class Product {
-  constructor () {
-    this.productId = Number
-    this.productVariantId = String
-    this.productName = String
-    this.slug = String
-    this.description = String
-    this.currencyCode = String
-    this.facetValueIds = Array
-    this.productAsset = {
-      preview: String
-    }
-    this.price = Number
+  constructor(
+    ID,
+    name,
+    slug,
+    description,
+    currencyCode,
+    facetValueIds,
+    assets,
+    featuredAsset,
+    price,
+    customFields,
+    collections
+  ) {
+    this.ID = ID
+    this.name = name
+    this.slug = slug
+    this.description = description
+    this.currencyCode = currencyCode
+    this.facetValueIds = facetValueIds
+    this.assets = assets
+    this.featuredAsset = featuredAsset
+    this.price = price
+    this.customFields = customFields
+    this.collections = collections
   }
 
-  formatPrice (p) {
+  fromSlug(slug) {
+    this.slug = slug
+    return new Promise((resolve) => {
+      storeClient
+        .query({
+          query: gql`
+        query RevealProduct {
+          product(slug: "${slug}") {
+            id
+            name
+            description
+            customFields {
+              youtubeUrl
+              totalSamples
+              fileSize
+              contents
+            }
+            assets {
+              id
+              name
+              source
+              mimeType
+            }
+            variants {
+              priceWithTax
+            }
+            featuredAsset {
+              source
+              preview
+            }
+            collections {
+              slug
+            }
+            customFields {
+              youtubeUrl
+              totalSamples
+              fileSize
+              contents
+            }
+          }
+        }
+      `
+        })
+        .then((result) => {
+          const p = result.data.product
+          this.ID = p.id
+          this.name = p.name
+          this.description = p.description
+          this.currencyCode = p.currencyCode
+          this.facetValues = p.facetValues
+          this.assets = p.assets
+          this.featuredAsset = p.featuredAsset
+          this.price = p.variants[0].priceWithTax
+          this.customFields = p.customFields
+          this.collections = p.collections
+          resolve(this)
+        })
+    })
+  }
+
+  formatPrice(p) {
     if (this.price !== 0) {
-      return (parseFloat(this.price) / 100.0) + ' $'
+      return parseFloat(this.price) / 100.0 + ' $'
     } else {
       return 'FREE'
     }
   }
 
-  badge () {
+  badge() {
     switch (Number(this.facetValueIds[0])) {
       case 41:
         return <div className="badge badge-secondary">FREE</div>
