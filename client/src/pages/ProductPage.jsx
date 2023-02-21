@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom'
 import { IconContext } from 'react-icons'
 import { FiCheck, FiFile, FiMusic, FiPlusCircle } from 'react-icons/fi'
 
-import { storeClient } from '../storeClient'
-import gql from 'graphql-tag'
+import { Product } from '../storeClient'
 import { AudioPlayer } from '../components/AudioPlayer'
 
 function withParams(Component) {
@@ -18,61 +17,16 @@ class ProductPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      product: {
-        name: '',
-        description: '',
-        assets: [],
-        featuredAsset: { source: '' },
-        variants: [{ priceWithTax: 0 }],
-        collections: [],
-        customFields: {
-          youtubeUrl: '',
-          totalSamples: '',
-          fileSize: '',
-          contents: ''
-        }
-      }
+      product: new Product()
     }
   }
 
   componentDidMount() {
     const product = this.props.params.product
 
-    storeClient
-      .query({
-        query: gql`
-        query RevealProduct {
-          product(slug: "${product}") {
-            name
-            description
-            customFields {
-              youtubeUrl
-              totalSamples
-              fileSize
-              contents
-            }
-            assets {
-              id
-              name
-              source
-              mimeType
-            }
-            variants {
-              priceWithTax
-            }
-            featuredAsset {
-              source
-            }
-            collections {
-              slug
-            }
-          }
-        }
-      `
-      })
-      .then((result) => {
-        this.setState({ product: result.data.product })
-      })
+    this.state.product.fromSlug(product).then((p) => {
+      this.setState({ product: p })
+    })
   }
 
   generateContents(contentText) {
@@ -105,8 +59,7 @@ class ProductPage extends React.Component {
               <div className="btn btn-primary btn-lg shadow-2xl shadow-primary mb-8">
                 <IconContext.Provider value={{ size: '1.5em' }}>
                   <span className="mr-2 text-lg">
-                    Buy for {this.state.product.variants[0].priceWithTax / 100}{' '}
-                    $
+                    Buy for {this.state.product.formatPrice()}
                   </span>
                   <FiPlusCircle />
                 </IconContext.Provider>
@@ -120,22 +73,23 @@ class ProductPage extends React.Component {
               {
                 <img
                   alt=""
-                  src={this.state.product.featuredAsset.source}
+                  src={this.state.product.featuredAsset?.source}
                   className="w-full rounded-2xl saturate-150 brightness-150 opacity-60 blur-3xl absolute"
                 />
               }
               {
                 <img
                   alt="Cover"
-                  src={this.state.product.featuredAsset.source}
+                  src={this.state.product.featuredAsset?.source}
                   className="w-full rounded-2xl relative"
                 />
               }
             </div>
           </div>
         </div>
-        {this.state.product.collections.filter((c) => c.slug === 'sample-packs')
-          .length > 0 && (
+        {this.state.product.collections?.filter(
+          (c) => c.slug === 'sample-packs'
+        ).length > 0 && (
           <div className="flex flex-col items-center mb-8 space-y-4">
             <div className="all-width">
               <h2 className="text-4xl mb-4 mt-8 text-center">
@@ -202,10 +156,10 @@ class ProductPage extends React.Component {
                   }) && (
                     <>
                       <h2 className="text-2xl">Previews</h2>
-                      <p>
+                      <p className="opacity-75">
                         Here are just some of the{' '}
                         {this.state.product.customFields.totalSamples} samples
-                        from this pack!{' '}
+                        from this pack!
                       </p>
                     </>
                   )}
