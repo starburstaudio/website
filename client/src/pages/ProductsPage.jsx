@@ -7,12 +7,12 @@ import { FiFile, FiSearch, FiSettings } from 'react-icons/fi'
 import { HiOutlineGift } from 'react-icons/hi'
 import { TbWaveSine } from 'react-icons/tb'
 
-import { storeClient } from '../storeClient'
+import { storeClient } from '../common/api/store/storeClient'
 
 import gql from 'graphql-tag'
-import CheckOptions from '../components/CheckOptions'
-import CheckSelect from '../components/CheckSelect'
-import ProductCard from '../components/ProductCard'
+import CheckOptions from '../common/components/CheckOptions'
+import CheckSelect from '../common/components/CheckSelect'
+import ProductCard from '../common/components/ProductCard'
 
 function withParams(Component) {
   // eslint-disable-next-line react/display-name

@@ -8,9 +8,10 @@ import {
   FiShoppingCart
 } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { storeClient, Product } from '../storeClient'
+import { storeClient } from '../api/store/storeClient'
+import { Product } from '../api/store/Product'
 import gql from 'graphql-tag'
-import { subscribe } from '../events'
+import { subscribe } from '../../events'
 
 class HeaderView extends React.Component {
   constructor(props) {

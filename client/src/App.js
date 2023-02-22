@@ -1,5 +1,3 @@
-import './App.css'
-
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
@@ -9,8 +7,8 @@ import AboutPage from './pages/AboutPage'
 import ProductsPage from './pages/ProductsPage'
 import ProductPage from './pages/ProductPage'
 
-import HeaderView from './components/HeaderView'
-import FooterView from './components/FooterView'
+import HeaderView from './common/components/HeaderView'
+import FooterView from './common/components/FooterView'
 
 class App extends React.Component {
   render() {

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { FiPlusCircle } from 'react-icons/fi'
 
-import { storeClient } from '../storeClient'
-import { trigger } from '../events'
+import { storeClient } from '../api/store/storeClient'
+import { trigger } from '../../events'
 
 import gql from 'graphql-tag'
 

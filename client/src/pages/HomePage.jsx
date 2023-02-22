@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import { FiChevronRight } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
 
-import { storeClient } from '../storeClient'
+import { storeClient } from '../common/api/store/storeClient'
 import gql from 'graphql-tag'
-import ProductCard from '../components/ProductCard'
+import ProductCard from '../common/components/ProductCard'
 
 class HomePage extends React.Component {
   constructor(props) {

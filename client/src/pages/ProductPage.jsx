@@ -5,10 +5,11 @@ import gql from 'graphql-tag'
 
 import { IconContext } from 'react-icons'
 import { FiCheck, FiFile, FiMusic, FiPlusCircle } from 'react-icons/fi'
-import { storeClient, Product } from '../storeClient'
+import { storeClient } from '../common/api/store/storeClient'
+import { Product } from '../common/api/store/Product'
 import { trigger } from '../events'
 
-import { AudioPlayer } from '../components/AudioPlayer'
+import { AudioPlayer } from '../common/components/AudioPlayer'
 
 function withParams(Component) {
   // eslint-disable-next-line react/display-name
