@@ -47,7 +47,8 @@ npm run dev:store     # Store server
 
 ## 📜 License
 
-All code in this repository is licensed under the GNU General Public License
-v3.0 or later
+All code in this repository is licensed under the GNU Affero General Public
+License v3.0 or later. If you've never heard of it,
+[here](https://www.gnu.org/licenses/why-affero-gpl.html) is some info on it.
 
 [See the license](./LICENSE)
