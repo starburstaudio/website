@@ -30,6 +30,9 @@ jobs:
       
       - name: Install only dev dependencies
         run: npm i -D --prefix=client
+      
+      - name: Install sarif formatter
+        run: npm i @microsoft/eslint-formatter-sarif
 
       - name: Run ESLint
         run: npx eslint client/src
