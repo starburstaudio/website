@@ -1,5 +1,6 @@
-import { storeClient } from "./storeClient"
-import gql from "graphql-tag"
+/* eslint-disable react/react-in-jsx-scope */
+import { storeClient } from './storeClient'
+import gql from 'graphql-tag'
 
 class Product {
   constructor(
@@ -98,6 +99,35 @@ class Product {
     this.name = line.productVariant.name
     this.featuredAsset = line.featuredAsset
     this.price = line.proratedLinePrice
+    return this
+  }
+
+  fromProductListing(r) {
+    this.facetValueIds = r.facetValues?.map((e) => e.id)
+    this.id = r.id
+    this.name = r.name
+    this.description = r.description
+    this.slug = r.slug
+    this.featuredAsset = r.featuredAsset
+    this.price = r.variants[0].priceWithTax
+    return this
+  }
+
+  fromSearchResult(r) {
+    this.facetValueIds = r.facetValueIds
+    this.id = r.productId
+    this.name = r.productName
+    this.description = r.description
+    this.slug = r.slug
+    this.featuredAsset = r.productAsset
+    let price = 0
+
+    if (r.priceWithTax.__typename === 'SinglePrice')
+      price = r.priceWithTax.value
+    if (r.priceWithTax.__typename === 'PriceRange') price = r.priceWithTax.min
+    this.price = price
+
+    return this
   }
 
   formatPrice() {
@@ -113,6 +143,7 @@ class Product {
   }
 
   badge() {
+    if (this.facetValueIds === undefined) return
     switch (Number(this.facetValueIds[0])) {
       case 41:
         return <div className="badge badge-secondary">FREE</div>
