@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "@apollo/client": "^3.7.7",
-    "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -35,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-prettier-standard": "^4.0.1",
