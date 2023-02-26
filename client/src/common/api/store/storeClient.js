@@ -2,11 +2,9 @@ import {
   ApolloClient,
   ApolloLink,
   HttpLink,
-  InMemoryCache,
-  gql
+  InMemoryCache
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import React from 'react'
 
 const AUTH_TOKEN_KEY = 'auth_token'
 
