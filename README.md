@@ -1,5 +1,13 @@
 # SBA Website
 
+> **Warning**
+> Do not contribute to this project. Do not file pull requests or issues.
+
+This entire project is Work-In-Progress and currently nowhere near completion.
+Further documentation and information will follow once it's completed.
+
+---
+
 This is a Monorepository, meaning that all parts of this project are hosted in
 the same repo.
 
