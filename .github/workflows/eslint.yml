@@ -27,16 +27,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Go to `client` subdirectory
-        run: cd client
       
       - name: Install only dev dependencies
-        run: npm i -D
+        run: npm i -D --prefix=client
 
       - name: Run ESLint
         run: npx eslint src
-          --config .eslintrc.js
+          --config client/.eslintrc.js
           --ext .js,.jsx
           --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif
