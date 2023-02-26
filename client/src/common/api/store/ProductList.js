@@ -64,7 +64,7 @@ class ProductList {
                     ? 'collectionSlug: "' + section + '" '
                     : ''
                 }
-                ${onlyFree ? 'facetValueIds: [41]' : ''}
+                ${onlyFree ? 'facetValueIds: [4]' : ''}
                 }) {
                 totalItems
                 items {
