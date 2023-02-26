@@ -51,7 +51,7 @@ class ProductCard extends React.Component {
     return (
       <div className="card w-auto card-bordered border-base-300 bg-base-200 indicator h-[36rem]">
         <figure className="aspect-square shrink-0">
-          <img src={this.props.product.featuredAsset?.source} />
+          <img src={this.props.product.featuredAsset?.preview} />
         </figure>
         <div className="card-body p-6 flex-1">
           <h2 className="card-title h-min font-bold">

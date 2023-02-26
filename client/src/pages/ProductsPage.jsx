@@ -8,6 +8,7 @@ import { HiOutlineGift } from 'react-icons/hi'
 import { TbWaveSine } from 'react-icons/tb'
 
 import { storeClient } from '../common/api/store/storeClient'
+import { ProductList } from '../common/api/store/ProductList'
 
 import gql from 'graphql-tag'
 import CheckOptions from '../common/components/CheckOptions'
@@ -23,7 +24,7 @@ class ProductsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      results: [],
+      products: new ProductList(),
       allItemCount: 0,
       sectionTitle: 'All Products',
       section:
@@ -33,22 +34,6 @@ class ProductsPage extends React.Component {
       onlyFree: this.props.params.free === 'free',
       searchQuery: ''
     }
-
-    storeClient
-      .query({
-        query: gql`
-          query GetTotal {
-            search(input: {}) {
-              totalItems
-            }
-          }
-        `
-      })
-      .then((r) => {
-        this.setState({ allItemCount: r.data.search.totalItems })
-      })
-
-    this.setTitle()
   }
 
   formatPrice(p) {
@@ -74,106 +59,29 @@ class ProductsPage extends React.Component {
   }
 
   performSearch() {
-    if (
-      this.state.searchQuery !== '' ||
-      this.state.onlyFree ||
-      (this.state.section !== undefined && this.state.section !== '')
-    ) {
-      storeClient
-        .query({
-          query: gql`
-          query SearchProducts {
-            search(input: {
-              ${
-                this.state.section !== undefined
-                  ? 'collectionSlug: "' + this.state.section + '" '
-                  : ''
-              }
-              ${this.state.onlyFree ? 'facetValueIds: [41]' : ''}
-            }) {
-              totalItems
-              items {
-                productId
-                productVariantId
-                productName
-                slug
-                description
-                currencyCode
-                facetValueIds
-                productAsset {
-                  preview
-                }
-                priceWithTax {
-                  __typename
-                  ... on SinglePrice {
-                    value
-                  }
-                  ... on PriceRange {
-                    min
-                  }
-                }
-              }
-            }
-          }
-        `
-        })
-        .then((result) => {
-          this.setState({ results: result.data.search.items })
-        })
-    } else {
-      storeClient
-        .query({
-          query: gql`
-            query ListProducts {
-              products(options: { sort: { createdAt: DESC } }) {
-                totalItems
-                items {
-                  id
-                  name
-                  slug
-                  description
-                  facetValues {
-                    id
-                  }
-                  featuredAsset {
-                    preview
-                  }
-                  variants {
-                    id
-                    priceWithTax
-                  }
-                }
-              }
-            }
-          `
-        })
-        .then((result) => {
-          const p = result.data.products
-          const items = []
-          p.items.forEach((i) => {
-            const facetValues = i.facetValues.map((e) => e.id)
-            items.push({
-              productId: i.id,
-              productVariantId: i.variants[0].id,
-              productName: i.name,
-              slug: i.slug,
-              description: i.description,
-              currencyCode: null,
-              facetValueIds: facetValues,
-              productAsset: i.featuredAsset,
-              priceWithTax: {
-                __typename: 'SinglePrice',
-                value: i.variants[0].priceWithTax
-              }
-            })
-          })
-          this.setState({ results: items })
-        })
-    }
+    new ProductList()
+      .listAll(this.state.section, this.state.onlyFree)
+      .then((r) => {
+        this.setState({ products: r })
+      })
   }
 
   componentDidMount() {
     this.performSearch()
+    this.setTitle()
+    storeClient
+      .query({
+        query: gql`
+          query GetTotal {
+            search(input: {}) {
+              totalItems
+            }
+          }
+        `
+      })
+      .then((r) => {
+        this.setState({ allItemCount: r.data.search.totalItems })
+      })
   }
 
   filterRedirect(section, isFree) {
@@ -261,7 +169,7 @@ class ProductsPage extends React.Component {
         <div className="all-width pt-24">
           <h1 className="text-4xl my-6">{this.state.sectionTitle}</h1>
           <p className="mb-8 opacity-75">
-            Showing {[this.state.results.length]} out of{' '}
+            Showing {[this.state.products.totalItems]} out of{' '}
             {[this.state.allItemCount]} total products.
           </p>
         </div>
@@ -344,18 +252,8 @@ class ProductsPage extends React.Component {
               gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))'
             }}>
             <IconContext.Provider value={{ size: '1.5em' }}>
-              {this.state.results.map((r) => (
-                <div key={r}>
-                  <ProductCard
-                    id={r.productVariantId}
-                    assetPreview={r.productAsset.preview}
-                    productName={r.productName}
-                    badges={r.facetValueIds}
-                    priceWithTax={r.priceWithTax}
-                    description={r.description}
-                    slug={r.slug}
-                  />
-                </div>
+              {this.state.products.products?.map((r) => (
+                <div key={r.id}>{<ProductCard product={r} />}</div>
               ))}
             </IconContext.Provider>
           </div>
@@ -366,10 +264,7 @@ class ProductsPage extends React.Component {
 }
 
 ProductsPage.propTypes = {
-  params: {
-    section: PropTypes.string,
-    free: PropTypes.string
-  }
+  params: PropTypes.object
 }
 
 export default withParams(ProductsPage)
