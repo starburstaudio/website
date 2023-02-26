@@ -4,43 +4,21 @@ import { Link } from 'react-router-dom'
 import { FiChevronRight } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
 
-import { storeClient } from '../common/api/store/storeClient'
-import gql from 'graphql-tag'
 import ProductCard from '../common/components/ProductCard'
+import { ProductList } from '../common/api/store/ProductList'
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      latestSamplePacks: []
+      latestSamplePacks: new ProductList()
     }
   }
 
   componentDidMount() {
-    storeClient
-      .query({
-        query: gql`
-          query ListProducts {
-            products(options: { sort: { createdAt: DESC } }) {
-              items {
-                id
-                name
-                slug
-                description
-                featuredAsset {
-                  preview
-                }
-                variants {
-                  priceWithTax
-                }
-              }
-            }
-          }
-        `
-      })
-      .then((r) => {
-        this.setState({ latestSamplePacks: r.data.products.items })
-      })
+    this.state.latestSamplePacks.listAll().then((p) => {
+      this.setState({ latestSamplePacks: p })
+    })
   }
 
   render() {
@@ -121,19 +99,8 @@ class HomePage extends React.Component {
                   maskImage:
                     'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 25%)'
                 }}>
-                {this.state.latestSamplePacks.map((p) => (
-                  <ProductCard
-                    key={p.productId}
-                    assetPreview={p.featuredAsset.preview}
-                    productName={p.name}
-                    badges={[]}
-                    priceWithTax={{
-                      __typename: 'SinglePrice',
-                      value: p.variants[0].priceWithTax
-                    }}
-                    description={p.description}
-                    slug={p.slug}
-                  />
+                {this.state.latestSamplePacks?.products?.map((p) => (
+                  <ProductCard key={p.id} product={p} />
                 ))}
                 <div className="card w-auto h-48 bg-base-200 card-bordered indicator" />
                 <div className="card w-auto h-48 bg-base-200 card-bordered indicator" />
