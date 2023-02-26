@@ -34,7 +34,6 @@
     ]
   },
   "devDependencies": {
-    "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-prettier-standard": "^4.0.1",
