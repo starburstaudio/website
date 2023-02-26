@@ -9,7 +9,50 @@ class ProductList {
     this.totalItems = 0
   }
 
-  listAll(section, onlyFree) {
+  listAll() {
+    return new Promise((resolve) => {
+      storeClient
+        .query({
+          query: gql`
+            query {
+              products(options: { sort: { createdAt: DESC } }) {
+                totalItems
+                items {
+                  id
+                  name
+                  slug
+                  description
+                  facetValues {
+                    id
+                  }
+                  featuredAsset {
+                    preview
+                  }
+                  variants {
+                    id
+                    priceWithTax
+                  }
+                }
+              }
+            }
+          `
+        })
+        .then((result) => {
+          const items = []
+
+          result.data.products.items.forEach((r) => {
+            const p = new Product().fromProductListing(r)
+            items.push(p)
+          })
+
+          this.products = items
+          this.totalItems = result.data.products.totalItems
+          resolve(this)
+        })
+    })
+  }
+
+  search(section, onlyFree) {
     return new Promise((resolve) => {
       storeClient
         .query({

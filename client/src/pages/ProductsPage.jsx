@@ -59,11 +59,23 @@ class ProductsPage extends React.Component {
   }
 
   performSearch() {
-    new ProductList()
-      .listAll(this.state.section, this.state.onlyFree)
-      .then((r) => {
-        this.setState({ products: r })
-      })
+    if (
+      this.state.searchQuery !== '' ||
+      this.state.onlyFree ||
+      (this.state.section !== undefined && this.state.section !== '')
+    ) {
+      this.state.products
+        .search(this.state.section, this.state.onlyFree)
+        .then((r) => {
+          this.setState({ products: r })
+        })
+    } else {
+      this.state.products
+        .listAll(this.state.section, this.state.onlyFree)
+        .then((r) => {
+          this.setState({ products: r })
+        })
+    }
   }
 
   componentDidMount() {
