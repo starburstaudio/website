@@ -32,7 +32,7 @@ jobs:
         run: npm i -D --prefix=client
 
       - name: Run ESLint
-        run: npx eslint src
+        run: npx eslint client/src
           --config client/.eslintrc.js
           --ext .js,.jsx
           --format @microsoft/eslint-formatter-sarif
