@@ -264,12 +264,14 @@ class HeaderView extends React.Component {
                       {Product.formatPrice(this.state.order.totalWithTax)}
                     </div>
                   </div>
-                  <div className="btn btn-lg btn-primary rounded-b-xl rounded-t-none no-animation">
-                    Checkout Now
-                    <IconContext.Provider value={{ size: '1.5rem' }}>
-                      <FiShoppingCart className="ml-2"></FiShoppingCart>
-                    </IconContext.Provider>
-                  </div>
+                  <Link to="/checkout" className="w-full">
+                    <div className="btn btn-lg btn-accent rounded-b-2xl rounded-t-none no-animation w-full">
+                      Checkout Now
+                      <IconContext.Provider value={{ size: '1.5rem' }}>
+                        <FiShoppingCart className="ml-2"></FiShoppingCart>
+                      </IconContext.Provider>
+                    </div>
+                  </Link>
                 </ul>
               </div>
             )}
