@@ -30,6 +30,9 @@ jobs:
 
       - name: Go to `client` subdirectory
         run: cd client
+      
+      - name: Install only dev dependencies
+        run: npm i -D
 
       - name: Run ESLint
         run: npx eslint src
