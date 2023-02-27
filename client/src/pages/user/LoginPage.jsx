@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className="all-width pt-24 m-auto">
+      <div className="all-width pt-24 m-auto pb-8">
         <AccountCard />
       </div>
     )
