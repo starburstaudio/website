@@ -1,4 +1,4 @@
-# SBA Website
+# Website
 
 > **Warning**
 > Do not contribute to this project. Do not file pull requests or issues.
