@@ -106,6 +106,16 @@ class ProductList {
         })
     })
   }
+
+  fromLines(o) {
+    const lines = []
+    o.lines.forEach((line) => {
+      const p = new Product()
+      p.fromOrderLine(line)
+      lines.push(p)
+    })
+    this.products = lines
+  }
 }
 
 export { ProductList }
