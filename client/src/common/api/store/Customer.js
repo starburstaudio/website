@@ -45,6 +45,37 @@ class Customer {
         console.log(r)
       })
   }
+
+  login(username, password, rememberMe) {
+    return new Promise((resolve, reject) => {
+      storeClient
+        .mutate({
+          mutation: gql`
+            mutation {
+              login(username: "${username}", password: "${password}", rememberMe: ${rememberMe}) {
+                __typename
+                ... on InvalidCredentialsError {
+                  message
+                }
+                ... on NotVerifiedError {
+                  message
+                }
+                ... on NativeAuthStrategyError {
+                  message
+                }
+              }
+            }
+          `
+        })
+        .then((r) => {
+          if (r.data.login.__typename === 'CurrentUser') {
+            resolve()
+          } else {
+            reject(new Error(r.data.login.message))
+          }
+        })
+    })
+  }
 }
 
 export { Customer }
