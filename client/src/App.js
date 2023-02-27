@@ -9,6 +9,7 @@ import ProductPage from './pages/ProductPage'
 
 import HeaderView from './common/components/HeaderView'
 import FooterView from './common/components/FooterView'
+import CheckoutPage from './pages/checkout/CheckoutPage'
 
 class App extends React.Component {
   render() {
@@ -18,10 +19,14 @@ class App extends React.Component {
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/" element={<HomePage />} />
+          {/* Info */}
           <Route path="/about" element={<AboutPage />} />
+          {/* Products */}
+          <Route path="/p/:product" element={<ProductPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:section?/:free?" element={<ProductsPage />} />
-          <Route path="/p/:product" element={<ProductPage />} />
+          {/* Checkout */}
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
         <FooterView />
       </>
