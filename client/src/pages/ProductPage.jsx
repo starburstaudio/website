@@ -162,13 +162,12 @@ class ProductPage extends React.Component {
             </div>
             {this.state.product.customFields.youtubeUrl !== undefined && (
               <iframe
-                className="all-width aspect-video rounded-xl"
+                className="all-width aspect-video rounded-2xl border border-base-300"
                 src={
                   'https://www.youtube-nocookie.com/embed/' +
                   this.state.product.customFields.youtubeUrl.split(
                     '/watch?v='
-                  )[1] +
-                  '?controls=0'
+                  )[1]
                 }
                 title="YouTube video player"
                 frameBorder="0"
