@@ -138,7 +138,7 @@ class ProductPage extends React.Component {
                 <img
                   alt=""
                   src={this.state.product.featuredAsset?.source}
-                  className="w-full rounded-2xl saturate-150 brightness-150 opacity-60 blur-3xl absolute"
+                  className="w-full rounded-2xl saturate-150 brightness-150 opacity-glow blur-3xl absolute"
                 />
               }
               {

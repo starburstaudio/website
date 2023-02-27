@@ -70,6 +70,9 @@ input[type=number] {
   .check-select svg {
     stroke: #0a84ff;
   }
+  .opacity-glow {
+    opacity: .2;
+  }
 }
 @media (prefers-color-scheme: light) {
   .header, .dropdown-content {
@@ -87,6 +90,9 @@ input[type=number] {
   }
   .check-select svg {
     stroke: #1953FF;
+  }
+  .opacity-glow {
+    opacity: .8;
   }
 }
 

@@ -50,7 +50,7 @@ class CheckoutPage extends React.Component {
                 <div className="flex-row flex mb-6 items-center" key={l.ID}>
                   <div>
                     <img
-                      className="h-24 w-24 p-0 rounded-lg saturate-150 brightness-150 opacity-20 blur-xl absolute"
+                      className="h-24 w-24 p-0 rounded-lg saturate-150 brightness-150 opacity-glow blur-xl absolute"
                       src={l.featuredAsset.preview}
                     />
                     <img
