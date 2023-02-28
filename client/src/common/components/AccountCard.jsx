@@ -2,6 +2,7 @@ import React from 'react'
 import { Customer } from '../api/store/Customer'
 import { FiEye, FiEyeOff, FiStopCircle } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
+import { trigger } from '../../events'
 
 class AccountCard extends React.Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class AccountCard extends React.Component {
         .then(
           (r) => {
             this.setState({ isProcessing: false, currentError: undefined })
+            trigger('updateCustomer', r)
           },
           (e) => {
             this.setState({ isProcessing: false, currentError: e.message })

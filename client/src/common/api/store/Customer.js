@@ -21,29 +21,35 @@ class Customer {
   }
 
   getCurrentCustomer() {
-    storeClient
-      .query({
-        query: gql`
-          query activeCustomer {
-            activeCustomer {
-              id
-              createdAt
-              updatedAt
-              title
-              firstName
-              lastName
-              phoneNumber
-              emailAddress
-              customFields
+    return new Promise((resolve, reject) => {
+      storeClient
+        .query({
+          query: gql`
+            query activeCustomer {
+              activeCustomer {
+                id
+                createdAt
+                updatedAt
+                title
+                firstName
+                lastName
+                phoneNumber
+                emailAddress
+                customFields
+              }
             }
-          }
-        `
-      })
-      .then((r) => {
-        const c = r.data.activeCustomer
-        this.loggedIn = c !== null
-        console.log(r)
-      })
+          `
+        })
+        .then((r) => {
+          this.setFromActiveCustomer(r.data.activeCustomer)
+          resolve(this)
+        })
+    })
+  }
+
+  setFromActiveCustomer(c) {
+    this.loggedIn = c !== null
+    console.log(c)
   }
 
   login(username, password, rememberMe) {
@@ -69,7 +75,8 @@ class Customer {
         })
         .then((r) => {
           if (r.data.login.__typename === 'CurrentUser') {
-            resolve()
+            this.setFromActiveCustomer(r)
+            resolve(this)
           } else {
             reject(new Error(r.data.login.message))
           }

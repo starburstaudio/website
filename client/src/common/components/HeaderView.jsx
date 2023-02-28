@@ -46,6 +46,10 @@ class HeaderView extends React.Component {
         }
       })
     })
+
+    subscribe('updateCustomer', (c) => {
+      this.setState({ customer: c.detail })
+    })
   }
 
   componentDidMount() {
