@@ -43,7 +43,17 @@ const storeClient = new ApolloClient({
     afterwareLink,
     httpLink
   ]),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore'
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all'
+    }
+  }
 })
 
 export { storeClient }

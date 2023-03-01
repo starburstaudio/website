@@ -10,6 +10,7 @@ import ProductPage from './pages/ProductPage'
 import HeaderView from './common/components/HeaderView'
 import FooterView from './common/components/FooterView'
 import CheckoutPage from './pages/checkout/CheckoutPage'
+import LoginPage from './pages/user/LoginPage'
 
 class App extends React.Component {
   render() {
@@ -27,6 +28,8 @@ class App extends React.Component {
           <Route path="/products/:section?/:free?" element={<ProductsPage />} />
           {/* Checkout */}
           <Route path="/checkout" element={<CheckoutPage />} />
+          {/* User */}
+          <Route path="/u/Login" element={<LoginPage />} />
         </Routes>
         <FooterView />
       </>

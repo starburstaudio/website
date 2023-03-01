@@ -1,21 +1,70 @@
 import React from 'react'
-import { FiEye, FiEyeOff } from 'react-icons/fi'
+import { Customer } from '../api/store/Customer'
+import { FiEye, FiEyeOff, FiStopCircle } from 'react-icons/fi'
+import { IconContext } from 'react-icons'
+import { trigger } from '../../events'
 
 class AccountCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      signUpMode: false
+      signUpMode: false,
+      email: '',
+      password: '',
+      rememberMe: false,
+      isProcessing: false,
+      currentError: undefined
     }
+
+    this.updateEmail = this.updateEmail.bind(this)
+    this.updatePassword = this.updatePassword.bind(this)
+    this.updateRememberMe = this.updateRememberMe.bind(this)
+  }
+
+  updateEmail(event) {
+    if (!this.state.isProcessing) this.setState({ email: event.target.value })
+  }
+
+  updatePassword(event) {
+    if (!this.state.isProcessing)
+      this.setState({ password: event.target.value })
+  }
+
+  updateRememberMe(event) {
+    if (!this.state.isProcessing)
+      this.setState({ rememberMe: event.target.checked })
   }
 
   switchMode() {
-    this.setState({ signUpMode: !this.state.signUpMode })
+    if (!this.state.isProcessing)
+      this.setState({ signUpMode: !this.state.signUpMode })
+  }
+
+  submitData() {
+    console.log(this?.state)
+    this.setState({ isProcessing: true }, () => {
+      new Customer()
+        .login(this.state.email, this.state.password, this.state.rememberMe)
+        .then(
+          (r) => {
+            this.setState({ isProcessing: false, currentError: undefined })
+            trigger('updateCustomer', r)
+          },
+          (e) => {
+            this.setState({ isProcessing: false, currentError: e.message })
+          }
+        )
+    })
   }
 
   render() {
     return (
-      <div className="card shadow bg-base-200 grow border-base-300 border max-w-md m-auto">
+      <div
+        className={`card shadow grow border max-w-md m-auto ${
+          this.state.isProcessing
+            ? 'bg-base-100 border-base-200'
+            : 'bg-base-200 border-base-300'
+        }`}>
         <div className="card-body space-y-2">
           <h1 className="text-3xl text-center">
             {this.state.signUpMode ? 'Sign Up' : 'Log In'}
@@ -24,11 +73,26 @@ class AccountCard extends React.Component {
             {this.state.signUpMode ? 'Sign Up' : 'Log In'} with{' '}
             {this.state.signUpMode ? 'an' : 'your'} e-mail adress and password
           </p>
+          {this.state.currentError !== undefined && (
+            <div className="alert alert-error shadow-lg">
+              <div className="flex">
+                <IconContext.Provider value={{ size: '1.25rem' }}>
+                  <FiStopCircle />
+                </IconContext.Provider>
+                <span className="shrink">{this.state.currentError}</span>
+              </div>
+            </div>
+          )}
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">E-Mail</span>
             </label>
-            <input type="email" className="input input-bordered w-full" />
+            <input
+              type="email"
+              disabled={this.state.isProcessing}
+              className="input input-bordered w-full"
+              onChange={this.updateEmail}
+            />
           </div>
           <div className="form-control w-full">
             <label className="label">
@@ -36,7 +100,9 @@ class AccountCard extends React.Component {
               <span className="label-text-alt">
                 {!this.state.signUpMode && (
                   <a
-                    className="link-primary"
+                    className={`${
+                      this.state.isProcessing ? 'link' : 'link-primary'
+                    }`}
                     tabIndex="-1"
                     href="/password-reset">
                     Forgot Password?
@@ -45,9 +111,14 @@ class AccountCard extends React.Component {
               </span>
             </label>
             <div className="input-group">
-              <input type="password" className="input input-bordered w-full" />
+              <input
+                type="password"
+                disabled={this.state.isProcessing}
+                className="input border-r-0 input-bordered w-full"
+                onChange={this.updatePassword}
+              />
               <label className="swap">
-                <input type="checkbox" />
+                <input type="checkbox" disabled={this.state.isProcessing} />
                 <div className="btn rounded-l-none no-animation swap-on">
                   <FiEyeOff />
                 </div>
@@ -60,13 +131,27 @@ class AccountCard extends React.Component {
           <div className="form-control">
             <label className="label cursor-pointer">
               <span className="label-text">Remember me</span>
-              <input type="checkbox" className="checkbox checkbox-primary" />
+              <input
+                type="checkbox"
+                disabled={this.state.isProcessing}
+                checked={this.state.rememberMe}
+                onChange={this.updateRememberMe}
+                className="checkbox checkbox-primary"
+              />
             </label>
           </div>
-          <button className="btn btn-primary">Log in</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.submitData()}
+            disabled={this.state.isProcessing}>
+            {this.state.signUpMode ? 'Sign Up' : 'Log In'}
+          </button>
           <div>
             <span className="opacity-75">Don&apos;t have an account yet? </span>
-            <a className="link link-primary" onClick={() => this.switchMode()}>
+            <a
+              className={`${this.state.isProcessing ? 'link' : 'link-primary'}`}
+              onClick={() => this.switchMode()}
+              disabled={this.state.isProcessing}>
               {this.state.signUpMode ? 'Log In' : 'Sign Up'}
             </a>
           </div>

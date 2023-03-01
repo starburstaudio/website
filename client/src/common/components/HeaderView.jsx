@@ -5,11 +5,15 @@ import {
   FiLogOut,
   FiMinusCircle,
   FiSettings,
-  FiShoppingCart
+  FiShoppingCart,
+  FiUser
 } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { storeClient } from '../api/store/storeClient'
+
 import { Product } from '../api/store/Product'
+import { Customer } from '../api/store/Customer'
+
 import gql from 'graphql-tag'
 import { subscribe } from '../../events'
 
@@ -22,9 +26,9 @@ class HeaderView extends React.Component {
         lines: [],
         totalWithTax: 0,
         totalQuantity: 0
-      }
+      },
+      customer: new Customer()
     }
-    this.getCurrentOrder()
     subscribe('updateOrder', (r) => {
       const lines = []
       const o = r.detail
@@ -42,6 +46,16 @@ class HeaderView extends React.Component {
         }
       })
     })
+
+    subscribe('updateCustomer', (c) => {
+      this.setState({ customer: c.detail })
+      this.getCurrentOrder()
+    })
+  }
+
+  componentDidMount() {
+    this.state.customer.getCurrentCustomer()
+    this.getCurrentOrder()
   }
 
   getCurrentOrder() {
@@ -86,6 +100,22 @@ class HeaderView extends React.Component {
             }
           })
         }
+      })
+  }
+
+  logout() {
+    storeClient
+      .mutate({
+        mutation: gql`
+          mutation {
+            logout {
+              success
+            }
+          }
+        `
+      })
+      .then((r) => {
+        if (r.data?.logout?.success === true) this.componentDidMount()
       })
   }
 
@@ -205,13 +235,6 @@ class HeaderView extends React.Component {
                 <Link to="/">Blog</Link>
               </li>
             </ul>
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="input input-ghost input-sm mx-2"
-              />
-            </div>
             {this.state.activeOrder && (
               <div className="dropdown dropdown-end">
                 <label tabIndex={0}>
@@ -275,45 +298,56 @@ class HeaderView extends React.Component {
                 </ul>
               </div>
             )}
-            <div className="dropdown h-12 dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Your Account"
-                    src="https://images.unsplash.com/photo-1619379180294-3e714910e031?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                  />
-                </div>
-              </label>
-              <IconContext.Provider value={{ size: '1rem' }}>
-                <ul className="mt-3 p-2 menu menu-compact dropdown-content shadow-2xl bg-base-200 w-52 border-base-300 border rounded-box z-50">
-                  <h2 className="p-3 text-xl">Your Profile</h2>
-                  <li>
-                    <Link to="my/products">
-                      <div className="text-primary">
-                        <FiDownload />
+            {!this.state.customer.loggedIn && (
+              <Link className="btn btn-circle btn-ghost" to="/u/login">
+                <IconContext.Provider value={{ size: '1.5rem' }}>
+                  <FiUser />
+                </IconContext.Provider>
+              </Link>
+            )}
+            {this.state.customer.loggedIn && (
+              <div className="dropdown h-12 dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Your Account"
+                      src="https://images.unsplash.com/photo-1619379180294-3e714910e031?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                    />
+                  </div>
+                </label>
+                <IconContext.Provider value={{ size: '1rem' }}>
+                  <ul
+                    tabIndex={0}
+                    className="mt-3 p-2 menu menu-compact dropdown-content shadow-2xl bg-base-200 w-52 border-base-300 border rounded-box z-50">
+                    <h2 className="p-3 text-xl">Account</h2>
+                    <li>
+                      <Link to="/u/products">
+                        <div className="text-primary">
+                          <FiDownload />
+                        </div>
+                        My Products
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/u/settings">
+                        <div className="text-primary">
+                          <FiSettings />
+                        </div>
+                        Settings
+                      </Link>
+                    </li>
+                    <li>
+                      <div onClick={() => this.logout()}>
+                        <div className="text-primary">
+                          <FiLogOut />
+                        </div>
+                        Logout
                       </div>
-                      My Products
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="settings">
-                      <div className="text-primary">
-                        <FiSettings />
-                      </div>
-                      Settings
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="settings">
-                      <div className="text-primary">
-                        <FiLogOut />
-                      </div>
-                      Logout
-                    </Link>
-                  </li>
-                </ul>
-              </IconContext.Provider>
-            </div>
+                    </li>
+                  </ul>
+                </IconContext.Provider>
+              </div>
+            )}
           </div>
         </div>
       </header>
