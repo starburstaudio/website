@@ -49,12 +49,13 @@ class HeaderView extends React.Component {
 
     subscribe('updateCustomer', (c) => {
       this.setState({ customer: c.detail })
+      this.getCurrentOrder()
     })
   }
 
   componentDidMount() {
-    this.getCurrentOrder()
     this.state.customer.getCurrentCustomer()
+    this.getCurrentOrder()
   }
 
   getCurrentOrder() {
