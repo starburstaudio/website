@@ -102,6 +102,22 @@ class HeaderView extends React.Component {
       })
   }
 
+  logout() {
+    storeClient
+      .mutate({
+        mutation: gql`
+          mutation {
+            logout {
+              success
+            }
+          }
+        `
+      })
+      .then((r) => {
+        if (r.data?.logout?.success === true) this.componentDidMount()
+      })
+  }
+
   removeAllFromOrder() {
     storeClient
       .mutate({
@@ -299,7 +315,9 @@ class HeaderView extends React.Component {
                   </div>
                 </label>
                 <IconContext.Provider value={{ size: '1rem' }}>
-                  <ul className="mt-3 p-2 menu menu-compact dropdown-content shadow-2xl bg-base-200 w-52 border-base-300 border rounded-box z-50">
+                  <ul
+                    tabIndex={0}
+                    className="mt-3 p-2 menu menu-compact dropdown-content shadow-2xl bg-base-200 w-52 border-base-300 border rounded-box z-50">
                     <h2 className="p-3 text-xl">Account</h2>
                     <li>
                       <Link to="/u/products">
@@ -318,12 +336,12 @@ class HeaderView extends React.Component {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/u/logout">
+                      <div onClick={() => this.logout()}>
                         <div className="text-primary">
                           <FiLogOut />
                         </div>
                         Logout
-                      </Link>
+                      </div>
                     </li>
                   </ul>
                 </IconContext.Provider>
