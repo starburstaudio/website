@@ -22,10 +22,8 @@ class CheckOptions extends React.Component {
           <div
             key={r.value}
             className={
-              'form-control check-select ' +
-              (this.state.value === r.value
-                ? 'bg-primary hover:bg-primary-focus '
-                : 'bg-base-100 hover:bg-base-200 ')
+              'form-control check-select hover:bg-base-200 ' +
+              (this.state.value === r.value ? 'bg-base-300' : 'bg-base-100 ')
             }
             onClick={() => {
               if (this.state.value === r.value) {
@@ -37,13 +35,7 @@ class CheckOptions extends React.Component {
               }
             }}>
             <label className="label cursor-pointer">
-              <span
-                className={
-                  'label-text flex gap-2 ' +
-                  (this.state.value === r.value ? 'text-white' : '')
-                }>
-                {r.jsx}
-              </span>
+              <span className="label-text flex gap-2">{r.jsx}</span>
             </label>
           </div>
         ))}
