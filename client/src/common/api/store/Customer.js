@@ -47,6 +47,25 @@ class Customer {
     })
   }
 
+  isLoggedIn() {
+    return new Promise((resolve, reject) => {
+      storeClient
+        .query({
+          query: gql`
+            query activeCustomer {
+              activeCustomer {
+                id
+              }
+            }
+          `
+        })
+        .then((r) => {
+          if (r.data.activeCustomer == null) resolve(false)
+          else resolve(r.data.activeCustomer.id !== null)
+        })
+    })
+  }
+
   setFromActiveCustomer(c) {
     this.loggedIn = c !== null
     console.log(c)
