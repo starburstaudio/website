@@ -805,10 +805,10 @@
   dependencies:
     fs-extra "^10.0.0"
 
-"@vendure/asset-server-plugin@1.9.2":
-  version "1.9.2"
-  resolved "https://registry.npmjs.org/@vendure/asset-server-plugin/-/asset-server-plugin-1.9.2.tgz"
-  integrity sha512-0ZlnbUdKj7oJHrHcq4bdOU7d7TU/gFx87qcHevsM/0r4w2dvQnLXYYAXEZjaO5vZ3cJ8xxygJq9bIN8m6N2IOw==
+"@vendure/asset-server-plugin@1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@vendure/asset-server-plugin/-/asset-server-plugin-1.9.3.tgz#f9b1904956a0fa29a462a0ce55c8bd992becb6d8"
+  integrity sha512-X+PDNng1NNb8VW5lpgAQpEfYYT73ZjpJ6mztvAFjr1O6ntbv0dTwT31g2vL5pDYR7+Jn7ib9hmjUUftipCbKkw==
   dependencies:
     file-type "^16.2.0"
     fs-extra "^10.0.0"
