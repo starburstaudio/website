@@ -5,42 +5,63 @@ import { FiMinusCircle } from 'react-icons/fi'
 import { Order } from '../../common/api/store/Order'
 import { Product } from '../../common/api/store/Product'
 
-import { Outlet } from 'react-router-dom'
+import AccountCard from '../../common/components/AccountCard'
+import LoadingSpinner from '../../common/components/LoadingSpinner'
+import CheckoutPay from './CheckoutPay'
+import { Customer } from '../../common/api/store/Customer'
+
+import { subscribe } from '../../events'
 
 class CheckoutPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       order: new Order(),
-      progress: 0
+      progress: 0,
+      currentView: (
+        <div className="p-8 h-96 m-auto">
+          <LoadingSpinner />
+        </div>
+      )
     }
+
+    subscribe('updateCustomer', () => {
+      this.getCurrentOrder()
+    })
   }
 
   getCurrentOrder() {
     this.state.order.getCurrentOrder().then((o) => {
       this.setState({ order: o })
+      switch (o.state) {
+        case 'AddingItems':
+          new Customer().isLoggedIn().then((r) => {
+            if (r) this.setState({ progress: 2, currentView: <CheckoutPay /> })
+            else
+              this.setState({
+                progress: 1,
+                currentView: <AccountCard onLogin={<div />} />
+              })
+          })
+          break
+        case 'done':
+          this.setState({ progress: 3 })
+          break
+        default:
+          this.setState({
+            progress: 0,
+            currentView: (
+              <div className="p-8 h-96 m-auto">
+                <LoadingSpinner />
+              </div>
+            )
+          })
+      }
     })
-  }
-
-  updateProgress() {
-    const sub = window.location.href.split('/').pop()
-
-    switch (sub) {
-      case 'login':
-        this.setState({ progress: 1 })
-        break
-      case 'pay':
-        this.setState({ progress: 2 })
-        break
-      case 'done':
-        this.setState({ progress: 3 })
-        break
-    }
   }
 
   componentDidMount() {
     this.getCurrentOrder()
-    this.updateProgress()
   }
 
   render() {
@@ -79,9 +100,7 @@ class CheckoutPage extends React.Component {
                   </li>
                 </ul>
               </div>
-              <div className="mt-8">
-                <Outlet />
-              </div>
+              <div className="mt-8">{this.state.currentView}</div>
             </div>
             <div className="w-96">
               <h2 className="text-2xl my-8">Your Order</h2>

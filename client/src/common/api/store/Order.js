@@ -8,6 +8,7 @@ class Order {
     this.lines = new ProductList()
     this.totalWithTax = 0
     this.totalQuantity = 0
+    this.state = ''
   }
 
   getCurrentOrder() {
@@ -17,6 +18,7 @@ class Order {
           query: gql`
             query GetCurrentOrder {
               activeOrder {
+                state
                 lines {
                   id
                   featuredAsset {
@@ -38,7 +40,7 @@ class Order {
             this.activeOrder = false
           } else {
             const o = r.data.activeOrder
-
+            this.state = o.state
             this.activeOrder = true
             this.lines.fromLines(o)
             this.totalWithTax = o.totalWithTax
