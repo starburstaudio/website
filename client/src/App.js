@@ -15,6 +15,7 @@ import CheckoutPage from './pages/checkout/CheckoutPage'
 
 import LoginPage from './pages/user/LoginPage'
 import UserProducts from './pages/user/User'
+import CheckoutLogin from './pages/checkout/CheckoutLogin'
 
 class App extends React.Component {
   render() {
@@ -31,7 +32,9 @@ class App extends React.Component {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:section?/:free?" element={<ProductsPage />} />
           {/* Checkout */}
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<CheckoutPage />}>
+            <Route path="login" element={<CheckoutLogin />} />
+          </Route>
           {/* User */}
           <Route path="/u/products" element={<UserProducts />} />
           <Route path="/u/login" element={<LoginPage />} />

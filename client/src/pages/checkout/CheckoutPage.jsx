@@ -4,13 +4,15 @@ import { FiMinusCircle } from 'react-icons/fi'
 
 import { Order } from '../../common/api/store/Order'
 import { Product } from '../../common/api/store/Product'
-import AccountCard from '../../common/components/AccountCard'
+
+import { Outlet } from 'react-router-dom'
 
 class CheckoutPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      order: new Order()
+      order: new Order(),
+      progress: 0
     }
   }
 
@@ -22,6 +24,17 @@ class CheckoutPage extends React.Component {
 
   componentDidMount() {
     this.getCurrentOrder()
+    switch (window.location.href.split('/').pop()) {
+      case 'login':
+        this.setState({ progress: 1 })
+        break
+      case 'pay':
+        this.setState({ progress: 2 })
+        break
+      case 'done':
+        this.setState({ progress: 3 })
+        break
+    }
   }
 
   render() {
@@ -37,12 +50,29 @@ class CheckoutPage extends React.Component {
             <div className="grow pr-8 pb-8">
               <div className="w-full my-6">
                 <ul className="steps w-full">
-                  <li className="step step-primary">Account Log-In</li>
-                  <li className="step">Payment</li>
-                  <li className="step">All done!</li>
+                  <li
+                    className={
+                      'step ' + (this.state.progress > 0 ? 'step-primary' : '')
+                    }>
+                    Account Log-In
+                  </li>
+                  <li
+                    className={
+                      'step ' + (this.state.progress > 1 ? 'step-primary' : '')
+                    }>
+                    Payment
+                  </li>
+                  <li
+                    className={
+                      'step ' + (this.state.progress > 2 ? 'step-primary' : '')
+                    }>
+                    All done!
+                  </li>
                 </ul>
               </div>
-              <AccountCard />
+              <div className="mt-8">
+                <Outlet />
+              </div>
             </div>
             <div className="w-96">
               <h2 className="text-2xl my-8">Your Order</h2>
