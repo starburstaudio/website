@@ -16,6 +16,7 @@ import CheckoutPage from './pages/checkout/CheckoutPage'
 import LoginPage from './pages/user/LoginPage'
 import UserProducts from './pages/user/User'
 import CheckoutLogin from './pages/checkout/CheckoutLogin'
+import CheckoutPay from './pages/checkout/CheckoutPay'
 
 class App extends React.Component {
   render() {
@@ -35,6 +36,7 @@ class App extends React.Component {
           <Route path="/checkout" element={<CheckoutPage />}>
             <Route path="" element={<Navigate to="login" />} />
             <Route path="login" element={<CheckoutLogin />} />
+            <Route path="pay" element={<CheckoutPay />} />
           </Route>
           {/* User */}
           <Route path="/u/products" element={<UserProducts />} />

@@ -62,12 +62,15 @@ class CheckoutPage extends React.Component {
                     }>
                     Account Log-In
                   </li>
-                  <li
-                    className={
-                      'step ' + (this.state.progress > 1 ? 'step-primary' : '')
-                    }>
-                    Payment
-                  </li>
+                  {this.state.order.totalWithTax !== 0 && (
+                    <li
+                      className={
+                        'step ' +
+                        (this.state.progress > 1 ? 'step-primary' : '')
+                      }>
+                      Payment
+                    </li>
+                  )}
                   <li
                     className={
                       'step ' + (this.state.progress > 2 ? 'step-primary' : '')
