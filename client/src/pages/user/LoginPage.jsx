@@ -1,5 +1,6 @@
 import React from 'react'
 import AccountCard from '../../common/components/AccountCard'
+import { Navigate } from 'react-router-dom'
 
 class LoginPage extends React.Component {
   state = {
@@ -10,7 +11,7 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div className="all-width pt-24 m-auto pb-8">
-        <AccountCard />
+        <AccountCard onLogin={<Navigate to={-1}></Navigate>} />
       </div>
     )
   }

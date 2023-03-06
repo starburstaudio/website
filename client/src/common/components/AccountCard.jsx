@@ -13,6 +13,7 @@ class AccountCard extends React.Component {
       password: '',
       rememberMe: false,
       isProcessing: false,
+      isLoggedIn: false,
       currentError: undefined
     }
 
@@ -47,7 +48,11 @@ class AccountCard extends React.Component {
         .login(this.state.email, this.state.password, this.state.rememberMe)
         .then(
           (r) => {
-            this.setState({ isProcessing: false, currentError: undefined })
+            this.setState({
+              isProcessing: false,
+              currentError: undefined,
+              isLoggedIn: true
+            })
             trigger('updateCustomer', r)
           },
           (e) => {
@@ -58,6 +63,8 @@ class AccountCard extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line react/prop-types
+    if (this.state.isLoggedIn) return this.props.onLogin
     return (
       <div
         className={`card shadow grow border max-w-md m-auto ${
