@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import NotFoundPage from './pages/NotFoundPage'
 import HeaderView from './common/components/HeaderView'
@@ -33,6 +33,7 @@ class App extends React.Component {
           <Route path="/products/:section?/:free?" element={<ProductsPage />} />
           {/* Checkout */}
           <Route path="/checkout" element={<CheckoutPage />}>
+            <Route path="" element={<Navigate to="login" />} />
             <Route path="login" element={<CheckoutLogin />} />
           </Route>
           {/* User */}
