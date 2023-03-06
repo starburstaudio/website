@@ -6,6 +6,7 @@ import {
 } from '@vendure/core';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
+import { StripePlugin } from '@vendure/payments-plugin/package/stripe';
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import 'dotenv/config';
 import path from 'path';
@@ -115,6 +116,12 @@ export const config: VendureConfig = {
         AdminUiPlugin.init({
             route: 'admin',
             port: 3002,
+        }),
+        StripePlugin.init({
+          apiKey: String(process.env.STRIPE_SECRET_KEY),
+          webhookSigningSecret: String(process.env.STRIPE_WEBHOOK_SIGNING_SECRET),
+          // This prevents different customers from using the same PaymentIntent
+          storeCustomersInStripe: true,
         }),
     ],
 };
