@@ -149,7 +149,9 @@ class AccountCard extends React.Component {
           <div>
             <span className="opacity-75">Don&apos;t have an account yet? </span>
             <a
-              className={`${this.state.isProcessing ? 'link' : 'link-primary'}`}
+              className={`${
+                this.state.isProcessing ? 'link' : 'link-primary'
+              } cursor-pointer underline`}
               onClick={() => this.switchMode()}
               disabled={this.state.isProcessing}>
               {this.state.signUpMode ? 'Log In' : 'Sign Up'}
