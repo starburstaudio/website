@@ -35,7 +35,7 @@ class Order {
         })
         .then((r) => {
           if (r.data.activeOrder == null) {
-            this.setState({ activeOrder: false })
+            this.activeOrder = false
           } else {
             const o = r.data.activeOrder
 
