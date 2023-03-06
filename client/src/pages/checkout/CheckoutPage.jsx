@@ -22,9 +22,10 @@ class CheckoutPage extends React.Component {
     })
   }
 
-  componentDidMount() {
-    this.getCurrentOrder()
-    switch (window.location.href.split('/').pop()) {
+  updateProgress() {
+    const sub = window.location.href.split('/').pop()
+
+    switch (sub) {
       case 'login':
         this.setState({ progress: 1 })
         break
@@ -35,6 +36,11 @@ class CheckoutPage extends React.Component {
         this.setState({ progress: 3 })
         break
     }
+  }
+
+  componentDidMount() {
+    this.getCurrentOrder()
+    this.updateProgress()
   }
 
   render() {
