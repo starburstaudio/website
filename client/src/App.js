@@ -2,15 +2,19 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import NotFoundPage from './pages/NotFoundPage'
+import HeaderView from './common/components/HeaderView'
+import FooterView from './common/components/FooterView'
+
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
+
 import ProductsPage from './pages/ProductsPage'
 import ProductPage from './pages/ProductPage'
 
-import HeaderView from './common/components/HeaderView'
-import FooterView from './common/components/FooterView'
 import CheckoutPage from './pages/checkout/CheckoutPage'
+
 import LoginPage from './pages/user/LoginPage'
+import UserProducts from './pages/user/User'
 
 class App extends React.Component {
   render() {
@@ -29,7 +33,8 @@ class App extends React.Component {
           {/* Checkout */}
           <Route path="/checkout" element={<CheckoutPage />} />
           {/* User */}
-          <Route path="/u/Login" element={<LoginPage />} />
+          <Route path="/u/products" element={<UserProducts />} />
+          <Route path="/u/login" element={<LoginPage />} />
         </Routes>
         <FooterView />
       </>

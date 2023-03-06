@@ -45,12 +45,12 @@ class CheckoutPage extends React.Component {
               <AccountCard />
             </div>
             <div className="w-96">
-              <h2 className="text-2xl my-6">Your Order</h2>
+              <h2 className="text-2xl my-8">Your Order</h2>
               {this.state.order.lines.products.map((l) => (
-                <div className="flex-row flex mb-6 items-center" key={l.ID}>
+                <div className="flex-row flex mb-8 items-center" key={l.ID}>
                   <div>
                     <img
-                      className="h-24 w-24 p-0 rounded-lg saturate-150 brightness-150 opacity-glow blur-xl absolute"
+                      className="h-24 w-24 p-0 rounded-lg saturate-150 brightness-150 opacity-glow-subtle blur-xl absolute"
                       src={l.featuredAsset.preview}
                     />
                     <img

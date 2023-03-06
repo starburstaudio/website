@@ -89,7 +89,16 @@ class ProductPage extends React.Component {
 
   render() {
     return (
-      <main className="">
+      <main>
+        <img
+          alt=""
+          src={this.state.product.featuredAsset?.source}
+          className="w-full aspect-video saturate-150 brightness-150 opacity-glow-subtle blur-3xl absolute -z-10"
+          style={{
+            maskImage:
+              'linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%)'
+          }}
+        />
         <div className="flex flex-col items-center mb-8">
           <div className="all-width pt-24 gap-8 flex justify-between">
             <div className="content-width shrink-0">
