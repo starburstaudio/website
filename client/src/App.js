@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import NotFoundPage from './pages/NotFoundPage'
 import HeaderView from './common/components/HeaderView'
@@ -15,8 +15,6 @@ import CheckoutPage from './pages/checkout/CheckoutPage'
 
 import LoginPage from './pages/user/LoginPage'
 import UserProducts from './pages/user/User'
-import CheckoutLogin from './pages/checkout/CheckoutLogin'
-import CheckoutPay from './pages/checkout/CheckoutPay'
 
 class App extends React.Component {
   render() {
@@ -33,11 +31,7 @@ class App extends React.Component {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:section?/:free?" element={<ProductsPage />} />
           {/* Checkout */}
-          <Route path="/checkout" element={<CheckoutPage />}>
-            <Route path="" element={<Navigate to="login" />} />
-            <Route path="login" element={<CheckoutLogin />} />
-            <Route path="pay" element={<CheckoutPay />} />
-          </Route>
+          <Route path="/checkout" element={<CheckoutPage />} />
           {/* User */}
           <Route path="/u/products" element={<UserProducts />} />
           <Route path="/u/login" element={<LoginPage />} />
