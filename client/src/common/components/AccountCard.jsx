@@ -65,20 +65,83 @@ class AccountCard extends React.Component {
   render() {
     // eslint-disable-next-line react/prop-types
     if (this.state.isLoggedIn) return this.props.onLogin
+    if (this.state.signUpMode)
+      return (
+        <div
+          className={`card grow border max-w-2xl m-auto ${
+            this.state.isProcessing
+              ? 'bg-base-100 border-base-200'
+              : 'bg-base-200 border-base-300'
+          }`}>
+          <div className="card-body space-y-2">
+            <h1 className="text-3xl">Create an account</h1>
+            <p className="pb-4 opacity-75">
+              Create an account to get access to all our products
+            </p>
+            <div className="flex gap-x-4">
+              <input
+                type="text"
+                className="input w-full"
+                placeholder="First Name"
+              />
+              <input
+                type="text"
+                className="input w-full"
+                placeholder="Last Name"
+              />
+            </div>
+            <input type="text" className="input w-full" placeholder="E-Mail" />
+            <input
+              type="password"
+              className="input w-full"
+              placeholder="Password"
+            />
+            <input
+              type="text"
+              className="input w-full"
+              placeholder="Street and House Number"
+            />
+            <div className="flex gap-x-4">
+              <input
+                type="text"
+                className="input w-full max-w-xs"
+                placeholder="Postal Code"
+              />
+              <input
+                type="text"
+                className="input w-full max-w-xs"
+                placeholder="City"
+              />
+            </div>
+            <div className="text-sm py-4">
+              <span className="opacity-75">
+                By selecting continue, you confirm that you have read and accept
+                the{' '}
+              </span>
+              <a className="link">Privacy Policy</a>
+              <span className="opacity-75"> and </span>
+              <a className="link">Terms of Service</a>
+            </div>
+            <button
+              className="btn btn-primary"
+              onClick={() => this.submitData()}
+              disabled={this.state.isProcessing}>
+              Continue
+            </button>
+          </div>
+        </div>
+      )
     return (
       <div
-        className={`card shadow grow border max-w-md m-auto ${
+        className={`card grow border max-w-md m-auto ${
           this.state.isProcessing
             ? 'bg-base-100 border-base-200'
             : 'bg-base-200 border-base-300'
         }`}>
         <div className="card-body space-y-2">
-          <h1 className="text-3xl text-center">
-            {this.state.signUpMode ? 'Sign Up' : 'Log In'}
-          </h1>
+          <h1 className="text-3xl text-center">Log In</h1>
           <p className="opacity-75 text-center">
-            {this.state.signUpMode ? 'Sign Up' : 'Log In'} with{' '}
-            {this.state.signUpMode ? 'an' : 'your'} e-mail adress and password
+            Log in with your e-mail address and password
           </p>
           {this.state.currentError !== undefined && (
             <div className="alert alert-error shadow-lg">
@@ -105,16 +168,14 @@ class AccountCard extends React.Component {
             <label className="label">
               <span className="label-text">Password</span>
               <span className="label-text-alt">
-                {!this.state.signUpMode && (
-                  <a
-                    className={`${
-                      this.state.isProcessing ? 'link' : 'link-primary'
-                    }`}
-                    tabIndex="-1"
-                    href="/password-reset">
-                    Forgot Password?
-                  </a>
-                )}
+                <a
+                  className={`${
+                    this.state.isProcessing ? 'link' : 'link-primary'
+                  }`}
+                  tabIndex="-1"
+                  href="/password-reset">
+                  Forgot Password?
+                </a>
               </span>
             </label>
             <div className="input-group">
@@ -151,7 +212,7 @@ class AccountCard extends React.Component {
             className="btn btn-primary"
             onClick={() => this.submitData()}
             disabled={this.state.isProcessing}>
-            {this.state.signUpMode ? 'Sign Up' : 'Log In'}
+            Log In
           </button>
           <div>
             <span className="opacity-75">Don&apos;t have an account yet? </span>
@@ -161,7 +222,7 @@ class AccountCard extends React.Component {
               } cursor-pointer underline`}
               onClick={() => this.switchMode()}
               disabled={this.state.isProcessing}>
-              {this.state.signUpMode ? 'Log In' : 'Sign Up'}
+              Sign Up
             </a>
           </div>
         </div>

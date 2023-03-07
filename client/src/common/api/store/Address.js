@@ -6,6 +6,7 @@ class Address {
     this.streetLine2 = ''
     this.city = ''
     this.country = ''
+    this.postalCode = ''
     this.phoneNumber = ''
     this.customFields = {}
   }
@@ -17,6 +18,7 @@ class Address {
     this.streetLine2 = o.streetLine2
     this.city = o.city
     this.country = o.country
+    this.postalCode = o.postalCode
     this.phoneNumber = o.phoneNumber
     this.customFields = o.customFields
   }
