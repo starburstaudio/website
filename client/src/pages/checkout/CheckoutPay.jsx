@@ -2,17 +2,17 @@ import React from 'react'
 import { storeClient } from '../../common/api/store/storeClient'
 import gql from 'graphql-tag'
 
+// TODO: Shipping Step
+
 class CheckoutPay extends React.Component {
   pay(method, metadata) {
     storeClient
       .mutate({
         mutation: gql`
-          mutation AddPayment {
-            addPaymentToOrder(input: {
-              method: "${method}"
-              metadata: ${JSON.stringify(metadata)}
-            }) {
-              ... on ErrorResult {
+          mutation {
+            transitionOrderToState(state: "ArrangingPayment") {
+              __typename
+              ... on OrderStateTransitionError {
                 errorCode
                 message
               }
@@ -20,8 +20,31 @@ class CheckoutPay extends React.Component {
           }
         `
       })
-      .then((r) => {
-        console.log(r)
+      .then((t) => {
+        console.log(t)
+        if (t.data.transitionOrderToState.__typename === 'Order')
+          storeClient
+            .mutate({
+              mutation: gql`
+              mutation {
+                addPaymentToOrder(input: {
+                  method: "${method}"
+                  metadata: ${JSON.stringify(metadata)}
+                }) {
+                  ... on Order {
+                    state
+                  }
+                  ... on ErrorResult {
+                    errorCode
+                    message
+                  }
+                }
+              }
+            `
+            })
+            .then((r) => {
+              console.log(r)
+            })
       })
   }
 

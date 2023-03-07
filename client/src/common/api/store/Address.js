@@ -1,0 +1,25 @@
+class Address {
+  constructor() {
+    this.fullName = ''
+    this.company = ''
+    this.streetLine1 = ''
+    this.streetLine2 = ''
+    this.city = ''
+    this.country = ''
+    this.phoneNumber = ''
+    this.customFields = {}
+  }
+
+  fromOrderAdress(o) {
+    this.fullName = o.fullName
+    this.company = o.company
+    this.streetLine1 = o.streetLine1
+    this.streetLine2 = o.streetLine2
+    this.city = o.city
+    this.country = o.country
+    this.phoneNumber = o.phoneNumber
+    this.customFields = o.customFields
+  }
+}
+
+export { Address }

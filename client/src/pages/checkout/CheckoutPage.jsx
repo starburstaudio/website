@@ -11,6 +11,7 @@ import CheckoutPay from './CheckoutPay'
 import { Customer } from '../../common/api/store/Customer'
 
 import { subscribe } from '../../events'
+import CheckoutShipping from './CheckoutShipping'
 
 class CheckoutPage extends React.Component {
   constructor(props) {
@@ -36,12 +37,21 @@ class CheckoutPage extends React.Component {
       switch (o.state) {
         case 'AddingItems':
           new Customer().isLoggedIn().then((r) => {
-            if (r) this.setState({ progress: 2, currentView: <CheckoutPay /> })
-            else
+            if (r) {
+              if (o.adress == null) {
+                this.setState({
+                  progress: 1,
+                  currentView: <CheckoutShipping />
+                })
+              } else {
+                this.setState({ progress: 2, currentView: <CheckoutPay /> })
+              }
+            } else {
               this.setState({
-                progress: 1,
+                progress: 0,
                 currentView: <AccountCard onLogin={<div />} />
               })
+            }
           })
           break
         case 'done':
@@ -81,7 +91,13 @@ class CheckoutPage extends React.Component {
                     className={
                       'step ' + (this.state.progress > 0 ? 'step-primary' : '')
                     }>
-                    Account Log-In
+                    Log-In
+                  </li>
+                  <li
+                    className={
+                      'step ' + (this.state.progress > 0 ? 'step-primary' : '')
+                    }>
+                    Address
                   </li>
                   {this.state.order.totalWithTax !== 0 && (
                     <li

@@ -2,6 +2,7 @@ import { storeClient } from './storeClient'
 import gql from 'graphql-tag'
 
 import { ProductList } from './ProductList'
+import { Address } from './Address'
 
 class Order {
   constructor() {
@@ -9,6 +10,7 @@ class Order {
     this.totalWithTax = 0
     this.totalQuantity = 0
     this.state = ''
+    this.address = new Address()
   }
 
   getCurrentOrder() {
@@ -19,6 +21,18 @@ class Order {
             query GetCurrentOrder {
               activeOrder {
                 state
+                shippingAddress {
+                  fullName
+                  company
+                  streetLine1
+                  streetLine2
+                  city
+                  province
+                  postalCode
+                  country
+                  phoneNumber
+                  customFields
+                }
                 lines {
                   id
                   featuredAsset {
@@ -45,6 +59,8 @@ class Order {
             this.lines.fromLines(o)
             this.totalWithTax = o.totalWithTax
             this.totalQuantity = o.totalQuantity
+
+            this.address.fromOrderAdress(o.shippingAddress)
 
             resolve(this)
           }
