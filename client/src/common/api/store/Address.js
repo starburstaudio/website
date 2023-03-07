@@ -11,7 +11,7 @@ class Address {
     this.customFields = {}
   }
 
-  fromOrderAdress(o) {
+  fromOrderAddress(o) {
     this.fullName = o.fullName
     this.company = o.company
     this.streetLine1 = o.streetLine1

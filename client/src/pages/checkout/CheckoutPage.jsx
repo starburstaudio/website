@@ -37,7 +37,7 @@ class CheckoutPage extends React.Component {
         case 'AddingItems':
           new Customer().isLoggedIn().then((r) => {
             if (r) {
-              if (o.adress == null) {
+              if (o.address == null) {
                 this.setState({ progress: 2, currentView: <CheckoutPay /> })
               } else {
                 this.setState({ progress: 2, currentView: <CheckoutPay /> })

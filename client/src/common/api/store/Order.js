@@ -60,7 +60,7 @@ class Order {
             this.totalWithTax = o.totalWithTax
             this.totalQuantity = o.totalQuantity
 
-            this.address.fromOrderAdress(o.shippingAddress)
+            this.address.fromOrderAddress(o.shippingAddress)
 
             resolve(this)
           }
