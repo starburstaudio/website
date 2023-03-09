@@ -68,50 +68,75 @@ class AccountCard extends React.Component {
     if (this.state.signUpMode)
       return (
         <div
-          className={`card grow border max-w-2xl m-auto ${
+          className={`card grow border max-w-xl m-auto ${
             this.state.isProcessing
               ? 'bg-base-100 border-base-200'
               : 'bg-base-200 border-base-300'
           }`}>
           <div className="card-body space-y-2">
             <h1 className="text-3xl">Create an account</h1>
-            <p className="pb-4 opacity-75">
+            <p className="opacity-75">
               Create an account to get access to all our products
             </p>
             <div className="flex gap-x-4">
-              <input
-                type="text"
-                className="input w-full"
-                placeholder="First Name"
-              />
-              <input
-                type="text"
-                className="input w-full"
-                placeholder="Last Name"
-              />
+              <div className="textPlaceholder w-full">
+                <input
+                  type="text"
+                  className="inputText input input-bordered w-full"
+                  required
+                />
+                <span className="floating-label">First Name</span>
+              </div>
+              <div className="textPlaceholder w-full">
+                <input
+                  type="text"
+                  className="inputText input input-bordered w-full"
+                  required
+                />
+                <span className="floating-label">Last Name</span>
+              </div>
             </div>
-            <input type="text" className="input w-full" placeholder="E-Mail" />
-            <input
-              type="password"
-              className="input w-full"
-              placeholder="Password"
-            />
-            <input
-              type="text"
-              className="input w-full"
-              placeholder="Street and House Number"
-            />
+            <div className="textPlaceholder">
+              <input
+                type="text"
+                className="inputText input input-bordered w-full"
+                required
+              />
+              <span className="floating-label">Email</span>
+            </div>
+            <div className="textPlaceholder">
+              <input
+                type="password"
+                className="inputText input input-bordered w-full"
+                required
+              />
+              <span className="floating-label">Password</span>
+            </div>
+            <div className="textPlaceholder">
+              <input
+                type="text"
+                className="inputText input input-bordered w-full"
+                required
+              />
+              <span className="floating-label">Street and House Number</span>
+            </div>
             <div className="flex gap-x-4">
-              <input
-                type="text"
-                className="input w-full max-w-xs"
-                placeholder="Postal Code"
-              />
-              <input
-                type="text"
-                className="input w-full max-w-xs"
-                placeholder="City"
-              />
+              <div className="textPlaceholder w-full">
+                <input
+                  type="number"
+                  className="inputText input input-bordered w-full"
+                  required
+                />
+                <span className="floating-label">Postal Code</span>
+              </div>
+              <div className="textPlaceholder w-full">
+                <input
+                  type="text"
+                  className="inputText input input-bordered w-full"
+                  required
+                />
+                <span className="floating-label">City</span>
+              </div>
             </div>
             <div className="text-sm py-4">
               <span className="opacity-75">
@@ -123,7 +148,7 @@ class AccountCard extends React.Component {
               <a className="link">Terms of Service</a>
             </div>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary rounded-full"
               onClick={() => this.submitData()}
               disabled={this.state.isProcessing}>
               Continue
@@ -154,37 +179,31 @@ class AccountCard extends React.Component {
             </div>
           )}
           <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">E-Mail</span>
-            </label>
-            <input
-              type="email"
-              disabled={this.state.isProcessing}
-              className="input input-bordered w-full"
-              onChange={this.updateEmail}
-            />
+            <div className="input-group">
+              <div className="textPlaceholder w-full">
+                <input
+                  type="text"
+                  className="inputText input input-bordered w-full"
+                  required
+                />
+                <span className="floating-label bg-transparent p-0">
+                  E-Mail
+                </span>
+              </div>
+            </div>
           </div>
           <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">Password</span>
-              <span className="label-text-alt">
-                <a
-                  className={`${
-                    this.state.isProcessing ? 'link' : 'link-primary'
-                  }`}
-                  tabIndex="-1"
-                  href="/password-reset">
-                  Forgot Password?
-                </a>
-              </span>
-            </label>
             <div className="input-group">
-              <input
-                type="password"
-                disabled={this.state.isProcessing}
-                className="input border-r-0 input-bordered w-full"
-                onChange={this.updatePassword}
-              />
+              <div className="textPlaceholder w-full">
+                <input
+                  type="password"
+                  className="inputText input w-full rounded-r-none input-bordered border-r-0"
+                  required
+                />
+                <span className="floating-label bg-transparent p-0">
+                  Password
+                </span>
+              </div>
               <label className="swap">
                 <input type="checkbox" disabled={this.state.isProcessing} />
                 <div className="btn rounded-l-none no-animation swap-on">
@@ -209,7 +228,7 @@ class AccountCard extends React.Component {
             </label>
           </div>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary rounded-full"
             onClick={() => this.submitData()}
             disabled={this.state.isProcessing}>
             Log In
