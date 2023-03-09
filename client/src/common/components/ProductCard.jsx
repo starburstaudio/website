@@ -71,15 +71,15 @@ class ProductCard extends React.Component {
           />
           <div className="card-actions justify-end items-center">
             <Link
-              className="btn btn-ghost text-md btn-sm"
+              className="btn btn-ghost text-md btn-sm rounded-full"
               to={'/p/' + this.props.product.slug}>
               More Info
             </Link>
             <div
-              className="btn btn-primary btn-md"
+              className="btn btn-primary btn-sm rounded-full"
               onClick={() => this.addToOrder()}>
-              <span className="mr-2">Buy</span>
               <FiPlusCircle />
+              <span className="ml-2">Buy</span>
             </div>
           </div>
         </div>
