@@ -67,9 +67,6 @@ input[type=number] {
   .shadow-accent.shadow-2xl {
     --tw-shadow-colored: 0 12px 48px -16px var(--tw-shadow-color);
   }
-  .check-select svg {
-    stroke: #0a84ff;
-  }
   .opacity-glow {
     opacity: .4;
   }
@@ -90,9 +87,6 @@ input[type=number] {
       transparent,
       #fff
     );
-  }
-  .check-select svg {
-    stroke: #1953FF;
   }
   .opacity-glow {
     opacity: .8;
@@ -221,4 +215,32 @@ code {
 
   /* We don't repeat our mask images */
   mask-repeat: no-repeat, no-repeat;
+}
+
+.textPlaceholder {
+  position: relative;
+}
+
+input:focus ~ .floating-label,
+input:not(:focus):valid ~ .floating-label{
+  top: 0.5rem;
+  left: 1.1rem;
+  font-size: .8rem;
+  opacity: .75;
+}
+
+.textPlaceholder .input {
+  padding-top: 0.9rem;
+  font-size: 1.2rem;
+  height: 3.5rem;
+}
+
+.floating-label {
+  position: absolute;
+  pointer-events: none;
+  opacity: .5;
+  left: 1rem;
+  top: 0.8rem;
+  font-size: 1.2rem;
+  transition: 0.2s ease all;
 }

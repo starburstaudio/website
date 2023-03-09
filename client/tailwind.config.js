@@ -16,8 +16,10 @@ module.exports = {
           success: '#b2ffc4',
           warning: '#ffecb9',
           error: '#ffd8cd',
-          '--rounded-btn': '.6rem',
-          '--btn-focus-scale': '0.97'
+          '--rounded-btn': '.8rem',
+          '--rounded-box': '1rem',
+          '--btn-focus-scale': '1',
+          '--btn-text-case': 'uppercase'
         },
         dark: {
           primary: '#0a84ff',
@@ -29,8 +31,10 @@ module.exports = {
           success: '#184520',
           warning: '#452B18',
           error: '#45181F',
-          '--rounded-btn': '.6rem',
-          '--btn-focus-scale': '0.97'
+          '--rounded-btn': '.5rem',
+          '--rounded-box': '1rem',
+          '--btn-focus-scale': '1',
+          '--btn-text-case': 'uppercase'
         }
       }
     ],
@@ -52,7 +56,8 @@ module.exports = {
       }
     },
     fontSize: {
-      sm: '0.85rem',
+      xs: '0.64rem',
+      sm: '0.8rem',
       base: '1rem',
       lg: '1.25rem',
       xl: '1.563rem',
