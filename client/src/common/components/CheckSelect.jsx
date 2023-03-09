@@ -19,8 +19,10 @@ class CheckSelect extends React.Component {
     return (
       <div
         className={
-          'form-control check-select hover:bg-base-200 ' +
-          (this.state.checked ? 'bg-base-300' : 'bg-base-100 ')
+          'form-control check-select group ' +
+          (this.state.checked
+            ? 'bg-primary hover:bg-primary-focus'
+            : 'hover:bg-primary-content ')
         }
         onClick={() => {
           this.setState({ checked: !this.state.checked }, () => {
@@ -28,7 +30,12 @@ class CheckSelect extends React.Component {
           })
         }}>
         <label className="label cursor-pointer">
-          <span className="label-text flex gap-2">{this.props.children}</span>
+          <span
+            className={`label-text ${
+              this.state.checked ? 'text-white' : ''
+            } flex gap-2`}>
+            {this.props.children}
+          </span>
         </label>
       </div>
     )
