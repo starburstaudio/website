@@ -58,15 +58,15 @@ class ProductCard extends React.Component {
             {this.props.product.name}
             {this.props.product.badge()}
           </h2>
-          <p className="font-bold text-base h-min grow-0">
+          <h3 className="font-semibold text-base h-min grow-0">
             {this.props.product.formatPrice()}
-          </p>
+          </h3>
           <div
             dangerouslySetInnerHTML={{ __html: this.props.product.description }}
             className="pb-4 text-sm overflow-hidden opacity-75 h-0 grow"
             style={{
               maskImage:
-                'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%)'
+                'linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 75%)'
             }}
           />
           <div className="card-actions justify-end items-center">
@@ -79,7 +79,7 @@ class ProductCard extends React.Component {
               className="btn btn-primary btn-sm rounded-full"
               onClick={() => this.addToOrder()}>
               <FiPlusCircle />
-              <span className="ml-2">Buy</span>
+              <span className="ml-2">BUY</span>
             </div>
           </div>
         </div>
