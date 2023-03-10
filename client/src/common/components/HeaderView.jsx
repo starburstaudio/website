@@ -27,7 +27,8 @@ class HeaderView extends React.Component {
         totalWithTax: 0,
         totalQuantity: 0
       },
-      customer: new Customer()
+      customer: new Customer(),
+      latestProduct: new Product()
     }
     subscribe('updateOrder', (r) => {
       const lines = []
@@ -56,6 +57,13 @@ class HeaderView extends React.Component {
   componentDidMount() {
     this.state.customer.getCurrentCustomer()
     this.getCurrentOrder()
+    this.getLatestProduct()
+  }
+
+  getLatestProduct() {
+    this.state.latestProduct.fromLatest().then((r) => {
+      this.setState({ latestProduct: r })
+    })
   }
 
   getCurrentOrder() {
@@ -222,24 +230,101 @@ class HeaderView extends React.Component {
               Starburst Audio
             </Link>
             <div className="flex flex-row gap-x-8 h-full text-sm">
+              <div className="dropdown dropdown-hover">
+                <Link to="/products/">
+                  <label
+                    tabIndex={0}
+                    className="hover:text-primary h-full items-center flex cursor-pointer">
+                    Products
+                  </label>
+                </Link>
+                <div
+                  tabIndex={0}
+                  className="dropdown-content -mt-2 menu p-4 shadow-lg bg-base-100 rounded-box">
+                  <div className="flex">
+                    <div className="flex flex-col gap-y-2 w-72">
+                      <Link to="/products">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-150 transition group rounded-2xl cursor-pointer">
+                          <div className="-space-y-1 shrink">
+                            <h3 className="text-xl font-semibold ">
+                              All Products
+                            </h3>
+                            <div className="text-base opacity-75 group-hover:opacity-100 transition-opacity">
+                              Check out all our products here.
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <Link to="/products/sample-packs">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-lg cursor-pointer">
+                          <div className="w-16 h-16">
+                            <img
+                              src="http://localhost:3001/assets/preview/86/frame-3x1024__preview.png"
+                              className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-50 blur-md absolute"
+                            />
+                            <img
+                              src="http://localhost:3001/assets/preview/86/frame-3x1024__preview.png"
+                              className="w-16 h-16 max-w-none rounded-lg relative"
+                            />
+                          </div>
+                          <div className="shrink">
+                            <h3 className="text-lg font-semibold ">Samples</h3>
+                            <div className="text-sm opacity-75 group-hover:opacity-100 transition-opacity">
+                              High-quality Sample Packs to elevate your music.
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <Link to="/products/presets">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-lg cursor-pointer">
+                          <div className="w-16 h-16">
+                            <img
+                              src="http://localhost:3001/assets/preview/b5/frame-1x1024__preview.png"
+                              className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-50 blur-md absolute"
+                            />
+                            <img
+                              src="http://localhost:3001/assets/preview/b5/frame-1x1024__preview.png"
+                              className="w-16 h-16 max-w-none rounded-lg relative"
+                            />
+                          </div>
+                          <div className="shrink">
+                            <h3 className="text-lg font-semibold">Presets</h3>
+                            <div className="text-sm opacity-75 group-hover:opacity-100 transition-opacity">
+                              Versatile Preset Packs for your favorite synths.
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <Link to="/products/plugins">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-lg cursor-pointer">
+                          <div className="w-16 h-16">
+                            <img
+                              src="http://localhost:3001/assets/preview/33/frame-2x1024__preview.png"
+                              className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-50 blur-md absolute"
+                            />
+                            <img
+                              src="http://localhost:3001/assets/preview/33/frame-2x1024__preview.png"
+                              className="w-16 h-16 max-w-none rounded-lg relative"
+                            />
+                          </div>
+                          <div className="shrink">
+                            <h3 className="text-lg font-semibold">Plugins</h3>
+                            <div className="text-sm opacity-75 group-hover:opacity-100 transition-opacity">
+                              Plugins that make music production fun and easy.
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <Link
                 className="hover:text-primary items-center flex"
                 to="/products/all/free">
                 Free Stuff
               </Link>
-              <Link
-                className="hover:text-primary items-center flex"
-                to="/products/all/free">
-                Plugins
-              </Link>
-              <Link
-                className="hover:text-primary items-center flex"
-                to="/products/all/free">
-                Sample Packs
-              </Link>
-              <Link
-                className="hover:text-primary items-center flex"
-                to="/products/all/free">
+              <Link className="hover:text-primary items-center flex" to="/blog">
                 Blog
               </Link>
             </div>
