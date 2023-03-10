@@ -102,6 +102,40 @@ class Product {
     return this
   }
 
+  fromLatest() {
+    return new Promise((resolve) => {
+      storeClient
+        .query({
+          query: gql`
+            query {
+              products(options: { sort: { createdAt: DESC } }) {
+                items {
+                  id
+                  name
+                  slug
+                  description
+                  facetValues {
+                    id
+                  }
+                  featuredAsset {
+                    source
+                  }
+                  variants {
+                    id
+                    priceWithTax
+                  }
+                }
+              }
+            }
+          `
+        })
+        .then((r) => {
+          this.fromProductListing(r.data.products.items[0])
+          resolve(this)
+        })
+    })
+  }
+
   fromProductListing(r) {
     this.facetValueIds = r.facetValues?.map((e) => e.id)
     this.id = r.id
