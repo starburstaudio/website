@@ -130,15 +130,15 @@ class ProductPage extends React.Component {
                 className="mb-8 text-md space-y-2 opacity-75"
               />
               <div
-                className="btn btn-primary btn-lg shadow-2xl shadow-primary mb-8"
+                className="btn btn-secondary btn-lg rounded-full shadow-2xl shadow-secondary mb-8"
                 onClick={() => this.addToOrder()}>
                 <IconContext.Provider value={{ size: '1.5em' }}>
-                  <span className="mr-2 text-lg">
+                  <FiPlusCircle />
+                  <span className="ml-4 text-lg">
                     {this.state.product.price === 0
                       ? 'Get for free'
                       : 'Buy now'}
                   </span>
-                  <FiPlusCircle />
                 </IconContext.Provider>
               </div>
             </div>
