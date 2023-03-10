@@ -212,7 +212,7 @@ class ProductsPage extends React.Component {
                     {
                       jsx: (
                         <div className="flex-row flex gap-2 items-center">
-                          <TbWaveSine />
+                          <TbWaveSine className="stroke-primary" />
                           <span>Samples</span>
                         </div>
                       ),
@@ -221,7 +221,7 @@ class ProductsPage extends React.Component {
                     {
                       jsx: (
                         <div className="flex-row flex gap-2 items-center">
-                          <FiFile />
+                          <FiFile className="stroke-primary" />
                           <span>Presets</span>
                         </div>
                       ),
@@ -230,7 +230,7 @@ class ProductsPage extends React.Component {
                     {
                       jsx: (
                         <div className="flex-row flex gap-2 items-center">
-                          <FiSettings />
+                          <FiSettings className="stroke-primary" />
                           <span>Plugins</span>
                         </div>
                       ),
@@ -250,7 +250,7 @@ class ProductsPage extends React.Component {
                     this.filterRedirect(null, s)
                   }}>
                   <span className="flex gap-2">
-                    <HiOutlineGift />
+                    <HiOutlineGift className="stroke-primary" />
                     Show only free
                   </span>
                 </CheckSelect>
@@ -263,7 +263,7 @@ class ProductsPage extends React.Component {
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))'
             }}>
-            <IconContext.Provider value={{ size: '1.5em' }}>
+            <IconContext.Provider value={{ size: '1.25em' }}>
               {this.state.products.products?.map((r) => (
                 <div key={r.id}>{<ProductCard product={r} />}</div>
               ))}
