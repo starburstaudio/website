@@ -22,7 +22,7 @@ class CheckSelect extends React.Component {
           'form-control check-select group ' +
           (this.state.checked
             ? 'bg-primary hover:bg-primary-focus'
-            : 'hover:bg-primary-content ')
+            : 'bg-none hover:bg-base-200')
         }
         onClick={() => {
           this.setState({ checked: !this.state.checked }, () => {

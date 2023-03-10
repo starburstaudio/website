@@ -25,7 +25,7 @@ class CheckOptions extends React.Component {
               'form-control check-select group ' +
               (this.state.value === r.value
                 ? 'bg-primary hover:bg-primary-focus'
-                : 'hover:bg-primary-content ')
+                : 'bg-none hover:bg-base-200')
             }
             onClick={() => {
               if (this.state.value === r.value) {
