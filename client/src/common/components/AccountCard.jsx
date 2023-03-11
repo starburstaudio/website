@@ -11,6 +11,11 @@ class AccountCard extends React.Component {
       signUpMode: false,
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
+      adress: '',
+      city: '',
+      zip: '',
       rememberMe: false,
       isProcessing: false,
       isLoggedIn: false,
@@ -20,6 +25,11 @@ class AccountCard extends React.Component {
     this.updateEmail = this.updateEmail.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
     this.updateRememberMe = this.updateRememberMe.bind(this)
+    this.updateFirstName = this.updateFirstName.bind(this)
+    this.updateLastName = this.updateLastName.bind(this)
+    this.updateAdress = this.updateAdress.bind(this)
+    this.updateCity = this.updateCity.bind(this)
+    this.updateZip = this.updateZip.bind(this)
   }
 
   componentDidMount() {
@@ -36,6 +46,28 @@ class AccountCard extends React.Component {
       this.setState({ password: event.target.value })
   }
 
+  updateFirstName(event) {
+    if (!this.state.isProcessing)
+      this.setState({ firstName: event.target.value })
+  }
+
+  updateLastName(event) {
+    if (!this.state.isProcessing)
+      this.setState({ lastName: event.target.value })
+  }
+
+  updateAdress(event) {
+    if (!this.state.isProcessing) this.setState({ adress: event.target.value })
+  }
+
+  updateCity(event) {
+    if (!this.state.isProcessing) this.setState({ city: event.target.value })
+  }
+
+  updateZip(event) {
+    if (!this.state.isProcessing) this.setState({ zip: event.target.value })
+  }
+
   updateRememberMe(event) {
     if (!this.state.isProcessing)
       this.setState({ rememberMe: event.target.checked })
@@ -48,23 +80,46 @@ class AccountCard extends React.Component {
 
   submitData() {
     console.log(this?.state)
-    this.setState({ isProcessing: true }, () => {
-      new Customer()
-        .login(this.state.email, this.state.password, this.state.rememberMe)
-        .then(
-          (r) => {
-            this.setState({
-              isProcessing: false,
-              currentError: undefined,
-              isLoggedIn: true
-            })
-            trigger('updateCustomer', r)
-          },
-          (e) => {
-            this.setState({ isProcessing: false, currentError: e.message })
-          }
-        )
-    })
+    if (this.state.signUpMode) {
+      this.setState({ isProcessing: true }, () => {
+        new Customer()
+          .register(
+            this.state.email,
+            this.state.password,
+            this.state.firstName,
+            this.state.lastName,
+            this.state.adress,
+            this.state.city,
+            this.state.zip
+          )
+          .then(
+            (r) => {
+              console.log(r)
+            },
+            (e) => {
+              this.setState({ isProcessing: false, currentError: e.message })
+            }
+          )
+      })
+    } else {
+      this.setState({ isProcessing: true }, () => {
+        new Customer()
+          .login(this.state.email, this.state.password, this.state.rememberMe)
+          .then(
+            (r) => {
+              this.setState({
+                isProcessing: false,
+                currentError: undefined,
+                isLoggedIn: true
+              })
+              trigger('updateCustomer', r)
+            },
+            (e) => {
+              this.setState({ isProcessing: false, currentError: e.message })
+            }
+          )
+      })
+    }
   }
 
   render() {
@@ -90,12 +145,25 @@ class AccountCard extends React.Component {
                 Sign in!
               </a>
             </p>
+            {this.state.currentError !== undefined && (
+              <div className="alert alert-error shadow-lg">
+                <div className="flex">
+                  <IconContext.Provider value={{ size: '1.25rem' }}>
+                    <FiStopCircle />
+                  </IconContext.Provider>
+                  <span className="shrink">{this.state.currentError}</span>
+                </div>
+              </div>
+            )}
             <div className="flex gap-x-4">
               <div className="textPlaceholder w-full">
                 <input
                   type="text"
                   className="inputText input input-bordered w-full"
                   required
+                  disabled={this.state.isProcessing}
+                  onChange={this.updateFirstName}
+                  value={this.state.firstName}
                 />
                 <span className="floating-label">First Name</span>
               </div>
@@ -104,6 +172,9 @@ class AccountCard extends React.Component {
                   type="text"
                   className="inputText input input-bordered w-full"
                   required
+                  disabled={this.state.isProcessing}
+                  onChange={this.updateLastName}
+                  value={this.state.lastName}
                 />
                 <span className="floating-label">Last Name</span>
               </div>
@@ -135,6 +206,9 @@ class AccountCard extends React.Component {
                 type="text"
                 className="inputText input input-bordered w-full"
                 required
+                disabled={this.state.isProcessing}
+                onChange={this.updateAdress}
+                value={this.state.adress}
               />
               <span className="floating-label">Street and House Number</span>
             </div>
@@ -144,14 +218,20 @@ class AccountCard extends React.Component {
                   type="number"
                   className="inputText input input-bordered w-full"
                   required
+                  disabled={this.state.isProcessing}
+                  onChange={this.updateZip}
+                  value={this.state.zip}
                 />
-                <span className="floating-label">Postal Code</span>
+                <span className="floating-label">Zip Code</span>
               </div>
               <div className="textPlaceholder w-full">
                 <input
                   type="text"
                   className="inputText input input-bordered w-full"
                   required
+                  disabled={this.state.isProcessing}
+                  onChange={this.updateCity}
+                  value={this.state.city}
                 />
                 <span className="floating-label">City</span>
               </div>

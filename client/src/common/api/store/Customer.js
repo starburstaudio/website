@@ -102,6 +102,40 @@ class Customer {
         })
     })
   }
+
+  register(email, password, firstName, lastName, adress, city, zip) {
+    return new Promise((resolve, reject) => {
+      storeClient
+        .mutate({
+          mutation: gql`
+            mutation {
+              registerCustomerAccount(
+                input: {
+                  emailAddress: "${email}",
+                  firstName: "${firstName}",
+                  lastName: "${lastName}",
+                  password: "${password}"
+                }
+              ) {
+                __typename
+                ... on MissingPasswordError {
+                  message
+                }
+                ... on PasswordValidationError {
+                  message
+                }
+                ... on NativeAuthStrategyError {
+                  message
+                }
+              }
+            }
+          `
+        })
+        .then((r) => {
+          resolve(r)
+        })
+    })
+  }
 }
 
 export { Customer }
