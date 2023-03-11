@@ -225,22 +225,22 @@ class HeaderView extends React.Component {
         <div className="px-0 all-width py-0 flex flex-row gap-x-3 items-center">
           <div className="flex-1 flex flex-row h-full">
             <Link
-              className="flex items-center text-lg font-bold h-full mr-8"
+              className="flex items-center text-xl font-bold h-full pr-4"
               to="/">
-              Starburst Audio
+              <h2 className="font-bold">Starburst Audio</h2>
             </Link>
-            <div className="flex flex-row gap-x-8 h-full text-sm">
+            <div className="flex flex-row h-full text-md">
               <div className="dropdown dropdown-hover">
                 <Link to="/products/">
                   <label
                     tabIndex={0}
-                    className="hover:text-primary h-full items-center flex cursor-pointer">
+                    className="hover:text-primary h-full items-center flex cursor-pointer transition px-4">
                     Products
                   </label>
                 </Link>
                 <div
                   tabIndex={0}
-                  className="dropdown-content -mt-2 menu p-4 shadow-lg bg-base-100 rounded-box">
+                  className="dropdown-content -mt-2 menu p-4 shadow-2xl rounded-3xl">
                   <div className="flex">
                     <div className="flex flex-col gap-y-2 w-72">
                       <Link to="/products">
@@ -256,15 +256,15 @@ class HeaderView extends React.Component {
                         </div>
                       </Link>
                       <Link to="/products/sample-packs">
-                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-lg cursor-pointer">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-xl cursor-pointer">
                           <div className="w-16 h-16">
                             <img
-                              src="http://localhost:3001/assets/preview/86/frame-3x1024__preview.png"
-                              className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-50 blur-md absolute"
+                              src="/icons/skeu/Samples_md.png"
+                              className="w-16 h-16 opacity-0 transition group-hover:opacity-75 blur-md absolute"
                             />
                             <img
-                              src="http://localhost:3001/assets/preview/86/frame-3x1024__preview.png"
-                              className="w-16 h-16 max-w-none rounded-lg relative"
+                              src="/icons/skeu/Samples_md.png"
+                              className="w-16 h-16 max-w-none relative group-hover:brightness-125 transition"
                             />
                           </div>
                           <div className="shrink">
@@ -276,15 +276,15 @@ class HeaderView extends React.Component {
                         </div>
                       </Link>
                       <Link to="/products/presets">
-                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-lg cursor-pointer">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-xl cursor-pointer">
                           <div className="w-16 h-16">
                             <img
-                              src="http://localhost:3001/assets/preview/b5/frame-1x1024__preview.png"
-                              className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-50 blur-md absolute"
+                              src="/icons/skeu/Presets_md.png"
+                              className="w-16 h-16 opacity-0 transition group-hover:opacity-75 blur-md absolute"
                             />
                             <img
-                              src="http://localhost:3001/assets/preview/b5/frame-1x1024__preview.png"
-                              className="w-16 h-16 max-w-none rounded-lg relative"
+                              src="/icons/skeu/Presets_md.png"
+                              className="w-16 h-16 max-w-none relative group-hover:brightness-125 transition"
                             />
                           </div>
                           <div className="shrink">
@@ -296,15 +296,15 @@ class HeaderView extends React.Component {
                         </div>
                       </Link>
                       <Link to="/products/plugins">
-                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-lg cursor-pointer">
+                        <div className="p-4 flex items-center gap-4 hover:backdrop-brightness-125 transition group rounded-xl cursor-pointer">
                           <div className="w-16 h-16">
                             <img
-                              src="http://localhost:3001/assets/preview/33/frame-2x1024__preview.png"
-                              className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-50 blur-md absolute"
+                              src="/icons/skeu/Plugins_md.png"
+                              className="w-16 h-16 opacity-0 transition group-hover:opacity-75 blur-md absolute"
                             />
                             <img
-                              src="http://localhost:3001/assets/preview/33/frame-2x1024__preview.png"
-                              className="w-16 h-16 max-w-none rounded-lg relative"
+                              src="/icons/skeu/Plugins_md.png"
+                              className="w-16 h-16 max-w-none relative group-hover:brightness-125 transition"
                             />
                           </div>
                           <div className="shrink">
@@ -320,11 +320,13 @@ class HeaderView extends React.Component {
                 </div>
               </div>
               <Link
-                className="hover:text-primary items-center flex"
+                className="hover:text-primary items-center flex transition px-4"
                 to="/products/all/free">
                 Free Stuff
               </Link>
-              <Link className="hover:text-primary items-center flex" to="/blog">
+              <Link
+                className="hover:text-primary items-center flex transition px-4"
+                to="/blog">
                 Blog
               </Link>
             </div>
@@ -345,16 +347,19 @@ class HeaderView extends React.Component {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu menu-compact mt-3 shadow-lg rounded-box w-80 border-base-300 border">
-                <h2 className="pt-6 text-xl mb-2 px-6">Shopping Cart</h2>
+                className="dropdown-content menu menu-compact mt-3 shadow-2xl rounded-3xl w-80">
+                <h2 className="pt-6 text-xl mb-2 px-6 font-bold">
+                  Shopping Cart
+                </h2>
                 <div className="opacity-75 mb-3 px-6">
-                  {this.state.order.totalQuantity} items
+                  {this.state.order.totalQuantity +
+                    (this.state.order.totalQuantity > 1 ? ' items' : 'item')}
                 </div>
-                <div className="border-b border-base-300 px-6">
+                <div className="px-6">
                   {this.state.order.lines.map((l) => (
                     <div className="flex-row flex mb-4 items-center" key={l.ID}>
                       <img
-                        className="h-16 w-16 p-0 rounded-lg border-base-300 border"
+                        className="h-16 w-16 p-0 rounded-lg"
                         src={l.featuredAsset.preview}
                       />
                       <div className="grow ml-3 cursor-default">
@@ -378,7 +383,7 @@ class HeaderView extends React.Component {
                   </div>
                 </div>
                 <Link to="/checkout" className="w-full">
-                  <div className="btn btn-lg btn-accent rounded-b-2xl rounded-t-none no-animation w-full">
+                  <div className="btn btn-lg btn-ghost rounded-b-3xl rounded-t-none no-animation w-full text-primary border-t border-base-300">
                     Checkout Now
                     <IconContext.Provider value={{ size: '1.5rem' }}>
                       <FiShoppingCart className="ml-2"></FiShoppingCart>
@@ -391,12 +396,12 @@ class HeaderView extends React.Component {
           {!this.state.customer.loggedIn && (
             <div className="gap-x-3 flex">
               <Link
-                className="btn btn-sm rounded-2xl text-sm btn-ghost normal-case"
+                className="btn btn-sm rounded-2xl btn-ghost normal-case"
                 to="/u/login">
                 <span>Log In</span>
               </Link>
               <Link
-                className="btn btn-sm rounded-2xl text-sm btn-primary space-x-2 normal-case"
+                className="btn btn-sm rounded-2xl btn-primary space-x-2 normal-case"
                 to="/u/login">
                 <IconContext.Provider value={{ size: '1rem' }}>
                   <FiUser />
