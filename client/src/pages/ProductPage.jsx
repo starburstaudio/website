@@ -117,20 +117,16 @@ class ProductPage extends React.Component {
                   <li>{this.state.product.name}</li>
                 </ul>
               </div>
-              <div className="text-2xl font-bold">
-                {this.state.product.formatPrice()}
-              </div>
-              <p className="opacity-75 text-sm mb-4 -mt-2">
-                Price includes VAT
-              </p>
+              <h2 className="text-2xl">{this.state.product.formatPrice()}</h2>
+              <p className="opacity-75 text-sm mb-4">Price includes VAT</p>
               <div
                 dangerouslySetInnerHTML={{
                   __html: this.state.product.description
                 }}
-                className="mb-8 text-md space-y-2 opacity-75"
+                className="mb-8 text-md space-y-2 opacity-75 leading-relaxed"
               />
               <div
-                className="btn btn-secondary btn-lg rounded-full shadow-2xl shadow-secondary mb-8"
+                className="btn btn-accent btn-lg rounded-full shadow-2xl shadow-accent mb-8"
                 onClick={() => this.addToOrder()}>
                 <IconContext.Provider value={{ size: '1.5em' }}>
                   <FiPlusCircle />

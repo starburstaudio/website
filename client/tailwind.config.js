@@ -5,9 +5,9 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: '#1953FF',
-          secondary: '#12b939',
-          accent: '#fa18c5',
+          primary: '#8c19ff',
+          secondary: '#ff19d9',
+          accent: '#19fa8a',
           neutral: '#cacaca',
           'base-100': '#fff',
           'base-200': '#f6f6f7',
@@ -22,9 +22,9 @@ module.exports = {
           '--btn-text-case': 'uppercase'
         },
         dark: {
-          primary: '#0a84ff',
-          secondary: '#07BA19',
-          accent: '#DA0AFA',
+          primary: '#A64DFF',
+          secondary: '#FF33BB',
+          accent: '#33FF99',
           neutral: '#545459',
           'base-100': '#1D1D1F',
           info: '#183445',
