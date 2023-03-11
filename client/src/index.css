@@ -190,7 +190,7 @@ code {
 }
 
 .check-select.bg-primary svg {
-  stroke: #fff;
+  fill: #fff;
 }
 
 .masked-overflow-y {

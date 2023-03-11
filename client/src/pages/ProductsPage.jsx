@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 
 import { IconContext } from 'react-icons'
-import { FiFile, FiSearch, FiSettings } from 'react-icons/fi'
+import { FiSearch } from 'react-icons/fi'
 import { HiOutlineGift } from 'react-icons/hi'
-import { TbWaveSine } from 'react-icons/tb'
+import { ReactComponent as SamplesIcon } from '../common/icons/samples.svg'
+import { ReactComponent as PresetsIcon } from '../common/icons/presets.svg'
+import { ReactComponent as PluginsIcon } from '../common/icons/plugins.svg'
 
 import { storeClient } from '../common/api/store/storeClient'
 import { ProductList } from '../common/api/store/ProductList'
@@ -212,7 +214,7 @@ class ProductsPage extends React.Component {
                     {
                       jsx: (
                         <div className="flex-row flex gap-2 items-center">
-                          <TbWaveSine className="stroke-primary" />
+                          <SamplesIcon className="w-6 h-6 fill-primary" />
                           <span>Samples</span>
                         </div>
                       ),
@@ -221,7 +223,7 @@ class ProductsPage extends React.Component {
                     {
                       jsx: (
                         <div className="flex-row flex gap-2 items-center">
-                          <FiFile className="stroke-primary" />
+                          <PresetsIcon className="w-6 h-6 fill-primary" />
                           <span>Presets</span>
                         </div>
                       ),
@@ -230,7 +232,7 @@ class ProductsPage extends React.Component {
                     {
                       jsx: (
                         <div className="flex-row flex gap-2 items-center">
-                          <FiSettings className="stroke-primary" />
+                          <PluginsIcon className="w-6 h-6 fill-primary" />
                           <span>Plugins</span>
                         </div>
                       ),
