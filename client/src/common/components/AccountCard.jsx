@@ -22,6 +22,11 @@ class AccountCard extends React.Component {
     this.updateRememberMe = this.updateRememberMe.bind(this)
   }
 
+  componentDidMount() {
+    // eslint-disable-next-line react/prop-types
+    this.setState({ signUpMode: this.props.signUpMode })
+  }
+
   updateEmail(event) {
     if (!this.state.isProcessing) this.setState({ email: event.target.value })
   }
@@ -76,7 +81,14 @@ class AccountCard extends React.Component {
           <div className="card-body space-y-2">
             <h1 className="text-3xl">Create an account</h1>
             <p className="opacity-75">
-              Create an account to get access to all our products
+              Create an account to check out. Already have an account?{' '}
+              <a
+                className="link link-primary"
+                onClick={() =>
+                  this.setState({ signUpMode: !this.state.signUpMode })
+                }>
+                Sign in!
+              </a>
             </p>
             <div className="flex gap-x-4">
               <div className="textPlaceholder w-full">
@@ -101,14 +113,20 @@ class AccountCard extends React.Component {
                 type="text"
                 className="inputText input input-bordered w-full"
                 required
+                disabled={this.state.isProcessing}
+                onChange={this.updateEmail}
+                value={this.state.email}
               />
-              <span className="floating-label">Email</span>
+              <span className="floating-label">E-Mail</span>
             </div>
             <div className="textPlaceholder">
               <input
                 type="password"
                 className="inputText input input-bordered w-full"
                 required
+                disabled={this.state.isProcessing}
+                onChange={this.updatePassword}
+                value={this.state.password}
               />
               <span className="floating-label">Password</span>
             </div>
@@ -156,97 +174,106 @@ class AccountCard extends React.Component {
           </div>
         </div>
       )
-    return (
-      <div
-        className={`card grow border max-w-md m-auto ${
-          this.state.isProcessing
-            ? 'bg-base-100 border-base-200'
-            : 'bg-base-200 border-base-300'
-        }`}>
-        <div className="card-body space-y-2">
-          <h1 className="text-3xl text-center">Log In</h1>
-          <p className="opacity-75 text-center">
-            Log in with your e-mail address and password
-          </p>
-          {this.state.currentError !== undefined && (
-            <div className="alert alert-error shadow-lg">
-              <div className="flex">
-                <IconContext.Provider value={{ size: '1.25rem' }}>
-                  <FiStopCircle />
-                </IconContext.Provider>
-                <span className="shrink">{this.state.currentError}</span>
+    else
+      return (
+        <div
+          className={`card grow border max-w-md m-auto ${
+            this.state.isProcessing
+              ? 'bg-base-100 border-base-200'
+              : 'bg-base-200 border-base-300'
+          }`}>
+          <div className="card-body space-y-2">
+            <h1 className="text-3xl text-center">Log In</h1>
+            <p className="opacity-75 text-center">
+              Log in with your e-mail address and password
+            </p>
+            {this.state.currentError !== undefined && (
+              <div className="alert alert-error shadow-lg">
+                <div className="flex">
+                  <IconContext.Provider value={{ size: '1.25rem' }}>
+                    <FiStopCircle />
+                  </IconContext.Provider>
+                  <span className="shrink">{this.state.currentError}</span>
+                </div>
+              </div>
+            )}
+            <div className="form-control w-full">
+              <div className="input-group">
+                <div className="textPlaceholder w-full">
+                  <input
+                    type="text"
+                    className="inputText input input-bordered w-full"
+                    required
+                    disabled={this.state.isProcessing}
+                    onChange={this.updateEmail}
+                    value={this.state.email}
+                  />
+                  <span className="floating-label bg-transparent p-0">
+                    E-Mail
+                  </span>
+                </div>
               </div>
             </div>
-          )}
-          <div className="form-control w-full">
-            <div className="input-group">
-              <div className="textPlaceholder w-full">
-                <input
-                  type="text"
-                  className="inputText input input-bordered w-full"
-                  required
-                />
-                <span className="floating-label bg-transparent p-0">
-                  E-Mail
-                </span>
+            <div className="form-control w-full">
+              <div className="input-group">
+                <div className="textPlaceholder w-full">
+                  <input
+                    type="password"
+                    className="inputText input w-full rounded-r-none input-bordered border-r-0"
+                    required
+                    disabled={this.state.isProcessing}
+                    onChange={this.updatePassword}
+                    value={this.state.password}
+                  />
+                  <span className="floating-label bg-transparent p-0">
+                    Password
+                  </span>
+                </div>
+                <label className="swap">
+                  <input type="checkbox" disabled={this.state.isProcessing} />
+                  <div className="btn rounded-l-none no-animation swap-on">
+                    <FiEyeOff />
+                  </div>
+                  <div className="btn rounded-l-none no-animation swap-off">
+                    <FiEye />
+                  </div>
+                </label>
               </div>
             </div>
-          </div>
-          <div className="form-control w-full">
-            <div className="input-group">
-              <div className="textPlaceholder w-full">
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Remember me</span>
                 <input
-                  type="password"
-                  className="inputText input w-full rounded-r-none input-bordered border-r-0"
-                  required
+                  type="checkbox"
+                  disabled={this.state.isProcessing}
+                  checked={this.state.rememberMe}
+                  onChange={this.updateRememberMe}
+                  className="checkbox checkbox-primary"
                 />
-                <span className="floating-label bg-transparent p-0">
-                  Password
-                </span>
-              </div>
-              <label className="swap">
-                <input type="checkbox" disabled={this.state.isProcessing} />
-                <div className="btn rounded-l-none no-animation swap-on">
-                  <FiEyeOff />
-                </div>
-                <div className="btn rounded-l-none no-animation swap-off">
-                  <FiEye />
-                </div>
               </label>
             </div>
-          </div>
-          <div className="form-control">
-            <label className="label cursor-pointer">
-              <span className="label-text">Remember me</span>
-              <input
-                type="checkbox"
-                disabled={this.state.isProcessing}
-                checked={this.state.rememberMe}
-                onChange={this.updateRememberMe}
-                className="checkbox checkbox-primary"
-              />
-            </label>
-          </div>
-          <button
-            className="btn btn-primary rounded-full"
-            onClick={() => this.submitData()}
-            disabled={this.state.isProcessing}>
-            Log In
-          </button>
-          <div>
-            <span className="opacity-75">Don&apos;t have an account yet? </span>
-            <a
-              className={`${
-                this.state.isProcessing ? 'link' : 'link-primary'
-              } cursor-pointer underline`}
-              onClick={() => this.switchMode()}
+            <button
+              className="btn btn-primary rounded-full"
+              onClick={() => this.submitData()}
               disabled={this.state.isProcessing}>
-              Sign Up
-            </a>
+              Log In
+            </button>
+            <div>
+              <span className="opacity-75">
+                Don&apos;t have an account yet?{' '}
+              </span>
+              <a
+                className={`${
+                  this.state.isProcessing ? 'link' : 'link-primary'
+                } cursor-pointer underline`}
+                onClick={() => this.switchMode()}
+                disabled={this.state.isProcessing}>
+                Sign Up
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
   }
 }
 
