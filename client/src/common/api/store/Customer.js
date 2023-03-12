@@ -1,7 +1,8 @@
 // /* eslint-disable prettier/prettier */
 import { storeClient } from './storeClient'
 import gql from 'graphql-tag'
-// import { OrderList } from './OrderList'
+import { Product } from './Product'
+import { ProductList } from './ProductList'
 // import { User } from './User'
 
 class Customer {
@@ -14,7 +15,7 @@ class Customer {
     this.lastName = ''
     this.phoneNumber = ''
     this.emailAddress = ''
-    // this.orders       = new OrderList()
+    this.orders = []
     // this.user         = new User()
     this.customFields = ''
     this.loggedIn = false
@@ -42,6 +43,50 @@ class Customer {
         })
         .then((r) => {
           this.setFromActiveCustomer(r.data.activeCustomer)
+          resolve(this)
+        })
+    })
+  }
+
+  getOwnProducts() {
+    return new Promise((resolve, reject) => {
+      storeClient
+        .query({
+          query: gql`
+            query activeCustomer {
+              activeCustomer {
+                orders {
+                  items {
+                    orderPlacedAt
+                    lines {
+                      productVariant {
+                        name
+                        product {
+                          slug
+                        }
+                      }
+                      featuredAsset {
+                        preview
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          `
+        })
+        .then((r) => {
+          const orders = []
+          r.data.activeCustomer.orders.items.forEach((i) => {
+            const line = { date: i.orderPlacedAt, products: new ProductList() }
+            i.lines.forEach((l) => {
+              line.products.products.push({
+                product: new Product().fromOrderLine(l)
+              })
+            })
+            orders.push(line)
+          })
+          this.orders = orders
           resolve(this)
         })
     })

@@ -99,6 +99,7 @@ class Product {
     this.name = line.productVariant.name
     this.featuredAsset = line.featuredAsset
     this.price = line.proratedLinePrice
+    this.slug = line.productVariant?.product?.slug
     return this
   }
 
