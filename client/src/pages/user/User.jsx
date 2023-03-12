@@ -1,21 +1,38 @@
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 import { IconContext } from 'react-icons'
-import { FiDownload, FiLink, FiSettings } from 'react-icons/fi'
+import { FiDownload, FiLink, FiSettings, FiClock } from 'react-icons/fi'
+import { Customer } from '../../common/api/store/Customer'
 import CheckOptions from '../../common/components/CheckOptions'
 
 class UserProducts extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      section: ''
+      section: '',
+      customer: new Customer(),
+      loggedIn: true
     }
   }
 
+  componentDidMount() {
+    this.state.customer
+      .isLoggedIn()
+      .then((r) => {
+        if (r) return this.state.customer.getCurrentCustomer()
+        else this.setState({ loggedIn: false })
+      })
+      .then((c) => {
+        if (c) this.setState({ customer: c })
+      })
+  }
+
   render() {
+    if (!this.state.loggedIn) return <Navigate to="/u/login" />
     return (
       <main className="flex flex-col items-center pt-24">
         <h1 className="text-4xl all-width border-b border-base-300 py-6">
-          Your Account
+          {this.state.customer.firstName}&apos;s Account
         </h1>
         <div className="all-width flex space-x-4 items-start mb-8">
           <div className="w-56 mr-4 mb-8 shrink-0 sticky top-[4.5rem]">
@@ -35,6 +52,15 @@ class UserProducts extends React.Component {
                         </div>
                       ),
                       value: 'products'
+                    },
+                    {
+                      jsx: (
+                        <div className="flex-row flex gap-2 items-center">
+                          <FiClock />
+                          <span>History</span>
+                        </div>
+                      ),
+                      value: 'history'
                     },
                     {
                       jsx: (
@@ -59,27 +85,27 @@ class UserProducts extends React.Component {
               <div
                 className="grid gap-y-4 font-bold"
                 style={{
-                  'grid-template-columns': '1fr 1fr 1fr auto'
+                  gridTemplateColumns: '1fr 1fr 1fr auto'
                 }}>
-                <td className="content-center flex items-center">
+                <div className="content-center flex items-center">
                   <div>Product</div>
-                </td>
-                <td className="content-center flex items-center">
+                </div>
+                <div className="content-center flex items-center">
                   <div>Purchase date</div>
-                </td>
-                <td className="content-center flex items-center">
+                </div>
+                <div className="content-center flex items-center">
                   <div>Serial</div>
-                </td>
-                <td className="w-[6.125rem]" />
+                </div>
+                <div className="w-[6.125rem]" />
               </div>
-              {[0, 0, 0, 0, 0].map((v) => (
+              {[0, 1, 2, 3, 4].map((v) => (
                 <div
                   className="grid gap-y-4 hover:bg-base-200 box-border border-transparent hover:border-base-300 border p-3 -mx-3 rounded-xl transition group"
                   key={v}
                   style={{
-                    'grid-template-columns': '1fr 1fr 1fr auto'
+                    gridTemplateColumns: '1fr 1fr 1fr auto'
                   }}>
-                  <td className="pl-0">
+                  <div className="pl-0">
                     <div className="flex items-center space-x-4">
                       <div className="w-16 h-16">
                         <img
@@ -98,15 +124,15 @@ class UserProducts extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td className="content-center flex items-center opacity-75 group-hover:opacity-100 transition">
+                  </div>
+                  <div className="content-center flex items-center opacity-75 group-hover:opacity-100 transition">
                     <div>17th of January 2023</div>
-                  </td>
-                  <td className="content-center flex items-center font-mono opacity-75 group-hover:opacity-100 transition">
+                  </div>
+                  <div className="content-center flex items-center font-mono opacity-75 group-hover:opacity-100 transition">
                     <div>SERI-AL12-345-678-9XY-Z</div>
-                  </td>
+                  </div>
                   <IconContext.Provider value={{ size: '1.5rem' }}>
-                    <td className="content-center flex items-center opacity-0 group-hover:opacity-100 transition">
+                    <div className="content-center flex items-center opacity-0 group-hover:opacity-100 transition">
                       <div className="tooltip" data-tip="Download">
                         <a className="btn btn-ghost btn-circle text-primary">
                           <FiDownload></FiDownload>
@@ -117,7 +143,7 @@ class UserProducts extends React.Component {
                           <FiLink></FiLink>
                         </a>
                       </div>
-                    </td>
+                    </div>
                   </IconContext.Provider>
                 </div>
               ))}
