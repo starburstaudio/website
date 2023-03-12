@@ -204,6 +204,7 @@ class AccountCard extends React.Component {
                   disabled={this.state.isProcessing}
                   onChange={this.updateFirstName}
                   value={this.state.firstName}
+                  autoComplete="given-name"
                 />
                 <span className="floating-label">First Name</span>
               </div>
@@ -215,6 +216,7 @@ class AccountCard extends React.Component {
                   disabled={this.state.isProcessing}
                   onChange={this.updateLastName}
                   value={this.state.lastName}
+                  autoComplete="family-name"
                 />
                 <span className="floating-label">Last Name</span>
               </div>
@@ -227,6 +229,7 @@ class AccountCard extends React.Component {
                 disabled={this.state.isProcessing}
                 onChange={this.updateEmail}
                 value={this.state.email}
+                autoComplete="email"
               />
               <span className="floating-label">E-Mail</span>
             </div>
@@ -240,6 +243,7 @@ class AccountCard extends React.Component {
                     disabled={this.state.isProcessing}
                     onChange={this.updatePassword}
                     value={this.state.password}
+                    autoComplete="new-password"
                   />
                   <span className="floating-label bg-transparent p-0">
                     Password
@@ -273,6 +277,7 @@ class AccountCard extends React.Component {
                 disabled={this.state.isProcessing}
                 onChange={this.updateAdress}
                 value={this.state.adress}
+                autoComplete="street-address"
               />
               <span className="floating-label">Street and House Number</span>
             </div>
@@ -285,6 +290,7 @@ class AccountCard extends React.Component {
                   disabled={this.state.isProcessing}
                   onChange={this.updateZip}
                   value={this.state.zip}
+                  autoComplete="postal-code"
                 />
                 <span className="floating-label">Zip</span>
               </div>
@@ -296,6 +302,7 @@ class AccountCard extends React.Component {
                   disabled={this.state.isProcessing}
                   onChange={this.updateCity}
                   value={this.state.city}
+                  autoComplete="address-level2"
                 />
                 <span className="floating-label">City</span>
               </div>
@@ -336,6 +343,7 @@ class AccountCard extends React.Component {
                       disabled={this.state.isProcessing}
                       onChange={this.updateCountrySearchTerm}
                       value={this.state.countrySearchTerm}
+                      autoComplete="none"
                     />
                     <div className="overflow-scroll shrink">
                       {this.state.supportedCountries
@@ -422,6 +430,7 @@ class AccountCard extends React.Component {
                     disabled={this.state.isProcessing}
                     onChange={this.updateEmail}
                     value={this.state.email}
+                    autoComplete="email"
                   />
                   <span className="floating-label bg-transparent p-0">
                     E-Mail
@@ -439,6 +448,7 @@ class AccountCard extends React.Component {
                     disabled={this.state.isProcessing}
                     onChange={this.updatePassword}
                     value={this.state.password}
+                    autoComplete="current-password"
                   />
                   <span className="floating-label bg-transparent p-0">
                     Password
