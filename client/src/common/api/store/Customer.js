@@ -67,6 +67,15 @@ class Customer {
   }
 
   setFromActiveCustomer(c) {
+    this.id = c.id
+    this.createdAt = c.createdAt
+    this.updatedAt = c.updatedAt
+    this.title = c.title
+    this.firstName = c.firstName
+    this.lastName = c.lastName
+    this.phoneNumber = c.phoneNumber
+    this.emailAddress = c.emailAddress
+    this.customFields = c.customFields
     this.loggedIn = c !== null
   }
 
