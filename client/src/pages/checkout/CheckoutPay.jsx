@@ -63,9 +63,7 @@ class CheckoutPay extends React.Component {
           })
         }
       })
-      .then((r) => {
-
-      })
+      .then((r) => {})
   }
 
   render() {

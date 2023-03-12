@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import { IconContext } from 'react-icons'
 import { FiDownload, FiLink, FiSettings, FiClock } from 'react-icons/fi'
 import { Customer } from '../../common/api/store/Customer'
@@ -23,7 +23,13 @@ class UserProducts extends React.Component {
         else this.setState({ loggedIn: false })
       })
       .then((c) => {
-        if (c) this.setState({ customer: c })
+        if (c) {
+          this.setState({ customer: c })
+          return this.state.customer.getOwnProducts()
+        }
+      })
+      .then((c) => {
+        this.setState({ customer: c })
       })
   }
 
@@ -81,9 +87,9 @@ class UserProducts extends React.Component {
           </div>
           <div className="w-full grow">
             <h2 className="text-3xl my-6">Your products</h2>
-            <div className="space-y-0">
+            <div className="space-y-2">
               <div
-                className="grid gap-y-4 font-bold"
+                className="grid gap-y-4 py-4 font-bold"
                 style={{
                   gridTemplateColumns: '1fr 1fr 1fr auto'
                 }}>
@@ -98,59 +104,95 @@ class UserProducts extends React.Component {
                 </div>
                 <div className="w-[6.125rem]" />
               </div>
-              {[0, 1, 2, 3, 4].map((v) => (
-                <div
-                  className="grid gap-y-4 hover:bg-base-200 box-border border-transparent hover:border-base-300 border p-3 -mx-3 rounded-xl transition group"
-                  key={v}
-                  style={{
-                    gridTemplateColumns: '1fr 1fr 1fr auto'
-                  }}>
-                  <div className="pl-0">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-16 h-16">
-                        <img
-                          src="http://localhost:3001/assets/preview/33/frame-2x1024__preview.png"
-                          className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-75 blur-md absolute"
-                        />
-                        <img
-                          src="http://localhost:3001/assets/preview/33/frame-2x1024__preview.png"
-                          className="w-16 h-16 rounded-lg relative"
-                        />
+              {this.state.customer.orders.map((o, i) => {
+                if (o?.products?.products.length > 1)
+                  return (
+                    <>
+                      <div className="divider py-6">
+                        Purchased on {new Date(o.date).toDateString()}
                       </div>
-                      <div>
-                        <div className="font-bold">Heatburst</div>
-                        <div className="text-sm opacity-50 group-hover:opacity-100 transition">
-                          Plugin
-                        </div>
+                      <div
+                        key={i}
+                        className="border-base-300 hover:scale-105 rounded-xl box-border border px-3 -mx-3 group transition hover:border-base-300 bg-base-200">
+                        {o.products?.products.map((l, i) => (
+                          <OrderLine key={i} i={i} l={l} o={o} multiview />
+                        ))}
                       </div>
-                    </div>
-                  </div>
-                  <div className="content-center flex items-center opacity-75 group-hover:opacity-100 transition">
-                    <div>17th of January 2023</div>
-                  </div>
-                  <div className="content-center flex items-center font-mono opacity-75 group-hover:opacity-100 transition">
-                    <div>SERI-AL12-345-678-9XY-Z</div>
-                  </div>
-                  <IconContext.Provider value={{ size: '1.5rem' }}>
-                    <div className="content-center flex items-center opacity-0 group-hover:opacity-100 transition">
-                      <div className="tooltip" data-tip="Download">
-                        <a className="btn btn-ghost btn-circle text-primary">
-                          <FiDownload></FiDownload>
-                        </a>
-                      </div>
-                      <div className="tooltip" data-tip="Open store page">
-                        <a className="btn btn-ghost btn-circle text-primary">
-                          <FiLink></FiLink>
-                        </a>
-                      </div>
-                    </div>
-                  </IconContext.Provider>
-                </div>
-              ))}
+                    </>
+                  )
+                else
+                  return o.products?.products.map((l, i) => (
+                    <OrderLine key={i} i={i} l={l} o={o} />
+                  ))
+              })}
             </div>
           </div>
         </div>
       </main>
+    )
+  }
+}
+/* eslint-disable react/prop-types */
+
+class OrderLine extends React.Component {
+  render() {
+    return (
+      <div
+        className={
+          this.props.multiview
+            ? `grid gap-y-4 p-3 -mx-3 border-transparent box-border border-b ${
+                this.props.i < this.props.o.products.products.length - 1
+                  ? 'group-hover:border-base-300'
+                  : ''
+              }`
+            : 'grid hover:scale-105 gap-y-4 hover:bg-base-200 box-border border-transparent hover:border-base-300 border p-3 -mx-3 rounded-xl transition group'
+        }
+        style={{
+          gridTemplateColumns: '1fr 1fr 1fr auto'
+        }}>
+        <div className="pl-0">
+          <div className="flex items-center space-x-4">
+            <div className="w-16 h-16">
+              <img
+                src={this.props.l.product.featuredAsset.preview}
+                className="w-16 h-16 rounded-lg saturate-150 brightness-150 opacity-0 transition group-hover:opacity-75 blur-md absolute"
+              />
+              <img
+                src={this.props.l.product.featuredAsset.preview}
+                className="w-16 h-16 rounded-lg relative"
+              />
+            </div>
+            <div>
+              <div className="font-bold">{this.props.l.product.name}</div>
+              <div className="text-sm opacity-50 group-hover:opacity-100 transition">
+                Plugin
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-center flex items-center opacity-75 group-hover:opacity-100 transition">
+          <div>{new Date(this.props.o.date).toDateString()}</div>
+        </div>
+        <div className="content-center flex items-center font-mono opacity-75 group-hover:opacity-100 transition">
+          <div>TEST</div>
+        </div>
+        <IconContext.Provider value={{ size: '1.5rem' }}>
+          <div className="content-center flex items-center opacity-0 group-hover:opacity-100 transition">
+            <div className="tooltip" data-tip="Download">
+              <a className="btn btn-ghost btn-circle text-primary">
+                <FiDownload></FiDownload>
+              </a>
+            </div>
+            <div className="tooltip" data-tip="Open store page">
+              <Link
+                to={`/p/${this.props.l.product.slug}`}
+                className="btn btn-ghost btn-circle text-primary">
+                <FiLink></FiLink>
+              </Link>
+            </div>
+          </div>
+        </IconContext.Provider>
+      </div>
     )
   }
 }

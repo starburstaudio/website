@@ -28,6 +28,10 @@ class CheckoutPage extends React.Component {
     subscribe('updateCustomer', () => {
       this.getCurrentOrder(true)
     })
+
+    subscribe('didPay', () => {
+      this.getCurrentOrder(true)
+    })
   }
 
   getCurrentOrder(loggedIn) {
@@ -54,9 +58,6 @@ class CheckoutPage extends React.Component {
               })
             }
           })
-          break
-        case 'done':
-          this.setState({ progress: 3 })
           break
         default:
           this.setState({
