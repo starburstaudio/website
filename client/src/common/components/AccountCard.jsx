@@ -23,6 +23,7 @@ class AccountCard extends React.Component {
         code: '',
         name: ''
       },
+      passwordHidden: true,
       countrySearchTerm: '',
       rememberMe: false,
       isProcessing: false,
@@ -229,16 +230,40 @@ class AccountCard extends React.Component {
               />
               <span className="floating-label">E-Mail</span>
             </div>
-            <div className="textPlaceholder">
-              <input
-                type="password"
-                className="inputText input input-bordered w-full"
-                required
-                disabled={this.state.isProcessing}
-                onChange={this.updatePassword}
-                value={this.state.password}
-              />
-              <span className="floating-label">Password</span>
+            <div className="form-control w-full">
+              <div className="input-group">
+                <div className="textPlaceholder w-full">
+                  <input
+                    type={this.state.passwordHidden ? 'password' : 'text'}
+                    className="inputText input w-full rounded-r-none input-bordered border-r-0"
+                    required
+                    disabled={this.state.isProcessing}
+                    onChange={this.updatePassword}
+                    value={this.state.password}
+                  />
+                  <span className="floating-label bg-transparent p-0">
+                    Password
+                  </span>
+                </div>
+                <label className="swap">
+                  <input
+                    type="checkbox"
+                    disabled={this.state.isProcessing}
+                    checked={!this.state.passwordHidden}
+                    onChange={(e) => {
+                      this.setState({
+                        passwordHidden: !e.target.checked
+                      })
+                    }}
+                  />
+                  <div className="btn h-14 px-5 rounded-l-none no-animation swap-on">
+                    <FiEyeOff />
+                  </div>
+                  <div className="btn h-14 px-5 rounded-l-none no-animation swap-off">
+                    <FiEye />
+                  </div>
+                </label>
+              </div>
             </div>
             <div className="textPlaceholder">
               <input
@@ -405,10 +430,10 @@ class AccountCard extends React.Component {
               </div>
             </div>
             <div className="form-control w-full">
-              <div className="input-group">
+              <div className="input-group items-stretch">
                 <div className="textPlaceholder w-full">
                   <input
-                    type="password"
+                    type={this.state.passwordHidden ? 'password' : 'text'}
                     className="inputText input w-full rounded-r-none input-bordered border-r-0"
                     required
                     disabled={this.state.isProcessing}
@@ -419,12 +444,21 @@ class AccountCard extends React.Component {
                     Password
                   </span>
                 </div>
-                <label className="swap">
-                  <input type="checkbox" disabled={this.state.isProcessing} />
-                  <div className="btn rounded-l-none no-animation swap-on">
+                <label className="swap h-full">
+                  <input
+                    type="checkbox"
+                    disabled={this.state.isProcessing}
+                    checked={!this.state.passwordHidden}
+                    onChange={(e) => {
+                      this.setState({
+                        passwordHidden: !e.target.checked
+                      })
+                    }}
+                  />
+                  <div className="btn h-14 px-5 rounded-l-none no-animation swap-on">
                     <FiEyeOff />
                   </div>
-                  <div className="btn rounded-l-none no-animation swap-off">
+                  <div className="btn h-14 px-5 rounded-l-none no-animation swap-off">
                     <FiEye />
                   </div>
                 </label>
