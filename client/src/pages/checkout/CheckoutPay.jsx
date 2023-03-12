@@ -10,22 +10,41 @@ class CheckoutPay extends React.Component {
       .mutate({
         mutation: gql`
           mutation {
-            transitionOrderToState(state: "ArrangingPayment") {
+            setOrderShippingMethod(shippingMethodId: "1") {
               __typename
-              ... on OrderStateTransitionError {
-                errorCode
+              ... on OrderModificationError {
+                message
+              }
+              ... on IneligibleShippingMethodError {
+                message
+              }
+              ... on NoActiveOrderError {
                 message
               }
             }
           }
         `
       })
-      .then((t) => {
-        console.log(t)
-        if (t.data.transitionOrderToState.__typename === 'Order')
-          storeClient
-            .mutate({
-              mutation: gql`
+      .then((r) => {
+        if (r.data.setOrderShippingMethod.__typename === 'Order')
+          return storeClient.mutate({
+            mutation: gql`
+              mutation {
+                transitionOrderToState(state: "ArrangingPayment") {
+                  __typename
+                  ... on OrderStateTransitionError {
+                    errorCode
+                    message
+                  }
+                }
+              }
+            `
+          })
+      })
+      .then((r) => {
+        if (r.data.transitionOrderToState.__typename === 'Order') {
+          return storeClient.mutate({
+            mutation: gql`
               mutation {
                 addPaymentToOrder(input: {
                   method: "${method}"
@@ -41,10 +60,11 @@ class CheckoutPay extends React.Component {
                 }
               }
             `
-            })
-            .then((r) => {
-              console.log(r)
-            })
+          })
+        }
+      })
+      .then((r) => {
+
       })
   }
 
