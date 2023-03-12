@@ -241,7 +241,7 @@ input:not(:focus):valid ~ .floating-label{
 
 .textPlaceholder .input {
   padding-top: 0.9rem;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   height: 3.5rem;
 }
 
@@ -251,6 +251,6 @@ input:not(:focus):valid ~ .floating-label{
   opacity: .5;
   left: 1rem;
   top: 0.8rem;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   transition: 0.2s ease all;
 }

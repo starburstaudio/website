@@ -1,8 +1,11 @@
 import React from 'react'
 import { Customer } from '../api/store/Customer'
-import { FiEye, FiEyeOff, FiStopCircle } from 'react-icons/fi'
+import { FiEye, FiEyeOff, FiStopCircle, FiChevronDown } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
 import { trigger } from '../../events'
+import { storeClient } from '../api/store/storeClient'
+import { gql } from '@apollo/client'
+import ReactCountryFlag from 'react-country-flag'
 
 class AccountCard extends React.Component {
   constructor(props) {
@@ -16,10 +19,16 @@ class AccountCard extends React.Component {
       adress: '',
       city: '',
       zip: '',
+      selectedCountry: {
+        code: '',
+        name: ''
+      },
+      countrySearchTerm: '',
       rememberMe: false,
       isProcessing: false,
       isLoggedIn: false,
-      currentError: undefined
+      currentError: undefined,
+      supportedCountries: []
     }
 
     this.updateEmail = this.updateEmail.bind(this)
@@ -30,11 +39,35 @@ class AccountCard extends React.Component {
     this.updateAdress = this.updateAdress.bind(this)
     this.updateCity = this.updateCity.bind(this)
     this.updateZip = this.updateZip.bind(this)
+    this.updateCountrySearchTerm = this.updateCountrySearchTerm.bind(this)
   }
 
   componentDidMount() {
+    fetch('https://extreme-ip-lookup.com/json/')
+      .then((res) => res.json())
+      .then((response) => {
+        console.log('Country is : ', response)
+      })
+      .catch((data, status) => {
+        console.log('Request failed:', data)
+      })
+
     // eslint-disable-next-line react/prop-types
     this.setState({ signUpMode: this.props.signUpMode })
+    storeClient
+      .query({
+        query: gql`
+          query {
+            availableCountries {
+              code
+              name
+            }
+          }
+        `
+      })
+      .then((r) => {
+        this.setState({ supportedCountries: r.data.availableCountries })
+      })
   }
 
   updateEmail(event) {
@@ -68,6 +101,16 @@ class AccountCard extends React.Component {
     if (!this.state.isProcessing) this.setState({ zip: event.target.value })
   }
 
+  updateCountry(event) {
+    if (!this.state.isProcessing)
+      this.setState({ countryCode: event.target.value })
+  }
+
+  updateCountrySearchTerm(event) {
+    if (!this.state.isProcessing)
+      this.setState({ countrySearchTerm: event.target.value })
+  }
+
   updateRememberMe(event) {
     if (!this.state.isProcessing)
       this.setState({ rememberMe: event.target.checked })
@@ -79,7 +122,6 @@ class AccountCard extends React.Component {
   }
 
   submitData() {
-    console.log(this?.state)
     if (this.state.signUpMode) {
       this.setState({ isProcessing: true }, () => {
         new Customer()
@@ -90,14 +132,21 @@ class AccountCard extends React.Component {
             this.state.lastName,
             this.state.adress,
             this.state.city,
-            this.state.zip
+            this.state.zip,
+            this.state.selectedCountry.code
           )
           .then(
             (r) => {
-              console.log(r)
+              this.setState({
+                isProcessing: false,
+                currentError: undefined,
+                isLoggedIn: true
+              })
+              trigger('updateCustomer', r)
             },
             (e) => {
               this.setState({ isProcessing: false, currentError: e.message })
+              console.log(e)
             }
           )
       })
@@ -212,8 +261,8 @@ class AccountCard extends React.Component {
               />
               <span className="floating-label">Street and House Number</span>
             </div>
-            <div className="flex gap-x-4">
-              <div className="textPlaceholder w-full">
+            <div className="flex gap-x-4 items-stretch">
+              <div className="textPlaceholder w-28 shrink-0">
                 <input
                   type="number"
                   className="inputText input input-bordered w-full"
@@ -222,7 +271,7 @@ class AccountCard extends React.Component {
                   onChange={this.updateZip}
                   value={this.state.zip}
                 />
-                <span className="floating-label">Zip Code</span>
+                <span className="floating-label">Zip</span>
               </div>
               <div className="textPlaceholder w-full">
                 <input
@@ -234,6 +283,77 @@ class AccountCard extends React.Component {
                   value={this.state.city}
                 />
                 <span className="floating-label">City</span>
+              </div>
+              <div className="dropdown">
+                <label tabIndex={0} className="btn input h-full input-bordered">
+                  {this.state.selectedCountry.name === '' ? (
+                    <span className="normal-case text-lg font-normal opacity-50 flex items-center gap-2">
+                      Country <FiChevronDown />
+                    </span>
+                  ) : (
+                    <span className="normal-case text-lg font-normal flex items-center gap-2">
+                      <ReactCountryFlag
+                        countryCode={this.state.selectedCountry.code}
+                      />
+                      <span
+                        className="whitespace-nowrap"
+                        style={{
+                          maxWidth: '9rem',
+                          maskImage:
+                            this.state.selectedCountry.name.length > 14
+                              ? 'linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 33%)'
+                              : 'none'
+                        }}>
+                        {this.state.selectedCountry.name}
+                      </span>
+                      <FiChevronDown />
+                    </span>
+                  )}
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box">
+                  <div className="flex flex-col max-h-96 w-52">
+                    <input
+                      type="text"
+                      placeholder="Search for a country..."
+                      className="inputText input input-ghost input-sm shrink-0 min-w-0 mb-2"
+                      disabled={this.state.isProcessing}
+                      onChange={this.updateCountrySearchTerm}
+                      value={this.state.countrySearchTerm}
+                    />
+                    <div className="overflow-scroll shrink">
+                      {this.state.supportedCountries
+                        .filter((c) => {
+                          if (this.state.countrySearchTerm === '') {
+                            return true
+                          } else {
+                            return c.name
+                              .toLowerCase()
+                              .includes(
+                                this.state.countrySearchTerm.toLowerCase()
+                              )
+                          }
+                        })
+                        .map((c) => (
+                          <li
+                            key={c.code}
+                            className="flex"
+                            onClick={() => {
+                              this.setState({
+                                selectedCountry: c,
+                                countrySearchTerm: ''
+                              })
+                            }}>
+                            <div>
+                              <ReactCountryFlag countryCode={c.code} />
+                              <span>{c.name}</span>
+                            </div>
+                          </li>
+                        ))}
+                    </div>
+                  </div>
+                </ul>
               </div>
             </div>
             <div className="text-sm py-4">
