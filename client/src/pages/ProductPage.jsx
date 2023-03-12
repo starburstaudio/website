@@ -93,10 +93,10 @@ class ProductPage extends React.Component {
         <img
           alt=""
           src={this.state.product.featuredAsset?.source}
-          className="w-full aspect-video saturate-150 brightness-150 opacity-glow-subtle blur-3xl absolute -z-10"
+          className="w-full h-[48rem] saturate-150 opacity-glow-subtle blur-3xl absolute -z-10"
           style={{
             maskImage:
-              'linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%)'
+              'linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%)'
           }}
         />
         <div className="flex flex-col items-center mb-8">
@@ -126,7 +126,7 @@ class ProductPage extends React.Component {
                 className="mb-8 text-md space-y-2 opacity-75 leading-relaxed"
               />
               <div
-                className="btn btn-accent btn-lg rounded-full shadow-2xl shadow-accent mb-8"
+                className="btn btn-primary backdrop-blur-3xl btn-lg rounded-full shadow-xl hover:shadow-primary hover:shadow-2xl mb-8"
                 onClick={() => this.addToOrder()}>
                 <IconContext.Provider value={{ size: '1.5em' }}>
                   <FiPlusCircle />

@@ -70,10 +70,10 @@ input[type=number] {
     --tw-shadow-colored: 0 12px 48px -16px var(--tw-shadow-color);
   }
   .opacity-glow {
-    opacity: .4;
+    opacity: .6;
   }
   .opacity-glow-subtle {
-    opacity: .15;
+    opacity: .2;
   }
 }
 @media (prefers-color-scheme: light) {
