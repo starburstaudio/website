@@ -15,7 +15,7 @@
     "@vendure/admin-ui-plugin": "1.9.2",
     "@vendure/asset-server-plugin": "1.9.2",
     "@vendure/core": "1.9.2",
-    "@vendure/email-plugin": "1.9.2",
+    "@vendure/email-plugin": "1.9.3",
     "@vendure/payments-plugin": "^1.9.3",
     "dotenv": "16.0.3",
     "mysql": "2.18.1",
