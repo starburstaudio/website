@@ -141,33 +141,33 @@ class Customer {
         })
         .then((r) => {
           if (r.data.registerCustomerAccount.__typename === 'Success') {
-            this.login(email, password, true).then(() => {
-              storeClient
-                .mutate({
-                  mutation: gql`
-                    mutation {
-                      createCustomerAddress(
-                        input: {
-                          fullName: "${firstName} ${lastName}"
-                          streetLine1: "${adress}"
-                          city: "${city}"
-                          postalCode: "${zip}"
-                          countryCode: "${countryCode}"
-                        }
-                      ) {
-                        id
-                      }
-                    }
-                  `
-                })
-                .then(() => {
-                  resolve(this)
-                })
-            })
+            return this.login(email, password, true)
           } else {
             reject(new Error(r.data.registerCustomerAccount.message))
           }
           resolve(r)
+        })
+        .then(() => {
+          return storeClient.mutate({
+            mutation: gql`
+                mutation {
+                  createCustomerAddress(
+                    input: {
+                      fullName: "${firstName} ${lastName}"
+                      streetLine1: "${adress}"
+                      city: "${city}"
+                      postalCode: "${zip}"
+                      countryCode: "${countryCode}"
+                    }
+                  ) {
+                    id
+                  }
+                }
+              `
+          })
+        })
+        .then(() => {
+          resolve(this)
         })
     })
   }

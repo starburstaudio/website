@@ -43,15 +43,6 @@ class AccountCard extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://extreme-ip-lookup.com/json/')
-      .then((res) => res.json())
-      .then((response) => {
-        console.log('Country is : ', response)
-      })
-      .catch((data, status) => {
-        console.log('Request failed:', data)
-      })
-
     // eslint-disable-next-line react/prop-types
     this.setState({ signUpMode: this.props.signUpMode })
     storeClient
@@ -146,7 +137,6 @@ class AccountCard extends React.Component {
             },
             (e) => {
               this.setState({ isProcessing: false, currentError: e.message })
-              console.log(e)
             }
           )
       })

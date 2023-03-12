@@ -26,23 +26,28 @@ class CheckoutPage extends React.Component {
     }
 
     subscribe('updateCustomer', () => {
-      this.getCurrentOrder()
+      this.getCurrentOrder(true)
     })
   }
 
-  getCurrentOrder() {
+  getCurrentOrder(loggedIn) {
     this.state.order.getCurrentOrder().then((o) => {
       this.setState({ order: o })
+      console.log(o)
       switch (o.state) {
         case 'AddingItems':
           new Customer().isLoggedIn().then((r) => {
             if (r) {
+              console.log('Is Logged in')
               if (o.address == null) {
+                console.log('No Address')
                 this.setState({ progress: 2, currentView: <CheckoutPay /> })
               } else {
+                console.log('Has Address')
                 this.setState({ progress: 2, currentView: <CheckoutPay /> })
               }
             } else {
+              console.log('Is not logged in')
               this.setState({
                 progress: 0,
                 currentView: <AccountCard onLogin={<div />} signUpMode />
