@@ -68,7 +68,6 @@ class Customer {
 
   setFromActiveCustomer(c) {
     this.loggedIn = c !== null
-    console.log(c)
   }
 
   login(username, password, rememberMe) {
@@ -103,7 +102,16 @@ class Customer {
     })
   }
 
-  register(email, password, firstName, lastName, adress, city, zip) {
+  register(
+    email,
+    password,
+    firstName,
+    lastName,
+    adress,
+    city,
+    zip,
+    countryCode
+  ) {
     return new Promise((resolve, reject) => {
       storeClient
         .mutate({
@@ -132,6 +140,33 @@ class Customer {
           `
         })
         .then((r) => {
+          if (r.data.registerCustomerAccount.__typename === 'Success') {
+            this.login(email, password, true).then(() => {
+              storeClient
+                .mutate({
+                  mutation: gql`
+                    mutation {
+                      createCustomerAddress(
+                        input: {
+                          fullName: "${firstName} ${lastName}"
+                          streetLine1: "${adress}"
+                          city: "${city}"
+                          postalCode: "${zip}"
+                          countryCode: "${countryCode}"
+                        }
+                      ) {
+                        id
+                      }
+                    }
+                  `
+                })
+                .then(() => {
+                  resolve(this)
+                })
+            })
+          } else {
+            reject(new Error(r.data.registerCustomerAccount.message))
+          }
           resolve(r)
         })
     })

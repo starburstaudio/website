@@ -45,7 +45,7 @@ class CheckoutPage extends React.Component {
             } else {
               this.setState({
                 progress: 0,
-                currentView: <AccountCard onLogin={<div />} />
+                currentView: <AccountCard onLogin={<div />} signUpMode />
               })
             }
           })
