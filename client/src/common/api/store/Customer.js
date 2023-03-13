@@ -63,6 +63,9 @@ class Customer {
                         name
                         product {
                           slug
+                          collections {
+                            slug
+                          }
                         }
                       }
                       featuredAsset {
@@ -81,7 +84,10 @@ class Customer {
             const line = { date: i.orderPlacedAt, products: new ProductList() }
             i.lines.forEach((l) => {
               line.products.products.push({
-                product: new Product().fromOrderLine(l)
+                product: new Product().fromOrderLine(l),
+                type: this.collectionSlugToType(
+                  l.productVariant.product.collections?.[0]?.slug
+                )
               })
             })
             orders.push(line)
@@ -90,6 +96,19 @@ class Customer {
           resolve(this)
         })
     })
+  }
+
+  collectionSlugToType(slug) {
+    switch (slug) {
+      case 'sample-packs':
+        return 'Sample Pack'
+      case 'presets':
+        return 'Preset Pack'
+      case 'plugins':
+        return 'Plugin'
+      default:
+        return 'Product'
+    }
   }
 
   isLoggedIn() {

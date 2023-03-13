@@ -87,9 +87,15 @@ class UserProducts extends React.Component {
           </div>
           <div className="w-full grow">
             <h2 className="text-3xl my-6">Your products</h2>
-            <div className="space-y-2">
+            <p className="content-width opacity-75">
+              These are all the products you&apos;ve purchased along with their
+              download links. Note that these links only work while you are
+              signed in and can only be used a set amount of times (hover the
+              respective download icon to see how often)
+            </p>
+            <div className="">
               <div
-                className="grid gap-y-4 py-4 font-bold"
+                className="grid gap-y-4 pt-8 pb-2 font-bold"
                 style={{
                   gridTemplateColumns: '1fr 1fr 1fr auto'
                 }}>
@@ -107,18 +113,18 @@ class UserProducts extends React.Component {
               {this.state.customer.orders.map((o, i) => {
                 if (o?.products?.products.length > 1)
                   return (
-                    <>
-                      <div className="divider py-6">
-                        Purchased on {new Date(o.date).toDateString()}
-                      </div>
+                    <div className="my-4">
                       <div
                         key={i}
-                        className="border-base-300 hover:scale-105 rounded-xl box-border border px-3 -mx-3 group transition hover:border-base-300 bg-base-200">
+                        className="border-transparent rounded-xl box-border border px-3 -mx-3 transition hover:bg-base-200 hover:border-base-300 overflow-hidden">
+                        <div className="mt-2 mb-2 transition">
+                          Purchased on {new Date(o.date).toDateString()}
+                        </div>
                         {o.products?.products.map((l, i) => (
                           <OrderLine key={i} i={i} l={l} o={o} multiview />
                         ))}
                       </div>
-                    </>
+                    </div>
                   )
                 else
                   return o.products?.products.map((l, i) => (
@@ -140,12 +146,8 @@ class OrderLine extends React.Component {
       <div
         className={
           this.props.multiview
-            ? `grid gap-y-4 p-3 -mx-3 border-transparent box-border border-b ${
-                this.props.i < this.props.o.products.products.length - 1
-                  ? 'group-hover:border-base-300'
-                  : ''
-              }`
-            : 'grid hover:scale-105 gap-y-4 hover:bg-base-200 box-border border-transparent hover:border-base-300 border p-3 -mx-3 rounded-xl transition group'
+            ? `grid gap-y-4 p-3 hover:bg-base-300 transition -mx-3 box-border group`
+            : 'grid mb-2 gap-y-4 hover:bg-base-200 box-border border-transparent hover:border-base-300 border p-3 -mx-3 rounded-xl transition group'
         }
         style={{
           gridTemplateColumns: '1fr 1fr 1fr auto'
@@ -165,7 +167,7 @@ class OrderLine extends React.Component {
             <div>
               <div className="font-bold">{this.props.l.product.name}</div>
               <div className="text-sm opacity-50 group-hover:opacity-100 transition">
-                Plugin
+                {this.props.l.type}
               </div>
             </div>
           </div>
