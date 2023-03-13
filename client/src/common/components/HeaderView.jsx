@@ -353,7 +353,7 @@ class HeaderView extends React.Component {
                 </h2>
                 <div className="opacity-75 mb-3 px-6">
                   {this.state.order.totalQuantity +
-                    (this.state.order.totalQuantity > 1 ? ' items' : 'item')}
+                    (this.state.order.totalQuantity > 1 ? ' items' : ' item')}
                 </div>
                 <div className="px-6">
                   {this.state.order.lines.map((l) => (
